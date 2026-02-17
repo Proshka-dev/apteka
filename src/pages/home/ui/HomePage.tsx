@@ -2,7 +2,7 @@ import Image from "next/image";
 
 export function HomePage() {
 	return (
-		<div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black" >
+		<div className="font-accent flex min-h-screen items-center justify-center" >
 			Главная страница
 		</div>
 	);
