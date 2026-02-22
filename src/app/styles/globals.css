@@ -53,38 +53,97 @@
 }
 
 :root {
+	/* Базовый радиус скругления углов (≈10px). Влияет на скругление всех компонентов (кнопки, карточки, поля ввода). */
 	--radius: 0.625rem;
+
+	/* Цвет фона всего приложения (белый). Используется в body и как основа для карточек/попапов. */
 	--background: oklch(1 0 0);
-	--foreground: oklch(0.129 0.042 264.695);
+
+	/* Основной цвет текста — тёмно-серый для хорошей контрастности */
+	--foreground: oklch(0.2 0 0);
+	/* #333333 */
+
+	/* Фон компонента Card (карточка). Обычно совпадает с --background. */
 	--card: oklch(1 0 0);
-	--card-foreground: oklch(0.129 0.042 264.695);
+
+	/* Текст внутри карточек — тёмно-серый */
+	--card-foreground: oklch(0.2 0 0);
+
+	/* Фон всплывающих окон (Popover, Dropdown). */
 	--popover: oklch(1 0 0);
-	--popover-foreground: oklch(0.129 0.042 264.695);
-	--primary: oklch(0.208 0.042 265.755);
-	--primary-foreground: oklch(0.984 0.003 247.858);
-	--secondary: oklch(0.968 0.007 247.896);
-	--secondary-foreground: oklch(0.208 0.042 265.755);
-	--muted: oklch(0.968 0.007 247.896);
-	--muted-foreground: oklch(0.554 0.046 257.417);
-	--accent: oklch(0.968 0.007 247.896);
-	--accent-foreground: oklch(0.208 0.042 265.755);
+
+	/* Текст внутри попапов — тёмно-серый */
+	--popover-foreground: oklch(0.2 0 0);
+
+	/* Основной акцентный цвет — мятный (#2FD3AE). Используется для главных кнопок, активных ссылок. */
+	--primary: #2FD3AE;
+	/* или oklch(0.8 0.2 160) */
+
+	/* Текст на акцентном фоне — белый */
+	--primary-foreground: #FFFFFF;
+
+	/* Второстепенный фон — очень светлый серый (близкий к белому). Для кнопок второго плана, неактивных элементов. */
+	--secondary: oklch(0.98 0 0);
+	/* #F9F9F9 */
+
+	/* Текст на второстепенном фоне — тёмно-серый */
+	--secondary-foreground: oklch(0.2 0 0);
+
+	/* Приглушённый фон — чуть темнее secondary */
+	--muted: oklch(0.96 0 0);
+	/* #F2F2F2 */
+	--muted-foreground: oklch(0.5 0 0);
+	/* #808080 */
+
+	/* Акцентный фон (выделение) — мятный с низкой насыщенностью или очень светлый серый */
+	--accent: oklch(0.96 0 0);
+
+	/* Цвет текста на accent-фоне. */
+	--accent-foreground: oklch(0.2 0 0);
+
+	/* Цвет для опасных действий (кнопки удаления, ошибки) — красный. */
 	--destructive: oklch(0.577 0.245 27.325);
-	--border: oklch(0.929 0.013 255.508);
-	--input: oklch(0.929 0.013 255.508);
-	--ring: oklch(0.704 0.04 256.788);
-	--chart-1: oklch(0.646 0.222 41.116);
-	--chart-2: oklch(0.6 0.118 184.704);
-	--chart-3: oklch(0.398 0.07 227.392);
-	--chart-4: oklch(0.828 0.189 84.429);
-	--chart-5: oklch(0.769 0.188 70.08);
-	--sidebar: oklch(0.984 0.003 247.858);
-	--sidebar-foreground: oklch(0.129 0.042 264.695);
-	--sidebar-primary: oklch(0.208 0.042 265.755);
-	--sidebar-primary-foreground: oklch(0.984 0.003 247.858);
-	--sidebar-accent: oklch(0.968 0.007 247.896);
-	--sidebar-accent-foreground: oklch(0.208 0.042 265.755);
-	--sidebar-border: oklch(0.929 0.013 255.508);
-	--sidebar-ring: oklch(0.704 0.04 256.788);
+
+	/* Цвет рамок и разделителей (светло-серый). */
+	--border: #E0E0E0;
+
+	/* Фон полей ввода — можно оставить как border или сделать белым */
+	--input: #FFFFFF;
+
+	/* Обводка фокуса — мятный (полупрозрачный, если нужна прозрачность) */
+	--ring: #2FD3AE;
+	/* или с прозрачностью: rgba(47, 211, 174, 0.5) */
+
+	/* Цвета для графиков — можно подобрать палитру на основе мятного */
+	--chart-1: #2FD3AE;
+	--chart-2: #4BC1E9;
+	--chart-3: #FF9E19;
+	--chart-4: #7894A4;
+	--chart-5: #011D71;
+
+	/* Фон боковой панели (белый). */
+	--sidebar: #FFFFFF;
+
+	/* Основной цвет текста в сайдбаре. */
+	--sidebar-foreground: oklch(0.2 0 0);
+
+	/* Цвет активных элементов сайдбара. */
+	--sidebar-primary: #2FD3AE;
+
+	/* Цвет текста на активных элементах сайдбара. */
+	--sidebar-primary-foreground: #FFFFFF;
+
+	/* Фон подсвеченных пунктов сайдбара. */
+	--sidebar-accent: oklch(0.96 0 0);
+
+	/* Цвет текста на подсвеченных пунктах. */
+	--sidebar-accent-foreground: oklch(0.2 0 0);
+
+	/* Цвет границ внутри сайдбара. */
+	--sidebar-border: #E0E0E0;
+
+	/* Цвет фокуса для элементов сайдбара. */
+	--sidebar-ring: #2FD3AE;
 }
 
 .dark {
@@ -142,6 +201,12 @@
 
 @theme {
 	/* Кастомные тени */
+	--shadow-btn-primary: 0 40px 40px 0 #2FD3AE33;
+	--shadow-btn-dark: 0 40px 40px 0 rgba(0, 0, 0, 0.2);
+
+	--shadow-btn-green: 0 40px 40px 0 rgba(113, 196, 118, 0.2);
+	--shadow-btn-grey: 0 40px 40px 0 rgba(0, 0, 0, 0.2);
+	--shadow-btn-pagination: 0 5px 10px 0 rgba(11, 54, 29, 0.05);
 	--shadow-black-10: 0 5px 20px rgba(0, 0, 0, 0.1);
 
 	/* Кастомные цвета */
@@ -152,6 +217,7 @@
 	--color-cust-yellow: #FF9E19;
 	--color-cust-darkgray: #4F4F4F;
 	--color-cust-gray: #828282;
+	/* --color-cust-butt-bd-inact: #E0E0E0; */
 
 	--background-image-gradient-custom: linear-gradient(to right, #2FD3AE, #011D71);
 }

@@ -1,7 +1,7 @@
 // src/widgets/Header/ui/Header.tsx
 'use client';
 
-import { Button, Icon, Logo } from '@/shared/ui';
+import { Button, ButtonContact, Icon, Logo } from '@/shared/ui';
 
 export const Header = () => {
 	return (
@@ -44,14 +44,35 @@ export const Header = () => {
 					</div>
 
 					<div className='flex gap-1.5'>
-						<div>vk</div>
-						<div>inst</div>
-						<div>yt</div>
+						<div className='w-7.25 h-7.25 border border-cust-butt-bd-inact text-center align-middle rounded-full'>
+							<Icon name='vk' className='text-cust-mint' />
+						</div>
+						<div className='w-7.25 h-7.25 border border-cust-butt-bd-inact text-center align-middle rounded-full'>
+							<Icon name='instagram' className='text-cust-mint' />
+						</div>
+						<div className='w-7.25 h-7.25 border border-cust-butt-bd-inact text-center align-middle rounded-full'>
+							<Icon name='youtube' className='text-cust-mint' />
+						</div>
 					</div>
 					<div className='flex flex-1 justify-evenly'>
-						<div>почта</div>
-						<div>телефон 1</div>
-						<div>телефон 2</div>
+						<ButtonContact
+							type="email"
+							value="info@restoll.ru"
+							subtitle="Напишите нам"
+							icon={<Icon name='messageOpen' className="w-6 h-6 text-cust-mint" />}
+						/>
+						<ButtonContact
+							type="phone"
+							value="8-800-777-22-33"
+							subtitle="Круглосуточно"
+							icon={<Icon name='phone' className="w-6 h-6 text-cust-mint" />}
+						/>
+						<ButtonContact
+							type="phone"
+							value="8 (495) 223-34-03"
+							subtitle="Интернет-аптека"
+							icon={<Icon name='phone' className="w-6 h-6 text-cust-mint" />}
+						/>
 					</div>
 					<div>лупа</div>
 					<div>Заказать звонок</div>
