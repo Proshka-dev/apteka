@@ -5,8 +5,8 @@ import { Slot } from "radix-ui"
 import { cn } from "@/shared/lib/utils"
 
 const buttonVariants = cva(
-	"cursor-pointer inline-flex items-center justify-center whitespace-nowrap disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive",
-	//убрал дефолтные: rounded-md text-sm font-medium gap-2 transition-all focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] 
+	"cursor-pointer inline-flex items-center justify-center whitespace-nowrap disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none shrink-0 [&_svg]:shrink-0 outline-none aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive",
+	//убрал дефолтные: rounded-md text-sm font-medium gap-2 transition-all focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] [&_svg:not([class*='size-'])]:size-4 
 	{
 		variants: {
 			variant: {
@@ -49,14 +49,14 @@ const buttonVariants = cva(
 				fullWidthPrimary36Card: 'justify-between gap-2.5 min-h-9 bg-primary text-white rounded-b-[5px] font-accent px-5 py-2 text-[14px] font-bold leading-none tracking-[0.05em] uppercase transition-[filter] duration-300 ease-out hover:brightness-108 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2',
 				fullWidthPrimary50RadAll: 'justify-between gap-2.5 min-h-12.5 bg-primary text-white rounded-[5px] font-sans px-3.75 py-2 text-[14px] font-bold leading-none tracking-[0.05em] uppercase transition-[filter] duration-300 ease-out hover:brightness-108 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2',
 
-				iconOutline50: '',
-				iconOutline40: '',
-				iconOutline40bw: '',
-				iconOutline29: '',
+				iconOutline50: 'border border-border bg-white text-primary rounded-full size-12.5 transition-[filter] duration-300 ease-out hover:brightness-92 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2',
+				iconOutline40: 'border border-border bg-white text-primary rounded-full size-10 transition-[filter] duration-300 ease-out hover:brightness-92 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2',
+				iconOutline40bw: 'border border-border bg-white text-[#323232] rounded-full size-10 transition-[filter] duration-300 ease-out hover:brightness-92 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2',
+				iconOutline29: 'border border-border bg-white text-primary rounded-full size-7.25 transition-[filter] duration-300 ease-out hover:brightness-92 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2',
 
-				iconPrimary50: '',
-				iconPrimary46: '',
-				iconPrimary25: '',
+				iconPrimary50: 'bg-primary text-white rounded-full size-12.5 transition-[filter] duration-300 ease-out hover:brightness-108 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2',
+				iconPrimary46: 'bg-primary text-white rounded-full size-11.5 transition-[filter] duration-300 ease-out hover:brightness-108 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2',
+				iconPrimary25: 'bg-primary text-white rounded-full size-6.25 transition-[filter] duration-300 ease-out hover:brightness-108 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2',
 
 
 

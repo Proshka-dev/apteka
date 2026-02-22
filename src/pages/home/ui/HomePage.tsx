@@ -1,4 +1,4 @@
-import { Button } from "@/shared/ui";
+import { Button, Icon } from "@/shared/ui";
 import Image from "next/image";
 
 export function HomePage() {
@@ -42,36 +42,38 @@ export function HomePage() {
 
 				iconOutline50
 				<Button variant={"iconOutline50"}>
-					test
+					<Icon name="search" className="w-6 h-6"></Icon>
 				</Button>
+
 				iconOutline40
 				<Button variant={"iconOutline40"}>
-					test
+					<Icon name="menu" className="w-6 h-6"></Icon>
 				</Button>
 				iconOutline40bw
 				<Button variant={"iconOutline40bw"}>
-					test
+					<Icon name="keyboardArrowDown" className="w-5 h-5 rotate-90"></Icon>
 				</Button>
 				iconOutline29
 				<Button variant={"iconOutline29"}>
-					test
+					<Icon name="vk" className="w-3.25 h-2.25"></Icon>
 				</Button>
 				iconPrimary50
 				<Button variant={"iconPrimary50"}>
-					test
+					<Icon name="shoppingCart" className="w-5 h-5"></Icon>
 				</Button>
+
 				iconPrimary46
 				<Button variant={"iconPrimary46"}>
-					test
+					<Icon name="shoppingCart" className="w-5 h-5"></Icon>
 				</Button>
+
 				iconPrimary25
 				<Button variant={"iconPrimary25"}>
-					test
+					<Icon name="vk" className="w-3.25 h-2.25"></Icon>
 				</Button>
 
 				<button className="">
-					<span>{'>'}</span>
-					<span>{'test'}</span>
+
 				</button>
 
 				<Button size='xs' variant={"default"}>default xs</Button>
