@@ -76,7 +76,7 @@ export function HomePage() {
 
 				</button>
 
-				<Button size='xs' variant={"default"}>default xs</Button>
+				{/* <Button size='xs' variant={"default"}>default xs</Button>
 				<Button size='sm' variant={"default"}>default sm</Button>
 				<Button variant={"default"}>Тестовая кнопка default</Button>
 				<Button size='lg' variant={"default"}>default lg</Button>
@@ -88,7 +88,7 @@ export function HomePage() {
 				<Button size='normal' variant={"ghost"}>Тестовая кнопка ghost</Button>
 				<Button size='normal' variant={"link"}>Тестовая кнопка link</Button>
 				<Button size='normal' variant={"outline"}>Тестовая кнопка outline</Button>
-				<Button size='normal' variant={"secondary"}>Тестовая кнопка secondary</Button>
+				<Button size='normal' variant={"secondary"}>Тестовая кнопка secondary</Button> */}
 
 			</div>
 		</div >
