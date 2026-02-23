@@ -1,21 +1,33 @@
-// src/widgets/Header/ui/Header.tsx
-'use client';
 
-import { Button, ButtonContact, Icon, Logo } from '@/shared/ui';
+import { RegionButton } from '@/features/region/ui/RegionSelectButton/RegionButton';
+import { prisma } from '@/shared/lib';
+import { ButtonContact, Icon, Logo } from '@/shared/ui';
 
-export const Header = () => {
+export async function Header() {
+	// Загружаем города прямо на сервере
+	const cities = await prisma.city.findMany({
+		orderBy: { name: 'asc' },
+	})
+	// Преобразуем в простые объекты (Prisma возвращает сложные объекты с методами)
+	const serializedCities = cities.map(city => ({
+		id: city.id,
+		name: city.name,
+		slug: city.slug ?? undefined,
+	}))
+
 	return (
 		<header className="">
 			{/* Верхний блок */}
 			<div className="border-green-400 border bg-white">
 				<div className="border-blue-400 border container mx-auto flex gap-5 py-2 items-center">
-					<div className='mr-15.5 font-accent'>
+					{/* <div className='mr-15.5 font-accent'>
 						<Icon name='nearMe' className='text-cust-mint' />
 						<span className='text-cust-grayblue text-sm font-medium font-accent'>
 							Москва и область
 						</span>
 						<Icon name='keyboardArrowDown' className='text-cust-gray' />
-					</div>
+					</div> */}
+					<RegionButton initialCities={serializedCities} />
 					<div className='flex-1'>
 						<Icon name='favoriteBorder' className='text-cust-mint mr-2.5' />
 						<span className='text-cust-grayblue text-sm font-medium font-accent'>

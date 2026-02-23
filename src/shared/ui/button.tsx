@@ -57,6 +57,8 @@ const buttonVariants = cva(
 				iconPrimary50: 'bg-primary text-white rounded-full size-12.5 hover:brightness-108',
 				iconPrimary46: 'bg-primary text-white rounded-full size-11.5 hover:brightness-108',
 				iconPrimary25: 'bg-primary text-white rounded-full size-6.25 hover:brightness-108',
+
+				ghost: 'hover:brightness-92',
 			},
 			size: {
 				default: "",

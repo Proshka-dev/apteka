@@ -21,7 +21,6 @@ export function HomePage() {
 				<Button variant={"pillSecondary30lg"}>pillSecondary30lg</Button>
 				<Button variant={"pillSecondary30"}>pillSecondary30</Button>
 				<Button variant={"pillSecondary25"}>pillSecondary25</Button>
-
 				<Button variant={"fullWidthPrimary40"}>
 					<span>{'>>'}</span>
 					<span>{'fullWidthPrimary40'}</span>
@@ -71,24 +70,6 @@ export function HomePage() {
 				<Button variant={"iconPrimary25"}>
 					<Icon name="vk" className="w-3.25 h-2.25"></Icon>
 				</Button>
-
-				<button className="">
-
-				</button>
-
-				{/* <Button size='xs' variant={"default"}>default xs</Button>
-				<Button size='sm' variant={"default"}>default sm</Button>
-				<Button variant={"default"}>Тестовая кнопка default</Button>
-				<Button size='lg' variant={"default"}>default lg</Button>
-				<Button size='icon-xs' variant={"default"}>xs</Button>
-				<Button size='icon-sm' variant={"default"}>sm</Button>
-				<Button size='icon' variant={"default"}>icon</Button>
-				<Button size='icon-lg' variant={"default"}>lg</Button>
-				<Button size='normal' variant={"destructive"}>Тестовая кнопка destructive</Button>
-				<Button size='normal' variant={"ghost"}>Тестовая кнопка ghost</Button>
-				<Button size='normal' variant={"link"}>Тестовая кнопка link</Button>
-				<Button size='normal' variant={"outline"}>Тестовая кнопка outline</Button>
-				<Button size='normal' variant={"secondary"}>Тестовая кнопка secondary</Button> */}
 
 			</div>
 		</div >
