@@ -1,19 +1,37 @@
 
-import { RegionButton } from '@/features/region/ui/RegionSelectButton/RegionButton';
+import { RegionButton } from '@/features/region/';
 import { prisma } from '@/shared/lib';
 import { ButtonContact, Icon, Logo } from '@/shared/ui';
+import { cookies } from 'next/headers'
 
 export async function Header() {
-	// Загружаем города прямо на сервере
+	const cookieStore = await cookies();
+	const selectedCityId = cookieStore.get('selectedCityId')?.value;
+
+	// Загружаем все города (нужны для меню)
 	const cities = await prisma.city.findMany({
 		orderBy: { name: 'asc' },
-	})
+	});
+
 	// Преобразуем в простые объекты (Prisma возвращает сложные объекты с методами)
 	const serializedCities = cities.map(city => ({
 		id: city.id,
 		name: city.name,
 		slug: city.slug ?? undefined,
 	}))
+
+	// Определяем город по куке (если есть)
+	let defaultCity = null
+	if (selectedCityId) {
+		defaultCity = serializedCities.find(c => c.id === Number(selectedCityId))
+	}
+
+	// Если нет города из куки, выбираем Москву по slug
+	if (!defaultCity) {
+		defaultCity = serializedCities.find(c => c.slug === 'moscow')
+			?? serializedCities[0] // если Москва вдруг отсутствует, берём первый
+			?? null
+	}
 
 	return (
 		<header className="">
@@ -27,7 +45,10 @@ export async function Header() {
 						</span>
 						<Icon name='keyboardArrowDown' className='text-cust-gray' />
 					</div> */}
-					<RegionButton initialCities={serializedCities} />
+					<RegionButton
+						initialCities={serializedCities}
+						initialSelectedCity={defaultCity}
+					/>
 					<div className='flex-1'>
 						<Icon name='favoriteBorder' className='text-cust-mint mr-2.5' />
 						<span className='text-cust-grayblue text-sm font-medium font-accent'>
