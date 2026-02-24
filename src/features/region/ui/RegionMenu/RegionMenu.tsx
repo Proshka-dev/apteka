@@ -1,12 +1,12 @@
 // features/region/ui/RegionMenu/RegionMenu.tsx
 'use client';
 
-import { City } from '@/entities/region/types';
-import { cn } from '@/shared/lib/utils';
+import { City } from '@/entities/region';
+import { cn } from '@/shared/lib';
 
 interface RegionMenuProps {
 	cities: City[]
-	selectedCity: City | null  // ← добавляем | null
+	selectedCity: City | null
 	onSelect: (city: City) => void
 	onClose: () => void
 }

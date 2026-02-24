@@ -5,8 +5,8 @@ import { useState, useEffect } from 'react'
 import { Button } from '@/shared/ui'
 import { Icon } from '@/shared/ui'
 import { RegionMenu } from '../RegionMenu/RegionMenu'
-import { City } from '@/entities/region/types'
-import { useRegionStore } from '@/entities/region/model/store'
+import { City } from '@/entities/region'
+import { useRegionStore } from '@/entities/region'
 
 interface RegionButtonProps {
 	initialCities: City[]
