@@ -2,19 +2,25 @@
 'use client';
 
 import { City } from '@/entities/region';
-import { cn } from '@/shared/lib';
+import { cn, useClickOutside } from '@/shared/lib';
+import { RefObject, useEffect, useRef } from 'react';
 
 interface RegionMenuProps {
 	cities: City[]
 	selectedCity: City | null
 	onSelect: (city: City) => void
 	onClose: () => void
+	buttonRef?: RefObject<HTMLButtonElement | null>; // реф на кнопку открытия
 }
 
-export const RegionMenu = ({ cities, selectedCity, onSelect, onClose }: RegionMenuProps) => {
-	// Закрытие при клике вне (можно использовать хук useClickOutside)
+export const RegionMenu = ({ cities, selectedCity, onSelect, onClose, buttonRef }: RegionMenuProps) => {
+	// Реф для Закрытия при клике вне
+	const menuRef = useRef<HTMLDivElement>(null);
+	// Используем хук с массивом рефов: сам меню и кнопка (если передана)
+	useClickOutside([menuRef, buttonRef].filter(Boolean) as React.RefObject<HTMLElement>[], onClose);
+
 	return (
-		<div className="absolute top-full left-0 mt-2 bg-white border rounded-md shadow-lg p-2 z-50">
+		<div ref={menuRef} className="absolute top-full left-0 mt-2 bg-white border rounded-md shadow-lg p-2 z-50">
 			{cities.map(city => (
 				<button
 					key={city.id}

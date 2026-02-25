@@ -1,7 +1,7 @@
 // features/region/ui/RegionButton/RegionButton.tsx
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { Button } from '@/shared/ui'
 import { Icon } from '@/shared/ui'
 import { RegionMenu } from '../RegionMenu/RegionMenu'
@@ -16,6 +16,9 @@ interface RegionButtonProps {
 export const RegionButton = ({ initialCities, initialSelectedCity }: RegionButtonProps) => {
 	const [isOpen, setIsOpen] = useState(false)
 	const { selectedCity, setSelectedCity } = useRegionStore()
+
+	//Реф для кастомного хука useClickOutside
+	const buttonRef = useRef<HTMLButtonElement>(null);
 
 	// Отображаемый город: приоритет у стора, иначе начальный из пропсов
 	const displayCity = selectedCity ?? initialSelectedCity
@@ -53,6 +56,7 @@ export const RegionButton = ({ initialCities, initialSelectedCity }: RegionButto
 			<Button
 				onClick={() => setIsOpen(!isOpen)}
 				variant="ghost"
+				ref={buttonRef} // привязываем реф
 				className="mr-15.5 flex items-center gap-1 font-accent"
 			>
 				<Icon name="nearMe" className="text-cust-mint" />
@@ -70,6 +74,7 @@ export const RegionButton = ({ initialCities, initialSelectedCity }: RegionButto
 					selectedCity={displayCity}
 					onSelect={handleSelect}
 					onClose={() => setIsOpen(false)}
+					buttonRef={buttonRef} // <-- передаём реф в меню
 				/>
 			)}
 		</div>
