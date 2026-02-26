@@ -4,7 +4,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { Button } from '@/shared/ui'
 import { Icon } from '@/shared/ui'
-import { RegionMenu } from '../RegionMenu/RegionMenu'
+import { RegionDialog } from '../RegionDialog/RegionDialog'
 import { City } from '@/entities/region'
 import { useRegionStore } from '@/entities/region'
 
@@ -14,11 +14,9 @@ interface RegionButtonProps {
 }
 
 export const RegionButton = ({ initialCities, initialSelectedCity }: RegionButtonProps) => {
-	const [isOpen, setIsOpen] = useState(false)
-	const { selectedCity, setSelectedCity } = useRegionStore()
+	const [dialogOpen, setDialogOpen] = useState(false)
 
-	//Реф для кастомного хука useClickOutside
-	const buttonRef = useRef<HTMLButtonElement>(null);
+	const { selectedCity, setSelectedCity } = useRegionStore()
 
 	// Отображаемый город: приоритет у стора, иначе начальный из пропсов
 	const displayCity = selectedCity ?? initialSelectedCity
@@ -33,7 +31,7 @@ export const RegionButton = ({ initialCities, initialSelectedCity }: RegionButto
 	// Обработчик выбора города
 	const handleSelect = async (city: City) => {
 		setSelectedCity(city)       // обновляем стор
-		setIsOpen(false)             // закрываем меню
+		setDialogOpen(false)
 
 		// Отправляем запрос на сервер для сохранения выбора в куки
 		try {
@@ -54,9 +52,9 @@ export const RegionButton = ({ initialCities, initialSelectedCity }: RegionButto
 	return (
 		<div className="relative">
 			<Button
-				onClick={() => setIsOpen(!isOpen)}
+				onClick={() => setDialogOpen(true)}
+
 				variant="ghost"
-				ref={buttonRef} // привязываем реф
 				className="mr-15.5 flex items-center gap-1 font-accent"
 			>
 				<Icon name="nearMe" className="text-cust-mint" />
@@ -65,16 +63,15 @@ export const RegionButton = ({ initialCities, initialSelectedCity }: RegionButto
 				</span>
 				<Icon
 					name="keyboardArrowDown"
-					className={`text-cust-gray transition-transform ${isOpen ? 'rotate-180' : ''}`}
+					className={`text-cust-gray transition-transform ${dialogOpen ? 'rotate-180' : ''}`}
 				/>
 			</Button>
-			{isOpen && (
-				<RegionMenu
+			{dialogOpen && (
+				<RegionDialog
+					open={dialogOpen}
+					onOpenChange={setDialogOpen}
 					cities={initialCities}
-					selectedCity={displayCity}
 					onSelect={handleSelect}
-					onClose={() => setIsOpen(false)}
-					buttonRef={buttonRef} // <-- передаём реф в меню
 				/>
 			)}
 		</div>

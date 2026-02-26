@@ -7,7 +7,7 @@ import { cookies } from 'next/headers'
 
 export async function Header() {
 	const cookieStore = await cookies();
-	const selectedCityId = cookieStore.get('selectedCityId')?.value;
+	//const selectedCityId = cookieStore.get('selectedCityId')?.value;
 
 	// Загружаем все города (нужны для меню)
 	const cities = await getCities()

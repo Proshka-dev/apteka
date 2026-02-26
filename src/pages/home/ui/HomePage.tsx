@@ -1,11 +1,33 @@
 import { Button, Icon } from "@/shared/ui";
 import Image from "next/image";
 
+import {
+	Dialog,
+	DialogContent,
+	DialogDescription,
+	DialogHeader,
+	DialogTitle,
+	DialogTrigger,
+} from "@/shared/ui/dialog"
+
 export function HomePage() {
 	return (
 		<div className="font-accent flex min-h-screen items-center justify-center flex-col" >
 			Главная страница
 			<div className="flex flex-col gap-10">
+				<Dialog>
+					<DialogTrigger>Open</DialogTrigger>
+					<DialogContent>
+						<DialogHeader>
+							<DialogTitle>Are you absolutely sure?</DialogTitle>
+							<DialogDescription>
+								This action cannot be undone. This will permanently delete your account
+								and remove your data from our servers.
+							</DialogDescription>
+						</DialogHeader>
+					</DialogContent>
+				</Dialog>
+
 				<Button variant={"pillPrimary50"}>pillPrimary50</Button>
 				<Button variant={"pillPrimary50ShGreen"}>pillPrimary50ShGreen</Button>
 				<Button variant={"pillPrimary40ShGreen"}>pillPrimary40ShGreen</Button>
