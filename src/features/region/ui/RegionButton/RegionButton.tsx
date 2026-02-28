@@ -1,7 +1,7 @@
 // features/region/ui/RegionButton/RegionButton.tsx
 'use client'
 
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect } from 'react'
 import { Button } from '@/shared/ui'
 import { Icon } from '@/shared/ui'
 import { RegionDialog } from '../RegionDialog/RegionDialog'
