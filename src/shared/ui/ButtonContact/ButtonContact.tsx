@@ -33,23 +33,22 @@ export function ButtonContact({
 	return (
 		<Button
 			variant="ghost"
-			className={cn("p-0 h-auto", className)} // убираем внутренние отступы и фикс. высоту
-			asChild
+			// className теперь будет автоматически передан в элемент render (если компонент Button поддерживает мерж)
+			className={cn("p-0 h-auto", className)}
+			nativeButton={false}
+			render={
+				<a
+					href={href}
+					className="flex items-center gap-5 px-4 py-2" // базовые стили ссылки
+					{...props}
+				/>
+			}
 		>
-			<a
-				href={href}
-				className="flex items-center gap-5 px-4 py-2" // 20px между иконкой и текстом
-				{...props}
-			>
-				{/* Левая часть: иконка */}
-				{icon || defaultIcon}
-
-				{/* Правая часть: текст */}
-				<div className="flex flex-col items-start">
-					<span className="uppercase text-lg leading-[27px]">{value}</span>
-					<span className="text-[11px] leading-none">{subtitle}</span>
-				</div>
-			</a>
+			{icon || defaultIcon}
+			<div className="flex flex-col items-start">
+				<span className="uppercase text-lg leading-[27px]">{value}</span>
+				<span className="text-[11px] leading-none">{subtitle}</span>
+			</div>
 		</Button>
 	);
 }
