@@ -1,5 +1,4 @@
-import { HomePage } from "@/pages/home";
-import Image from "next/image";
+import { HomePage } from "@/pages-fsd/home";
 
 export default function Home() {
 	return (
