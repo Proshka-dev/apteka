@@ -28,71 +28,89 @@ export function HomePage() {
 					</DialogContent>
 				</Dialog>
 
-				<Button variant={"pillPrimary50"}>pillPrimary50</Button>
-				<Button variant={"pillPrimary50ShGreen"}>pillPrimary50ShGreen</Button>
-				<Button variant={"pillPrimary40ShGreen"}>pillPrimary40ShGreen</Button>
-				<Button variant={"pillPrimary46ShGrey"}>pillPrimary46ShGrey</Button>
-				<Button variant={"rectPrimary33"}>rectPrimary33</Button>
-				<Button variant={"rectSecondary33"}>rectSecondary33</Button>
-				<Button variant={"rectWhite30"}>rectWhite30</Button>
-				<Button variant={"pillOutline50"}>pillOutline50</Button>
-				<Button variant={"pillOutline40"}>pillOutline40</Button>
-				<Button variant={"pillOutline36"}>pillOutline36</Button>
-				<Button variant={"square40"}>square40</Button>
-				<Button variant={"square27"}>square27</Button>
-				<Button variant={"pillSecondary30lg"}>pillSecondary30lg</Button>
-				<Button variant={"pillSecondary30"}>pillSecondary30</Button>
-				<Button variant={"pillSecondary25"}>pillSecondary25</Button>
-				<Button variant={"fullWidthPrimary40"}>
+				{/* Пилюли */}
+				<Button variant="primary" size="pill-50-bold-accent">pillPrimary50</Button>
+				<Button variant="primary-green-shadow" size="pill-50-bold-accent">pillPrimary50ShGreen</Button>
+				<Button variant="primary-green-shadow" size="pill-40-bold-accent">pillPrimary40ShGreen</Button>
+				<Button variant="primary-grey-shadow" size="pill-46-bold-accent">pillPrimary46ShGrey</Button>
+
+				{/* Прямоугольные */}
+				<Button variant="primary" size="rect-33-bold-sans">rectPrimary33</Button>
+				<Button variant="grey" size="rect-33-sans">rectSecondary33</Button>
+				<Button variant="white" size="rect-30-accent">rectWhite30</Button>
+
+				{/* Outline пилюли */}
+				<Button variant="primary-outline" size="pill-50-bold-accent">pillOutline50</Button>
+				<Button variant="primary-outline" size="pill-40-sans">pillOutline40</Button>
+				<Button variant="primary-outline" size="pill-36-sans">pillOutline36</Button>
+
+				{/* Квадратные */}
+				<Button variant="white" size="square-40-sans">square40</Button>
+				<Button variant="white" size="square-27-sans">square27</Button>
+
+				{/* Вторичные пилюли */}
+				<Button variant="grey" size="pill-30-sans">pillSecondary30lg</Button>
+				<Button variant="grey" size="pill-30-sans-medium">pillSecondary30</Button>
+				<Button variant="grey" size="pill-25-sans">pillSecondary25</Button>
+
+				{/* FullWidth */}
+				<Button variant="primary-black-shadow" size="full-40-primary-shadow">
 					<span>{'>>'}</span>
-					<span>{'fullWidthPrimary40'}</span>
+					<span>fullWidthPrimary40</span>
 				</Button>
-				<Button variant={"fullWidthPrimary50RadBottom"}>fullWidthPrimary50RadBottom</Button>
-				<Button variant={"fullWidthLink40"}>
+
+				<Button variant="primary" size="full-50-bottom-sans">fullWidthPrimary50RadBottom</Button>
+
+				<Button variant="text-link" size="full-40-link">
 					<span>{'>>'}</span>
-					<span>{'fullWidthLink40'}</span>
+					<span>fullWidthLink40</span>
 				</Button>
-				<Button variant={"fullWidthPrimary36Card"}>
-					<span>{'fullWidthPrimary36Card'}</span>
+
+				<Button variant="primary" size="full-36-card-accent">
+					<span>fullWidthPrimary36Card</span>
 					<span>{'<<'}</span>
 				</Button>
-				<Button variant={"fullWidthPrimary50RadAll"}>
+
+				<Button variant="primary" size="full-50-all-sans-bold">
 					<span>{'>>'}</span>
-					<span>{'fullWidthPrimary50RadAll'}</span>
+					<span>fullWidthPrimary50RadAll</span>
 				</Button>
 
-				iconOutline50
-				<Button variant={"iconOutline50"}>
-					<Icon name="search" className="w-6 h-6"></Icon>
+				{/* Иконки */}
+				{/* iconOutline50 */}
+				<Button variant="icon-outline" size="icon-50">
+					<Icon name="search" className="w-6 h-6" />
 				</Button>
 
-				iconOutline40
-				<Button variant={"iconOutline40"}>
-					<Icon name="menu" className="w-6 h-6"></Icon>
-				</Button>
-				iconOutline40bw
-				<Button variant={"iconOutline40bw"}>
-					<Icon name="keyboardArrowDown" className="w-5 h-5 rotate-90"></Icon>
-				</Button>
-				iconOutline29
-				<Button variant={"iconOutline29"}>
-					<Icon name="vk" className="w-3.25 h-2.25"></Icon>
-				</Button>
-				iconPrimary50
-				<Button variant={"iconPrimary50"}>
-					<Icon name="shoppingCart" className="w-5 h-5"></Icon>
+				{/* iconOutline40 */}
+				<Button variant="icon-outline" size="icon-40">
+					<Icon name="menu" className="w-6 h-6" />
 				</Button>
 
-				iconPrimary46
-				<Button variant={"iconPrimary46"}>
-					<Icon name="shoppingCart" className="w-5 h-5"></Icon>
+				{/* iconOutline40bw */}
+				<Button variant="icon-outline-bw" size="icon-40">
+					<Icon name="keyboardArrowDown" className="w-5 h-5 rotate-90" />
 				</Button>
 
-				iconPrimary25
-				<Button variant={"iconPrimary25"}>
-					<Icon name="vk" className="w-3.25 h-2.25"></Icon>
+				{/* iconOutline29 */}
+				<Button variant="icon-outline" size="icon-29">
+					<Icon name="vk" className="w-3.25 h-2.25" />
 				</Button>
 
+				{/* iconPrimary50 */}
+				<Button variant="icon-primary" size="icon-50">
+					<Icon name="shoppingCart" className="w-5 h-5" />
+				</Button>
+
+				{/* iconPrimary46 */}
+				<Button variant="icon-primary" size="icon-46">
+					<Icon name="shoppingCart" className="w-5 h-5" />
+				</Button>
+
+				{/* iconPrimary25 */}
+				<Button variant="icon-primary" size="icon-25">
+					<Icon name="vk" className="w-3.25 h-2.25" />
+				</Button>
 			</div>
 		</div >
 	);
