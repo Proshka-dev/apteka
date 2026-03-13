@@ -25,7 +25,10 @@ export const RegionDialogContent = ({ cities, onSelect, onClose }: RegionDialogC
 
 	return (
 		<div className="flex flex-col gap-7.5 w-full h-full">
-			<InputGroup className="w-full">
+			<div className='shrink-0 border border-amber-500'>
+				Input
+			</div>
+			{/* <InputGroup className="w-full">
 				<InputGroupInput
 					placeholder="Найдите свой город"
 					value={search}
@@ -36,58 +39,60 @@ export const RegionDialogContent = ({ cities, onSelect, onClose }: RegionDialogC
 				<InputGroupAddon className="pl-5">
 					<Icon name="search" className="size-5 text-cust-placeholder-icon" />
 				</InputGroupAddon>
-			</InputGroup>
-			<ScrollArea className="h-full"> {/* flex-1 min-h-0 -mr-2 pr-2  */}
-				<div>Текст</div>
-				<div>Текст</div>
-				<div>Текст</div>
-				<div>Текст</div>
-				<div>Текст</div>
-				<div>Текст</div>
-				<div>Текст</div>
-				<div>Текст</div>
-				<div>Текст</div>
-				<div>Текст</div>
-				<div>Текст</div>
-				<div>Текст</div>
-				<div>Текст</div>
-				<div>Текст</div>
-				<div>Текст</div>
-				<div>Текст</div>
-				<div>Текст</div>
-				<div>Текст</div>
-				<div>Текст</div>
-				<div>Текст</div>
-				<div>Текст</div>
-				<div>Текст</div>
-				<div>Текст</div>
-				<div>Текст</div>
-				<div>Текст</div>
-				<div>Текст</div>
-				<div>Текст</div>
-				<div>Текст</div>
-				<div>Текст</div>
-				<div>Текст</div>
-				<div>Текст</div>
-				<div>Текст</div>
-				<div>Текст</div>
-				<div>Текст</div>
-				<div>Текст</div>
-				<div>Текст</div>
-				<div>Текст</div>
-				<div>Текст</div>
-				<div>Текст</div>
-				<div>Текст</div>
-				<div>Текст</div>
-				<div>Текст</div>
-				<div>Текст</div>
-				<div>Текст</div>
-				<div>Текст</div>
-				<div>Текст</div>
-				<div>Текст</div>
-
-				{/* <div
-					className={`
+			</InputGroup> */}
+			<div className='min-h-0 border border-green-800'>
+				<ScrollArea className="h-full"> {/* flex-1 min-h-0 -mr-2 pr-2  */}
+					<div>Текст</div>
+					<div>Текст</div>
+					<div>Текст</div>
+					<div>Текст</div>
+					<div>Текст</div>
+					<div>Текст</div>
+					<div>Текст</div>
+					<div>Текст</div>
+					<div>Текст</div>
+					<div>Текст</div>
+					<div>Текст</div>
+					<div>Текст</div>
+					<div>Текст</div>
+					<div>Текст</div>
+					<div>Текст</div>
+					<div>Текст</div>
+					<div>Текст</div>
+					<div>Текст</div>
+					<div>Текст</div>
+					<div>Текст</div>
+					<div>Текст</div>
+					<div>Текст</div>
+					<div>Текст</div>
+					<div>Текст</div>
+					<div>Текст</div>
+					<div>Текст</div>
+					<div>Текст</div>
+					<div>Текст</div>
+					<div>Текст</div>
+					<div>Текст</div>
+					<div>Текст</div>
+					<div>Текст</div>
+					<div>Текст</div>
+					<div>Текст</div>
+					<div>Текст</div>
+					<div>Текст</div>
+					<div>Текст</div>
+					<div>Текст</div>
+					<div>Текст</div>
+					<div>Текст</div>
+					<div>Текст</div>
+					<div>Текст</div>
+					<div>Текст</div>
+					<div>Текст</div>
+					<div>Текст</div>
+					<div>Текст</div>
+					<div>Текст</div>
+				</ScrollArea>
+				{/* <ScrollArea className="h-full flex-1 min-h-0 -mr-2 pr-2">
+					<div
+						className={`
             grid gap-2
             grid-cols-2
             sm:grid-cols-2
@@ -96,18 +101,19 @@ export const RegionDialogContent = ({ cities, onSelect, onClose }: RegionDialogC
 			xl:grid-cols-5
 			2xl:grid-cols-5
           `}
-				>
-					{filteredCities.map((city) => (
-						<button
-							key={city.id}
-							onClick={() => handleCityClick(city)}
-							className="text-left px-2 py-1 hover:bg-accent rounded transition-colors break-words"
-						>
-							{city.name}
-						</button>
-					))}
-				</div> */}
-			</ScrollArea>
+					>
+						{filteredCities.map((city) => (
+							<button
+								key={city.id}
+								onClick={() => handleCityClick(city)}
+								className="text-left px-2 py-1 hover:bg-accent rounded transition-colors break-words"
+							>
+								{city.name}
+							</button>
+						))}
+					</div>
+				</ScrollArea> */}
+			</div>
 		</div>
 	);
 };

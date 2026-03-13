@@ -54,7 +54,9 @@ function DialogContent({
 				data-slot="dialog-content"
 				className={cn(
 					"bg-background data-open:animate-in data-closed:animate-out data-closed:fade-out-0 data-open:fade-in-0 data-closed:zoom-out-95 data-open:zoom-in-95 ring-foreground/10 fixed top-1/2 left-1/2 z-50 grid w-full max-w-[calc(100%-2rem)] -translate-x-1/2 -translate-y-1/2 gap-5 rounded-xl p-15 text-sm ring-1 duration-100 outline-none sm:max-w-md",
-					"md:max-w-[calc(100%-2rem)] md:w-2/3 md:h-[50vh]",//кастомные стили
+					"max-w-[calc(100%-2rem)] max-h-[calc(100%-2rem)] w-screen h-screen rounded-none",//кастомные стили
+					"sm:max-w-[calc(100%-2rem)] sm:w-2/3 sm:h-[50vh] sm:rounded-4xl shadow-cust-dialogs",//кастомные стили
+					//					"md:max-w-[calc(100%-2rem)] md:w-2/3 md:h-[50vh] md:rounded-4xl",//кастомные стили
 					className
 				)}
 				{...props}
