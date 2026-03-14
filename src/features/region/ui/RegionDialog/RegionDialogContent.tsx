@@ -1,3 +1,4 @@
+// features/region/ui/RegionDialogContent/RegionDialogContent.tsx
 'use client';
 
 import { useState } from 'react';
@@ -25,10 +26,10 @@ export const RegionDialogContent = ({ cities, onSelect, onClose }: RegionDialogC
 
 	return (
 		<div className="flex flex-col gap-7.5 w-full h-full">
-			<div className='shrink-0 border border-amber-500'>
+			{/* <div className='shrink-0 border border-amber-500'>
 				Input
-			</div>
-			{/* <InputGroup className="w-full">
+			</div> */}
+			<InputGroup className="w-full shrink-0">
 				<InputGroupInput
 					placeholder="Найдите свой город"
 					value={search}
@@ -39,50 +40,10 @@ export const RegionDialogContent = ({ cities, onSelect, onClose }: RegionDialogC
 				<InputGroupAddon className="pl-5">
 					<Icon name="search" className="size-5 text-cust-placeholder-icon" />
 				</InputGroupAddon>
-			</InputGroup> */}
-			<div className='min-h-0 border border-green-800'>
-				<ScrollArea className="h-full"> {/* flex-1 min-h-0 -mr-2 pr-2  */}
-					<div>Текст</div>
-					<div>Текст</div>
-					<div>Текст</div>
-					<div>Текст</div>
-					<div>Текст</div>
-					<div>Текст</div>
-					<div>Текст</div>
-					<div>Текст</div>
-					<div>Текст</div>
-					<div>Текст</div>
-					<div>Текст</div>
-					<div>Текст</div>
-					<div>Текст</div>
-					<div>Текст</div>
-					<div>Текст</div>
-					<div>Текст</div>
-					<div>Текст</div>
-					<div>Текст</div>
-					<div>Текст</div>
-					<div>Текст</div>
-					<div>Текст</div>
-					<div>Текст</div>
-					<div>Текст</div>
-					<div>Текст</div>
-					<div>Текст</div>
-					<div>Текст</div>
-					<div>Текст</div>
-					<div>Текст</div>
-					<div>Текст</div>
-					<div>Текст</div>
-					<div>Текст</div>
-					<div>Текст</div>
-					<div>Текст</div>
-					<div>Текст</div>
-					<div>Текст</div>
-					<div>Текст</div>
-					<div>Текст</div>
-					<div>Текст</div>
-					<div>Текст</div>
-					<div>Текст</div>
-					<div>Текст</div>
+			</InputGroup>
+			<div className='min-h-0 border border-green-800 flex-1'>
+				{/* flex-1 min-h-0 -mr-2 pr-2  */}
+				<ScrollArea className="h-full">
 					<div>Текст</div>
 					<div>Текст</div>
 					<div>Текст</div>
@@ -90,7 +51,7 @@ export const RegionDialogContent = ({ cities, onSelect, onClose }: RegionDialogC
 					<div>Текст</div>
 					<div>Текст</div>
 				</ScrollArea>
-				{/* <ScrollArea className="h-full flex-1 min-h-0 -mr-2 pr-2">
+				{/* <ScrollArea className="h-full -mr-2 pr-2">
 					<div
 						className={`
             grid gap-2
