@@ -26,9 +26,6 @@ export const RegionDialogContent = ({ cities, onSelect, onClose }: RegionDialogC
 
 	return (
 		<div className="flex flex-col gap-7.5 w-full h-full">
-			{/* <div className='shrink-0 border border-amber-500'>
-				Input
-			</div> */}
 			<InputGroup className="w-full shrink-0">
 				<InputGroupInput
 					placeholder="Найдите свой город"
@@ -41,17 +38,8 @@ export const RegionDialogContent = ({ cities, onSelect, onClose }: RegionDialogC
 					<Icon name="search" className="size-5 text-cust-placeholder-icon" />
 				</InputGroupAddon>
 			</InputGroup>
-			<div className='min-h-0 border border-green-800 flex-1'>
-				{/* flex-1 min-h-0 -mr-2 pr-2  */}
-				<ScrollArea className="h-full">
-					<div>Текст</div>
-					<div>Текст</div>
-					<div>Текст</div>
-					<div>Текст</div>
-					<div>Текст</div>
-					<div>Текст</div>
-				</ScrollArea>
-				{/* <ScrollArea className="h-full -mr-2 pr-2">
+			<div className='min-h-0 flex-1'>
+				<ScrollArea className="h-full -mr-2 pr-2">
 					<div
 						className={`
             grid gap-2
@@ -73,7 +61,7 @@ export const RegionDialogContent = ({ cities, onSelect, onClose }: RegionDialogC
 							</button>
 						))}
 					</div>
-				</ScrollArea> */}
+				</ScrollArea>
 			</div>
 		</div>
 	);
