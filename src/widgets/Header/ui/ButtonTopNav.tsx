@@ -18,12 +18,12 @@ export function ButtonTopNav({
 	iconName,
 }: ButtonTopNavProps) {
 	return (
-		<Button variant={'ghost'} nativeButton={false} render={(buttonProps) => (
+		<Button variant={'ghost'} nativeButton={true} render={(buttonProps) => (
 			// inline-flex items-center whitespace-nowrap УБРАТЬ, если будет работать без них
 			<Link
 				href={href}
-				className={cn('', className)}
 				{...buttonProps}
+				className={cn(buttonProps.className, className)}
 			>
 				<span className="text-cust-grayblue text-sm font-medium font-accent mr-2.5">
 					{children}

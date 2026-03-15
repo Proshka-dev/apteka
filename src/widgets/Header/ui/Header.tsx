@@ -35,7 +35,7 @@ export async function Header() {
 						</div> */}
 					</div>
 					<div className='flex gap-5'> {/* Правый блок кнопок*/}
-						<ButtonTopNav href='/favorites' iconName='favoriteBorder'>
+						<ButtonTopNav href='/favorites' iconName='favoriteBorder' className='hidden md:inline-flex'>
 							Избранное
 						</ButtonTopNav>
 						<ButtonTopNav href='/profile' iconName='person'>
