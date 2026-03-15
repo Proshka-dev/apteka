@@ -18,7 +18,7 @@ export function DevPage() {
 			Страница для разработчика
 			<div className="flex flex-col gap-10">
 				<DevDialogs />
-				{/* <DevButtons /> */}
+				<DevButtons />
 				<div className="h-50 border-amber-700 border">
 					<ScrollArea className="h-full">
 						<div>Текст</div>

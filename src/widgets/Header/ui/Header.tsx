@@ -5,6 +5,7 @@ import { RegionButton } from '@/features/region/';
 import { ButtonContact, Icon, Logo } from '@/shared/ui';
 import { cookies } from 'next/headers'
 import { ButtonTopNav } from './ButtonTopNav';
+import { ButtonSocials } from './ButtonSocials';
 
 export async function Header() {
 	const cookieStore = await cookies();
@@ -53,15 +54,9 @@ export async function Header() {
 					</div>
 
 					<div className='flex gap-1.5'>
-						<div className='w-7.25 h-7.25 border border-cust-butt-bd-inact text-center align-middle rounded-full'>
-							<Icon name='vk' className='text-cust-mint' />
-						</div>
-						<div className='w-7.25 h-7.25 border border-cust-butt-bd-inact text-center align-middle rounded-full'>
-							<Icon name='instagram' className='text-cust-mint' />
-						</div>
-						<div className='w-7.25 h-7.25 border border-cust-butt-bd-inact text-center align-middle rounded-full'>
-							<Icon name='youtube' className='text-cust-mint' />
-						</div>
+						<ButtonSocials href='https://vk.com' iconName='vk' />
+						<ButtonSocials href='https://www.instagram.com' iconName='instagram' iconSize={3} />
+						<ButtonSocials href='https://youtube.com' iconName='youtube' />
 					</div>
 					<div className='flex flex-1 justify-evenly'>
 						<ButtonContact

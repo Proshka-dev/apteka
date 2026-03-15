@@ -18,7 +18,7 @@ export function ButtonTopNav({
 	iconName,
 }: ButtonTopNavProps) {
 	return (
-		<Button variant={'ghost'} nativeButton={true} render={(buttonProps) => (
+		<Button variant={'ghost-custom'} nativeButton={false} render={(buttonProps) => (
 			// inline-flex items-center whitespace-nowrap УБРАТЬ, если будет работать без них
 			<Link
 				href={href}

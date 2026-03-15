@@ -32,7 +32,7 @@ export function ButtonContact({
 
 	return (
 		<Button
-			variant="ghost"
+			variant="ghost-custom"
 			// className теперь будет автоматически передан в элемент render (если компонент Button поддерживает мерж)
 			className={cn("p-0 h-auto", className)}
 			nativeButton={false}

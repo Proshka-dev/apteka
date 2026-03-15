@@ -54,7 +54,7 @@ export const RegionButton = ({ initialCities, initialSelectedCity }: RegionButto
 			<Button
 				onClick={() => setDialogOpen(true)}
 
-				variant="ghost"
+				variant="ghost-custom"
 				className="mr-15.5 flex items-center gap-1 font-accent"
 			>
 				<Icon name="nearMe" className="text-cust-mint" />
