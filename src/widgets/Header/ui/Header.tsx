@@ -4,6 +4,7 @@ import { getDefaultSelectedCity } from '@/entities/region/lib/getDefaultSelected
 import { RegionButton } from '@/features/region/';
 import { ButtonContact, Icon, Logo } from '@/shared/ui';
 import { cookies } from 'next/headers'
+import { ButtonTopNav } from './ButtonTopNav';
 
 export async function Header() {
 	const cookieStore = await cookies();
@@ -19,35 +20,28 @@ export async function Header() {
 		<header className="">
 			{/* Верхний блок */}
 			<div className="border-green-400 border bg-white">
-				<div className="border-blue-400 border container mx-auto flex gap-5 py-2 items-center">
-					{/* <div className='mr-15.5 font-accent'>
-						<Icon name='nearMe' className='text-cust-mint' />
-						<span className='text-cust-grayblue text-sm font-medium font-accent'>
-							Москва и область
-						</span>
-						<Icon name='keyboardArrowDown' className='text-cust-gray' />
-					</div> */}
-					<RegionButton
-						initialCities={cities}
-						initialSelectedCity={defaultCity}
-					/>
-					<div className='flex-1'>
-						<Icon name='favoriteBorder' className='text-cust-mint mr-2.5' />
-						<span className='text-cust-grayblue text-sm font-medium font-accent'>
-							Служебные страницы
-						</span>
+				<div className="border-blue-400 border container mx-auto flex py-2 justify-between">
+					<div className='flex gap-5'> {/* Левый блок кнопок*/}
+						<RegionButton
+							initialCities={cities}
+							initialSelectedCity={defaultCity}
+						/>
+						{/* (!!!) Отложил разработку служебных страниц. Возможно, они не нужны.*/}
+						{/* <div className='flex-1'>
+							<Icon name='menu' className='text-cust-mint mr-2.5' />
+							<span className='text-cust-grayblue text-sm font-medium font-accent'>
+								Служебные страницы
+							</span>
+						</div> */}
 					</div>
-					<div>
-						<span className='text-cust-grayblue text-sm font-medium font-accent mr-2.5'>
+					<div className='flex gap-5'> {/* Правый блок кнопок*/}
+						<ButtonTopNav href='/favorites' iconName='favoriteBorder'>
 							Избранное
-						</span>
-						<Icon name='menu' className='text-cust-mint' />
-					</div>
-					<div>
-						<span className='text-cust-grayblue text-sm font-medium font-accent mr-2.5'>
+						</ButtonTopNav>
+						<ButtonTopNav href='/profile' iconName='person'>
 							Личный кабинет
-						</span>
-						<Icon name='person' className='text-cust-mint' />
+						</ButtonTopNav>
+
 					</div>
 				</div>
 			</div>
