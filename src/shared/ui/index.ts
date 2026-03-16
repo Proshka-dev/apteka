@@ -14,4 +14,5 @@ export * from './Icon/Icon'
 
 //Кастомные компоненты
 export * from './ButtonContact/ButtonContact'
+export * from './ButtonLink/ButtonLink'
 

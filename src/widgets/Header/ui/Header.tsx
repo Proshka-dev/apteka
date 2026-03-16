@@ -2,7 +2,7 @@
 import { getCities } from '@/entities/region/api/getCities';
 import { getDefaultSelectedCity } from '@/entities/region/lib/getDefaultSelectedCity';
 import { RegionButton } from '@/features/region/';
-import { ButtonContact, Icon, Logo } from '@/shared/ui';
+import { Button, ButtonContact, ButtonLink, Icon, Logo } from '@/shared/ui';
 import { cookies } from 'next/headers'
 import { ButtonTopNav } from './ButtonTopNav';
 import { ButtonSocials } from './ButtonSocials';
@@ -63,24 +63,25 @@ export async function Header() {
 							type="email"
 							value="info@restoll.ru"
 							subtitle="Напишите нам"
-							icon={<Icon name='messageOpen' className="w-6 h-6 text-cust-mint" />}
+							iconName='messageOpen'
 						/>
 						<ButtonContact
 							type="phone"
 							value="8-800-777-22-33"
 							subtitle="Круглосуточно"
-							icon={<Icon name='phone' className="w-6 h-6 text-cust-mint" />}
+							iconName='phone'
 						/>
 						<ButtonContact
 							type="phone"
 							value="8 (495) 223-34-03"
 							subtitle="Интернет-аптека"
-							icon={<Icon name='phone' className="w-6 h-6 text-cust-mint" />}
+							iconName='phone'
 						/>
 					</div>
 					<div>лупа</div>
 					<div>Заказать звонок</div>
 					<div>Корзина</div>
+					<ButtonLink href='/dev'>test</ButtonLink>
 				</div>
 			</div>
 			{/* Меню */}
