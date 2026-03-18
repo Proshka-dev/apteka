@@ -6,7 +6,8 @@ import { Button, ButtonContact, ButtonLink, Icon, Input, Logo } from '@/shared/u
 import { cookies } from 'next/headers'
 import { ButtonTopNav } from './ButtonTopNav';
 import { ButtonSocials } from './ButtonSocials';
-import { SearchBar } from './SearchBar';
+import { SearchBar } from '../../../features/search/ui/SearchBar/SearchBar';
+import { BurgerMenu } from './BurgerMenu';
 
 export async function Header() {
 	const cookieStore = await cookies();
@@ -74,7 +75,10 @@ export async function Header() {
 			</div>
 			{/* Средний блок */}
 			<div className="border-green-400 border bg-white shadow-black-10">
-				<div className="border-blue-400 border container mx-auto flex gap-5 items-center">
+				<div className="border-blue-400 border container mx-auto flex gap-5 items-center justify-between">
+					<BurgerMenu />
+
+
 					<div className='mr-2.5'>
 						<Logo />
 					</div>
@@ -83,11 +87,6 @@ export async function Header() {
 						<ButtonSocials href='https://vk.com' iconName='vk' />
 						<ButtonSocials href='https://www.instagram.com' iconName='instagram' iconSize={3} />
 						<ButtonSocials href='https://youtube.com' iconName='youtube' />
-					</div>
-					<div className='flex justify-end flex-1 md:hidden'>
-						<ButtonLink href='/search' variant={'icon-outline'} size={'icon-50'} className={''}>
-							<Icon name='search' className='size-6 text-cust-mint' />
-						</ButtonLink>
 					</div>
 					<div className='hidden md:block flex-1'>
 						<SearchBar />

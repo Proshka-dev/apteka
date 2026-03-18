@@ -5,6 +5,8 @@ export * from './input';
 export * from './scroll-area';
 export * from './input-group'
 export * from './textarea'
+export * from './sheet'
+export * from './label'
 
 //Логотип
 export * from './Logo/Logo';
