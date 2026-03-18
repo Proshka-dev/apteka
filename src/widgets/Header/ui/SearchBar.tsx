@@ -5,7 +5,6 @@ import { useRouter } from 'next/navigation';
 import {
 	Popover,
 	PopoverBackdrop,
-	PopoverBackdropAlt,
 	PopoverContent,
 	PopoverTrigger,
 } from '@/shared/ui/popover';
@@ -50,20 +49,13 @@ export function SearchBar({ className }: SearchBarProps) {
 				modal={false} // отключаем модальное поведение – фокус остаётся на триггере
 			>
 				{/* Встроенный бэкдроп с размытием */}
-				{/* <PopoverBackdrop onClick={() => setOpen(false)} /> */}
-				<PopoverBackdropAlt
-					// className="pointer-events-auto cursor-default"
-					onClick={() => setOpen(false)}
-				/>
-
+				<PopoverBackdrop onClick={() => setOpen(false)} />
 				{/* 
          			ВАЖНО: Оборачиваем триггер в div с z-index выше, чем у Backdrop (z-50),
          			чтобы инпут оставался визуально над блюром и был доступен для клика.
       			*/}
 				<div className="relative z-[60]">
 					<PopoverTrigger
-						// 1. Отключаем стандартный клик, чтобы он не "крал" фокус у инпута
-
 						nativeButton={false}
 						render={(triggerProps) => (
 							<InputGroup className="bg-white">
@@ -74,13 +66,6 @@ export function SearchBar({ className }: SearchBarProps) {
 									onKeyDown={handleKeyDown}
 									placeholder="Поиск..."
 
-								// Переопределяем onClick, чтобы он не мешал фокусу
-								// onClick={(e) => {
-								// 	e.currentTarget.focus()
-								// 	setOpen(true)
-								// }}
-								// Открываем при фокусе (например, при переходе через Tab)
-								// onFocus={() => setOpen(true)}
 								/>
 								<InputGroupAddon>
 									<Button
@@ -95,21 +80,14 @@ export function SearchBar({ className }: SearchBarProps) {
 							</InputGroup>
 						)}
 					/>
-
 				</div>
 
 				<PopoverContent
-					className="w-[var(--popover-trigger-width)] p-0 mt-5"
+					className="w-(--popover-trigger-width) p-0 mt-5"
 					align="start"
 					sideOffset={0}
 					initialFocus={false}
 				>
-					{/* 
-			           Добавляем Backdrop прямо сюда. 
-           				Он отрендерится внутри Portal, но не будет привязан к позиции инпута.
-        			*/}
-					{/* <PopoverBackdropAlt /> */}
-
 					<div>Найденные товары:</div>
 					<SuggestionsList
 						suggestions={suggestions}

@@ -13,23 +13,6 @@ function PopoverTrigger({ ...props }: PopoverPrimitive.Trigger.Props) {
 	return <PopoverPrimitive.Trigger data-slot="popover-trigger" {...props} />
 }
 
-// Создаем отдельный компонент для Backdrop, чтобы использовать его внутри Content
-export const PopoverBackdropAlt2 = React.forwardRef<
-	HTMLDivElement,
-	React.ComponentPropsWithoutRef<typeof PopoverPrimitive.Backdrop>
->(({ className, ...props }, ref) => (
-	<PopoverPrimitive.Backdrop
-		ref={ref}
-		className={cn(
-			"fixed inset-0 z-50 bg-black/20 backdrop-blur-sm pointer-events-auto",
-			"data-open:animate-in data-open:fade-in-0 data-closed:animate-out data-closed:fade-out-0",
-			className
-		)}
-		{...props}
-	/>
-))
-PopoverBackdrop.displayName = "PopoverBackdrop"
-
 function PopoverContent({
 	className,
 	align = "center",
@@ -118,20 +101,3 @@ export function PopoverBackdrop({ className, ...props }: PopoverPrimitive.Backdr
 		/>
 	);
 }
-
-export const PopoverBackdropAlt = React.forwardRef<
-	HTMLDivElement,
-	React.ComponentPropsWithoutRef<typeof PopoverPrimitive.Backdrop>
->(({ className, ...props }, ref) => (
-	<PopoverPrimitive.Backdrop
-		ref={ref}
-		// Классы для блюра и анимации появления
-		className={cn(
-			"fixed inset-0 z-50 bg-black/20 backdrop-blur-sm",
-			"data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=open]:fade-in-0 data-[state=closed]:fade-out-0",
-			className
-		)}
-		{...props}
-	/>
-));
-PopoverBackdrop.displayName = "PopoverBackdrop";

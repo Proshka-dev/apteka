@@ -79,18 +79,20 @@ export async function Header() {
 						<Logo />
 					</div>
 
-					<div className='flex gap-1.5'>
+					<div className='hidden xl:flex gap-1.5'>
 						<ButtonSocials href='https://vk.com' iconName='vk' />
 						<ButtonSocials href='https://www.instagram.com' iconName='instagram' iconSize={3} />
 						<ButtonSocials href='https://youtube.com' iconName='youtube' />
 					</div>
-					{/* <ButtonLink href='/search' variant={'icon-outline'} size={'icon-50'}>
-						<Icon name='search' className='size-6 text-cust-mint' />
-					</ButtonLink> */}
-					<div className='flex-1'>
+					<div className='flex justify-end flex-1 md:hidden'>
+						<ButtonLink href='/search' variant={'icon-outline'} size={'icon-50'} className={''}>
+							<Icon name='search' className='size-6 text-cust-mint' />
+						</ButtonLink>
+					</div>
+					<div className='hidden md:block flex-1'>
 						<SearchBar />
 					</div>
-					<ButtonLink href='/callback' variant={'primary'} size={'pill-50-bold-accent'} className={'min-w-57'}>
+					<ButtonLink href='/callback' variant={'primary'} size={'pill-50-bold-accent'} className={'hidden lg:flex min-w-57'}>
 						Заказать звонок
 					</ButtonLink>
 					<ButtonLink href='/cart' variant={'icon-outline'} size={'icon-50'}>
