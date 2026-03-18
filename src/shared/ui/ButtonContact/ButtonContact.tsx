@@ -30,7 +30,7 @@ export function ButtonContact({
 			render={
 				<a
 					href={href}
-					className="flex items-center gap-5 px-4 py-2" // базовые стили ссылки
+					className="flex items-center gap-5 px-4 py-0" // базовые стили ссылки
 					{...props}
 				/>
 			}

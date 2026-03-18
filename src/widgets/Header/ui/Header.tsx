@@ -2,10 +2,11 @@
 import { getCities } from '@/entities/region/api/getCities';
 import { getDefaultSelectedCity } from '@/entities/region/lib/getDefaultSelectedCity';
 import { RegionButton } from '@/features/region/';
-import { Button, ButtonContact, ButtonLink, Icon, Logo } from '@/shared/ui';
+import { Button, ButtonContact, ButtonLink, Icon, Input, Logo } from '@/shared/ui';
 import { cookies } from 'next/headers'
 import { ButtonTopNav } from './ButtonTopNav';
 import { ButtonSocials } from './ButtonSocials';
+import { SearchBar } from './SearchBar';
 
 export async function Header() {
 	const cookieStore = await cookies();
@@ -20,9 +21,10 @@ export async function Header() {
 	return (
 		<header className="">
 			{/* Верхний блок */}
-			<div className="border-green-400 border bg-white">
-				<div className="border-blue-400 border container mx-auto flex py-2 justify-between">
-					<div className='flex gap-5'> {/* Левый блок кнопок*/}
+			<div className="border-green-400 border bg-white ">
+				<div className="border-blue-400 border container mx-auto flex py-2 justify-between items-center">
+					{/* Левый блок кнопок*/}
+					<div className='flex gap-5'>
 						<RegionButton
 							initialCities={cities}
 							initialSelectedCity={defaultCity}
@@ -35,7 +37,31 @@ export async function Header() {
 							</span>
 						</div> */}
 					</div>
-					<div className='flex gap-5'> {/* Правый блок кнопок*/}
+
+					{/* Центральный блок кнопок*/}
+					<div className='hidden flex-1 justify-evenly xl:flex'>
+						<ButtonContact
+							type="email"
+							value="info@restoll.ru"
+							subtitle="Напишите нам"
+							iconName='messageOpen'
+						/>
+						<ButtonContact
+							type="phone"
+							value="8-800-777-22-33"
+							subtitle="Круглосуточно"
+							iconName='phone'
+						/>
+						<ButtonContact
+							type="phone"
+							value="8 (495) 223-34-03"
+							subtitle="Интернет-аптека"
+							iconName='phone'
+						/>
+					</div>
+
+					{/* Правый блок кнопок*/}
+					<div className='flex gap-5'>
 						<ButtonTopNav href='/favorites' iconName='favoriteBorder' className='hidden md:inline-flex'>
 							Избранное
 						</ButtonTopNav>
@@ -58,30 +84,18 @@ export async function Header() {
 						<ButtonSocials href='https://www.instagram.com' iconName='instagram' iconSize={3} />
 						<ButtonSocials href='https://youtube.com' iconName='youtube' />
 					</div>
-					<div className='flex flex-1 justify-evenly'>
-						<ButtonContact
-							type="email"
-							value="info@restoll.ru"
-							subtitle="Напишите нам"
-							iconName='messageOpen'
-						/>
-						<ButtonContact
-							type="phone"
-							value="8-800-777-22-33"
-							subtitle="Круглосуточно"
-							iconName='phone'
-						/>
-						<ButtonContact
-							type="phone"
-							value="8 (495) 223-34-03"
-							subtitle="Интернет-аптека"
-							iconName='phone'
-						/>
+					{/* <ButtonLink href='/search' variant={'icon-outline'} size={'icon-50'}>
+						<Icon name='search' className='size-6 text-cust-mint' />
+					</ButtonLink> */}
+					<div className='flex-1'>
+						<SearchBar />
 					</div>
-					<div>лупа</div>
-					<div>Заказать звонок</div>
-					<div>Корзина</div>
-					<ButtonLink href='/dev'>test</ButtonLink>
+					<ButtonLink href='/callback' variant={'primary'} size={'pill-50-bold-accent'} className={'min-w-57'}>
+						Заказать звонок
+					</ButtonLink>
+					<ButtonLink href='/cart' variant={'icon-outline'} size={'icon-50'}>
+						<Icon name='shoppingCart' className='size-6 text-cust-mint' />
+					</ButtonLink>
 				</div>
 			</div>
 			{/* Меню */}
