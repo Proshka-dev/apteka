@@ -1,34 +1,41 @@
 'use client'
+
+import { useMediaQuery } from "@/shared/lib";
 import { Button, Icon, Input, Label, Sheet, SheetClose, SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetTitle, SheetTrigger } from "@/shared/ui";
+import { useEffect, useState } from "react";
 
 export function BurgerMenu() {
-	//Обработчик открытия бокового меню
-	// function handleBurgerMenuOpen() {
-	// 	alert('menu test');
-	// }
+
+	const [open, setOpen] = useState(false);
+	const isDesktop = useMediaQuery('(min-width: 768px)'); // md брейкпоинт
+
+	useEffect(() => {
+		if (isDesktop) {
+			setOpen(false);
+		}
+	}, [isDesktop]);
 
 	return (
 		<div className='flex md:hidden'>
-			<Sheet>
+			<Sheet open={open} onOpenChange={setOpen}>
 				<SheetTrigger
 					render={
 						<Button
 							variant={'icon-outline'}
 							size={'icon-50'}
 							className={''}
-						// onClick={handleBurgerMenuOpen}
 						>
 							<Icon name='menu' className='size-6 text-cust-mint' />
 						</Button>
 					}
 				/>
-				<SheetContent>
-					<SheetHeader>
-						<SheetTitle>Edit profile</SheetTitle>
-						<SheetDescription>
-							Make changes to your profile here. Click save when you&apos;re done.
-						</SheetDescription>
-					</SheetHeader>
+				<SheetContent
+					side="top"
+					// className={'!top-28'} // w-screen min-h-200
+					className={'md:hidden'}
+					showCloseButton={false}
+					overlayClassName="md:backdrop-filter-none! md:bg-transparent!"
+				>
 					<div className="grid flex-1 auto-rows-min gap-6 px-4">
 						<div className="grid gap-3">
 							<Label htmlFor="sheet-demo-name">Name</Label>
@@ -48,3 +55,6 @@ export function BurgerMenu() {
 		</div>
 	)
 }
+
+
+// overlayClassName="backdrop-filter-none! bg-transparent!"
