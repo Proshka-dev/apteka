@@ -23,6 +23,7 @@ import { VkIcon } from './icons/VkIcon';
 import { WashingHandsIcon } from './icons/WashingHandsIcon';
 import { YoutubeIcon } from './icons/YoutubeIcon';
 import { KeyboardArrowDownIcon } from './icons/KeyboardArrowDownIcon';
+import { CloseBigIcon } from './icons/CloseBigIcon';
 
 const icons = {
 	babyBoy: BabyBoyIcon,
@@ -48,6 +49,7 @@ const icons = {
 	washingHands: WashingHandsIcon,
 	youtube: YoutubeIcon,
 	keyboardArrowDown: KeyboardArrowDownIcon,
+	closeBig: CloseBigIcon,
 };
 
 export type IconName = keyof typeof icons;
@@ -61,3 +63,4 @@ export const Icon = ({ name, ...props }: IconProps) => {
 
 	return <Component {...props} />;
 };
+

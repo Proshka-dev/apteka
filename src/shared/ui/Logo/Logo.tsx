@@ -3,11 +3,11 @@ import { Icon } from '@/shared/ui';
 
 export const Logo = () => {
 	return (
-		<Link href="/" className="flex items-center gap-5">
-			<Icon name='logo' className="w-12.5 h-12.5" />
+		<Link href="/" className="flex items-center gap-2.5 md:gap-5">
+			<Icon name='logo' className="size-8.75 md:size-12.5" />
 
 			<div className="flex flex-col">
-				<div className="text-[#011D71] font-[raleway] text-[22px]">
+				<div className="text-[#011D71] font-[raleway] text-[14px] md:text-[22px]">
 					<span className="font-extrabold">
 						Аптека
 					</span>
@@ -16,7 +16,7 @@ export const Logo = () => {
 					</span>
 
 				</div>
-				<span className="text-[#7894A4] font-[roboto] text-[14px]">
+				<span className="text-[#7894A4] font-[roboto] text-[10px] md:text-[14px]">
 					Ваша онлайн аптека
 				</span>
 			</div>
