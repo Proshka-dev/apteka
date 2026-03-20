@@ -192,10 +192,32 @@
 	}
 }
 
-/* Переопределение размера контейнера */
+/* Переопределение стилей контейнера */
 @utility container {
+	/* Центрирование (как было center: true) */
+	margin-inline: auto;
+
+	/* Базовый паддинг (как было DEFAULT) */
+	padding-inline: 1rem;
+
+	/* Паддинг для маленьких экранов */
+	@variant sm {
+		padding-inline: 1rem;
+	}
+
+	/* Паддинг для больших экранов */
+	@variant lg {
+		padding-inline: 2rem;
+	}
+
+	/* Можно добавить и другие брейкпоинты: md, xl, 2xl... */
+	@variant xl {
+		padding-inline: 2rem;
+	}
+
 	@variant 2xl {
 		max-width: 1520px;
+		padding-inline: 2rem;
 	}
 }
 
