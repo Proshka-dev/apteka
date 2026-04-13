@@ -203,15 +203,23 @@
 	/* Паддинг для маленьких экранов */
 	@variant sm {
 		padding-inline: 1rem;
+		max-width: none;
+	}
+
+	@variant md {
+		padding-inline: 1.5rem;
+		max-width: 720px;
 	}
 
 	/* Паддинг для больших экранов */
 	@variant lg {
+		max-width: 960px;
 		padding-inline: 2rem;
 	}
 
 	/* Можно добавить и другие брейкпоинты: md, xl, 2xl... */
 	@variant xl {
+		max-width: 1200px;
 		padding-inline: 2rem;
 	}
 
