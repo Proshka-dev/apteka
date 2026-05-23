@@ -253,3 +253,12 @@
 
 	--background-image-gradient-custom: linear-gradient(to right, #2FD3AE, #011D71);
 }
+
+.hide-scrollbar {
+	-ms-overflow-style: none;
+	scrollbar-width: none;
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+	display: none;
+}

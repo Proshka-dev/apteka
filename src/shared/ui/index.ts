@@ -18,4 +18,4 @@ export * from './Icon/Icon'
 export * from './ButtonContact/ButtonContact'
 export * from './ButtonLink/ButtonLink'
 export * from './Backdrop/Backdrop'
-
+export * from './ScrollArrows/ScrollArrows'
