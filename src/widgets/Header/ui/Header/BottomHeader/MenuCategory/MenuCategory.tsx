@@ -1,8 +1,8 @@
-'use client'
-
+'use client';
 import { IconName } from "@/shared/ui";
 import { ButtonCategory } from "../ButtonCategory/ButtonCategory";
 import { useDragScroll } from "@/shared/lib";
+import { cn } from "@/shared/lib/utils";
 
 interface CategoryMenuItem {
 	text: string;
@@ -11,10 +11,19 @@ interface CategoryMenuItem {
 }
 
 export function MenuCategory() {
-
-	const { ref } = useDragScroll<HTMLUListElement>({
+	const { ref, canScrollLeft, canScrollRight } = useDragScroll<HTMLUListElement>({
 		speed: 1.0,
 	});
+
+	// Формируем маску динамически
+	const maskStyle: React.CSSProperties = {
+		maskImage: `linear-gradient(to right, ${canScrollLeft ? 'transparent 0%, black 5%' : 'black 0%'
+			}, ${canScrollRight ? 'black 95%, transparent 100%' : 'black 100%'
+			})`,
+		WebkitMaskImage: `linear-gradient(to right, ${canScrollLeft ? 'transparent 0%, black 5%' : 'black 0%'
+			}, ${canScrollRight ? 'black 95%, transparent 100%' : 'black 100%'
+			})`,
+	};
 
 	const categories: CategoryMenuItem[] = [
 		{ text: 'лекарства', iconName: 'pills', href: '/categories/pills' },
@@ -30,24 +39,17 @@ export function MenuCategory() {
 
 
 	return (
-		<div className="flex overflow-hidden items-center grow">
-			<div className="max-w-full">
+		<div className="relative flex overflow-hidden items-center grow">
+			<div className="max-w-full w-full">
 				<ul
-					className="flex gap-2.5 max-w-full select-none overflow-hidden overflow-x-scroll whitespace-nowrap cursor-grab touch-pan-y hide-scrollbar"
-					// [&::-webkit-scrollbar]:hidden [scrollbar-width:none]
 					ref={ref}
+					style={maskStyle}
+					className="flex gap-2.5 max-w-full select-none overflow-x-scroll whitespace-nowrap cursor-grab hide-scrollbar"
 				>
 					{categories.map((item) => (
-						<li className="flex space-x-4 p-2" key={item.text}>
-							{/*Для перехватывания события onDragStart и отмены действия по-умолчанию*/}
-							<span
-								draggable={false}
-								onDragStart={(e) => e.preventDefault()}
-							>
-								<ButtonCategory
-									href={item.href}
-									iconName={item.iconName}
-								>
+						<li key={item.text} className="flex space-x-4 p-2">
+							<span draggable={false} onDragStart={(e) => e.preventDefault()}>
+								<ButtonCategory href={item.href} iconName={item.iconName}>
 									{item.text}
 								</ButtonCategory>
 							</span>
@@ -56,5 +58,5 @@ export function MenuCategory() {
 				</ul>
 			</div>
 		</div>
-	)
+	);
 }
