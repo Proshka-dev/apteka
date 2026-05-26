@@ -3,14 +3,13 @@ import { IconName } from "@/shared/ui";
 import { ButtonCategory } from "../ButtonCategory/ButtonCategory";
 import { useDragScroll } from "@/shared/lib";
 import { cn } from "@/shared/lib/utils";
+import { Category } from "@/entities/category";
 
-interface CategoryMenuItem {
-	text: string;
-	iconName: IconName;
-	href: string;
+interface MenuCategoryProps {
+	categories: Category[];
 }
 
-export function MenuCategory() {
+export function MenuCategory({ categories }: MenuCategoryProps) {
 	const { ref, canScrollLeft, canScrollRight } = useDragScroll<HTMLUListElement>({
 		speed: 1.0,
 	});
@@ -25,19 +24,6 @@ export function MenuCategory() {
 			})`,
 	};
 
-	const categories: CategoryMenuItem[] = [
-		{ text: 'лекарства', iconName: 'pills', href: '/categories/pills' },
-		{ text: 'витамины и бад', iconName: 'vitamins', href: '/categories/vitamins' },
-		{ text: 'красота', iconName: 'skinCare', href: '/categories/skinCare' },
-		{ text: 'гигиена', iconName: 'washingHands', href: '/categories/washingHands' },
-		{ text: 'линзы', iconName: 'eyeIcon', href: '/categories/eyeIcon' },
-		{ text: 'мать и дитя', iconName: 'babyBoy', href: '/categories/babyBoy' },
-		{ text: 'медтовары', iconName: 'firstAidKit', href: '/categories/firstAidKit' },
-		{ text: 'зоотовары', iconName: 'dogIcon', href: '/categories/dogIcon' },
-		{ text: 'медтехника', iconName: 'smartwatch', href: '/categories/smartwatch' },
-	];
-
-
 	return (
 		<div className="relative flex overflow-hidden items-center grow">
 			<div className="max-w-full w-full">
@@ -47,10 +33,13 @@ export function MenuCategory() {
 					className="flex gap-2.5 max-w-full select-none overflow-x-scroll whitespace-nowrap cursor-grab hide-scrollbar"
 				>
 					{categories.map((item) => (
-						<li key={item.text} className="flex space-x-4 p-2">
+						<li key={item.id} className="flex space-x-4 p-2">
 							<span draggable={false} onDragStart={(e) => e.preventDefault()}>
-								<ButtonCategory href={item.href} iconName={item.iconName}>
-									{item.text}
+								<ButtonCategory
+									href={`/categories/${item.slug}`}
+									iconName={item.iconName as IconName}
+								>
+									{item.name}
 								</ButtonCategory>
 							</span>
 						</li>

@@ -28,7 +28,7 @@ function slugify(name: string): string {
 }
 
 async function main() {
-	// Уникальный список из 30 крупных городов России
+	// ========== ГОРОДА ==========
 	const cityNames = [
 		'Москва',
 		'Санкт-Петербург',
@@ -79,6 +79,34 @@ async function main() {
 
 	console.log(`✅ Добавлено ${citiesData.length} городов:`)
 	citiesData.forEach(c => console.log(`   ${c.name} → ${c.slug}`))
+
+	// ========== КАТЕГОРИИ ==========
+	// список категорий в нужном порядке (поле order будет автоматически проставлено)
+	const categoryItems = [
+		{ name: 'лекарства', iconName: 'pills' },
+		{ name: 'витамины и бад', iconName: 'vitamins' },
+		{ name: 'красота', iconName: 'skinCare' },
+		{ name: 'гигиена', iconName: 'washingHands' },
+		{ name: 'линзы', iconName: 'eyeIcon' },
+		{ name: 'мать и дитя', iconName: 'babyBoy' },
+		{ name: 'медтовары', iconName: 'firstAidKit' },
+		{ name: 'зоотовары', iconName: 'dogIcon' },
+		{ name: 'медтехника', iconName: 'smartwatch' }
+	]
+
+	const categoriesData = categoryItems.map((item, index) => ({
+		name: item.name,
+		slug: slugify(item.name),
+		iconName: item.iconName,
+		order: index + 1,      // порядок от 1 до 9
+		parentId: null,        // пока все корневые
+	}))
+
+	await prisma.category.deleteMany({})
+	console.log('🗑️ Старые категории удалены')
+	await prisma.category.createMany({ data: categoriesData })
+	console.log(`✅ Добавлено ${categoriesData.length} категорий:`)
+	categoriesData.forEach(c => console.log(`   ${c.name} (order: ${c.order}, icon: ${c.iconName}) → ${c.slug}`))
 }
 
 main()

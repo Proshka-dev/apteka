@@ -16,3 +16,18 @@ model City {
 
   @@map("cities")
 }
+
+model Category {
+  id        Int      @id @default(autoincrement())
+  name      String   @unique          // отображаемое название (например, "лекарства")
+  slug      String   @unique          // для человеко-понятного url (например, "lekarstva")
+  iconName  String?                   // имя иконки (например, "pills")
+  order     Int      @default(0)      // порядок вывода (чем меньше, тем выше)
+  parentId  Int?                      // для иерархии (если понадобится подкатегории)
+  parent    Category? @relation("CategoryToParent", fields: [parentId], references: [id])
+  children  Category[] @relation("CategoryToParent")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("categories")
+}
