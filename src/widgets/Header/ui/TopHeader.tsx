@@ -4,7 +4,7 @@ import { getDefaultSelectedCity } from '@/entities/region/lib/getDefaultSelected
 import { RegionButton } from '@/features/region/';
 import { ButtonContact } from '@/shared/ui';
 import { cookies } from 'next/headers'
-import { ButtonTopNav } from '../../ButtonTopNav';
+import { ButtonTopNav } from './ButtonTopNav';
 
 export async function TopHeader() {
 	const cookieStore = await cookies();

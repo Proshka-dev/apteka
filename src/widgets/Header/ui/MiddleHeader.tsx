@@ -1,18 +1,23 @@
 'use client'
 import { ButtonLink, Icon, Logo } from '@/shared/ui';
-import { ButtonSocials } from '../../ButtonSocials';
-import { SearchBar } from '../../../../../features/search/ui/SearchBar/SearchBar';
-import { BurgerMenu } from './BurgerMenu/BurgerMenu';
+import { ButtonSocials } from './ButtonSocials';
+import { SearchBar } from '../../../features/search/ui/SearchBar/SearchBar';
+import { BurgerMenu } from './BurgerMenu';
 import { useMediaQuery } from '@/shared/lib';
+import { Category } from '@/entities/category';
 
-export function MiddleHeader() {
+interface MiddleHeaderProps {
+	categories: Category[];
+}
+
+export function MiddleHeader({ categories }: MiddleHeaderProps) {
 
 	const isDesktop = useMediaQuery('(min-width: 768px)'); // md брейкпоинт
 
 	return (
 		<div className="border-green-400 border bg-white shadow-black-10">
 			<div className="border-blue-400 border container mx-auto flex gap-5 items-center justify-between">
-				<BurgerMenu />
+				<BurgerMenu categories={categories} />
 
 
 				<div className='mr-2.5'>

@@ -1,11 +1,18 @@
 'use client'
 
+import { Category } from "@/entities/category";
 import { useMediaQuery } from "@/shared/lib";
-import { Button, ButtonLink, Icon, Input, Label, Logo, Sheet, SheetClose, SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetTitle, SheetTrigger } from "@/shared/ui";
+import { Button, ButtonLink, Icon, IconName, Input, Label, Logo, Sheet, SheetClose, SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetTitle, SheetTrigger } from "@/shared/ui";
 import { useEffect, useState } from "react";
-import { ButtonTopNav } from "../../../ButtonTopNav";
+import { BurgerMenuCategoryList } from "./BurgerMenuCategoryList";
 
-export function BurgerMenu() {
+interface BurgerMenuProps {
+	categories: Category[];
+}
+
+
+export function BurgerMenu({ categories }: BurgerMenuProps) {
+
 
 	const [open, setOpen] = useState(false);
 	const isDesktop = useMediaQuery('(min-width: 768px)'); // md брейкпоинт
@@ -59,10 +66,7 @@ export function BurgerMenu() {
 					</div>
 
 					{/* Body */}
-					<div className="grid flex-1 auto-rows-min gap-6 px-4">
-						Содержимое
-					</div>
-
+					<BurgerMenuCategoryList categories={categories} />
 					{/* Footer */}
 					<div className="flex flex-col">
 						Footer

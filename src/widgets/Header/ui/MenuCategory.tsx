@@ -1,8 +1,7 @@
 'use client';
 import { IconName } from "@/shared/ui";
-import { ButtonCategory } from "../ButtonCategory/ButtonCategory";
+import { ButtonCategory } from "./ButtonCategory";
 import { useDragScroll } from "@/shared/lib";
-import { cn } from "@/shared/lib/utils";
 import { Category } from "@/entities/category";
 
 interface MenuCategoryProps {
@@ -37,7 +36,7 @@ export function MenuCategory({ categories }: MenuCategoryProps) {
 							<span draggable={false} onDragStart={(e) => e.preventDefault()}>
 								<ButtonCategory
 									href={`/categories/${item.slug}`}
-									iconName={item.iconName as IconName}
+									iconName={(item.iconName as IconName) || 'pills'}
 								>
 									{item.name}
 								</ButtonCategory>

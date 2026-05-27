@@ -28,9 +28,10 @@ export function ButtonCategory({
 			>
 				<div className='flex gap-3.75 items-center'>
 					<Icon name={iconName} className={`text-white size-${iconSize}`} />
-					<span className="text-white text-xs lg:text-sm font-bolf font-accent tracking-[0.05em]">
+					<div className="text-white text-xs sm:text-sm md:text-sm font-bold font-accent tracking-[0.05em] uppercase">
+						{/* <span className="text-white text-xs lg:text-sm font-bolf font-accent tracking-[0.05em]"> */}
 						{children}
-					</span>
+					</div>
 				</div>
 			</Link>
 		)}>
