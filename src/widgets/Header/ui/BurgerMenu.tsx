@@ -62,6 +62,3 @@ export function BurgerMenu({ categories }: BurgerMenuProps) {
 		</div>
 	)
 }
-
-
-// overlayClassName="backdrop-filter-none! bg-transparent!"
