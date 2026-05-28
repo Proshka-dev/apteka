@@ -2,7 +2,7 @@
 'use client';
 
 import { cn } from '@/shared/lib';
-import type { Suggestion } from '../../hooks/useSearchSuggestions';
+import type { Suggestion } from '../hooks/useSearchSuggestions';
 
 interface SuggestionsListProps {
 	suggestions: Suggestion[];

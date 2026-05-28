@@ -1,7 +1,7 @@
 'use client'
 import { ButtonLink, Icon, Logo } from '@/shared/ui';
 import { ButtonSocials } from './ButtonSocials';
-import { SearchBar } from '../../../features/search/ui/SearchBar/SearchBar';
+import { SearchBar } from '../../../features/search/ui/SearchBar';
 import { BurgerMenu } from './BurgerMenu';
 import { useMediaQuery } from '@/shared/lib';
 import { Category } from '@/entities/category';

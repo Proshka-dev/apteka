@@ -4,7 +4,7 @@
 import { useState, useEffect } from 'react'
 import { Button } from '@/shared/ui'
 import { Icon } from '@/shared/ui'
-import { RegionDialog } from '../RegionDialog/RegionDialog'
+import { RegionDialog } from './RegionDialog'
 import { City } from '@/entities/region'
 import { useRegionStore } from '@/entities/region'
 

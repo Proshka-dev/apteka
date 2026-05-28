@@ -9,6 +9,7 @@ interface ButtonTopNavProps {
 	href: string;
 	iconName: IconName;
 	className?: string;
+	iconPosition?: 'left' | 'right';
 }
 
 export function ButtonTopNav({
@@ -16,14 +17,18 @@ export function ButtonTopNav({
 	href,
 	className,
 	iconName,
+	iconPosition = 'right',
 }: ButtonTopNavProps) {
 	return (
 		<Button variant={'ghost-custom'} nativeButton={false} render={(buttonProps) => (
-			// inline-flex items-center whitespace-nowrap УБРАТЬ, если будет работать без них
 			<Link
 				href={href}
 				{...buttonProps}
-				className={cn(buttonProps.className, className)}
+				className={cn(
+					buttonProps.className,
+					className,
+					`${iconPosition === 'left' && 'flex-row-reverse'}`,
+				)}
 			>
 				<span className="text-cust-grayblue text-sm font-medium font-accent mr-2.5">
 					{children}

@@ -1,1 +1,1 @@
-export * from './ui/RegionButton/RegionButton'
+export * from './ui/RegionButton'

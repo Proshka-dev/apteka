@@ -12,13 +12,14 @@ import { InputGroup, InputGroupAddon, InputGroupInput } from '@/shared/ui';
 import { Button, Icon } from '@/shared/ui';
 import { useSearchSuggestions } from '@/features/search/hooks/useSearchSuggestions';
 import { cn } from '@/shared/lib/utils';
-import { SuggestionsList } from '@/features/search/ui/SuggestionsList/SuggestionsList';
+import { SuggestionsList } from './SuggestionsList';
 
 interface SearchBarProps {
 	className?: string;
+	variant?: 'default' | 'green';
 }
 
-export function SearchBar({ className }: SearchBarProps) {
+export function SearchBar({ className, variant = 'default' }: SearchBarProps) {
 	const [open, setOpen] = useState(false);
 	const [query, setQuery] = useState('');
 	const router = useRouter();
@@ -49,16 +50,16 @@ export function SearchBar({ className }: SearchBarProps) {
 				modal={false} // отключаем модальное поведение – фокус остаётся на триггере
 			>
 				{/* Встроенный бэкдроп с размытием */}
-				<PopoverBackdrop onClick={() => setOpen(false)} />
+				{/* <PopoverBackdrop onClick={() => setOpen(false)} /> */}
 				{/* 
          			ВАЖНО: Оборачиваем триггер в div с z-index выше, чем у Backdrop (z-50),
          			чтобы инпут оставался визуально над блюром и был доступен для клика.
       			*/}
-				<div className="relative z-[60]">
+				<div className="relative z-60">
 					<PopoverTrigger
 						nativeButton={false}
 						render={(triggerProps) => (
-							<InputGroup className="bg-white">
+							<InputGroup className={`bg-white ${variant === 'green' && 'border-0'}`}>
 								<InputGroupInput
 									{...triggerProps}
 									value={query}
@@ -74,7 +75,10 @@ export function SearchBar({ className }: SearchBarProps) {
 										onClick={handleSearch}
 										aria-label="Поиск"
 									>
-										<Icon name="search" className="h-5 w-5" />
+										<Icon
+											name="search"
+											className={`size-5 ${variant === 'green' && 'text-cust-mint'} `}
+										/>
 									</Button>
 								</InputGroupAddon>
 							</InputGroup>

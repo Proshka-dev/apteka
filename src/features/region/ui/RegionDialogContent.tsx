@@ -55,7 +55,7 @@ export const RegionDialogContent = ({ cities, onSelect, onClose }: RegionDialogC
 							<button
 								key={city.id}
 								onClick={() => handleCityClick(city)}
-								className="text-left px-2 py-1 hover:bg-accent rounded transition-colors break-words"
+								className="text-left px-2 py-1 hover:bg-accent rounded transition-colors wrap-break-word"
 							>
 								{city.name}
 							</button>
