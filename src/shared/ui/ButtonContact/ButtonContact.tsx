@@ -2,6 +2,7 @@
 import { Mail, Phone } from "lucide-react";
 import { Button, Icon, IconName } from "@/shared/ui";
 import { cn } from "@/shared/lib/utils";
+import Link from "next/link";
 
 interface ButtonContactProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
 	type?: 'email' | 'phone';
@@ -28,7 +29,7 @@ export function ButtonContact({
 			className={cn("p-0 h-auto", className)}
 			nativeButton={false}
 			render={
-				<a
+				<Link
 					href={href}
 					className="flex items-center gap-5 px-4 py-0" // базовые стили ссылки
 					{...props}

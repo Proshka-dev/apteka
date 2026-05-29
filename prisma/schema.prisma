@@ -31,3 +31,14 @@ model Category {
 
   @@map("categories")
 }
+
+model CallbackRequest {
+  id        Int      @id @default(autoincrement())
+  name      String
+  phone     String
+  status    String   @default("new")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("callback_requests")
+}
