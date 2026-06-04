@@ -1,6 +1,6 @@
 import { Category, getCategories } from "@/entities/category";
 import { MenuCategory } from "./MenuCategory";
-import { RequestCallbackDialog } from "@/features/request-callback";
+import { CallbackDialog } from "@/features/request-callback";
 
 interface BottomHeaderProps {
 	categories: Category[];
@@ -17,7 +17,7 @@ export async function BottomHeader({ categories }: BottomHeaderProps) {
 			</div>
 			{/* Мобильная версия */}
 			<div className="md:hidden">
-				<RequestCallbackDialog />
+				<CallbackDialog />
 			</div>
 		</div>
 	);

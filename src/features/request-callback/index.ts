@@ -1,1 +1,1 @@
-export * from './ui/RequestCallbackDialog'
+export * from './ui/CallbackDialog'

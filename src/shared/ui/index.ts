@@ -7,6 +7,7 @@ export * from './input-group'
 export * from './textarea'
 export * from './sheet'
 export * from './label'
+export * from './field'
 
 //Логотип
 export * from './Logo/Logo';
@@ -18,4 +19,4 @@ export * from './Icon/Icon'
 export * from './ButtonContact/ButtonContact'
 export * from './ButtonLink/ButtonLink'
 export * from './Backdrop/Backdrop'
-export * from './InputMaskPhone'
+export * from './MaskedInput'

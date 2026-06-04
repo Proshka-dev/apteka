@@ -1,12 +1,11 @@
 'use server';
 
 import { prisma } from '@/shared/lib';
-import { callbackSchema } from '../model/callbackSchema';
+import { CallbackFormData, callbackSchema } from '../model/callbackSchema';
 // import { sendAdminNotification } from '@/shared/lib/notifications'; 
 
-export async function submitCallback(formData: FormData) {
-	const raw = Object.fromEntries(formData);
-	const parsed = callbackSchema.safeParse(raw);
+export async function submitCallback(data: CallbackFormData) {
+	const parsed = callbackSchema.safeParse(data);
 
 	// 1. Валидация входных данных (ошибки пользователя)
 	if (!parsed.success) {
@@ -37,7 +36,9 @@ export async function submitCallback(formData: FormData) {
 
 		// Возвращаем безопасный текст для пользователя, чтобы не раскрывать детали инфраструктуры
 		return {
-			serverError: 'Произошла ошибка при отправке заявки. Пожалуйста, попробуйте позже.'
+			serverError: 'Произошла ошибка при отправке заявки. Пожалуйста, попробуйте позже.',
 		};
+		// { error: { root: ['Ошибка сервера. Попробуйте позже.'] } };
+
 	}
 }
