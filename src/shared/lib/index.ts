@@ -7,3 +7,4 @@ export * from './hooks/useClickOutside';
 export * from './hooks/useDebounce';
 export * from './hooks/useMediaQuery';
 export * from './hooks/useDragScroll';
+export * from './normalizePhone';

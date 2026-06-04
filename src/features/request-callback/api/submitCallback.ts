@@ -1,6 +1,6 @@
 'use server';
 
-import { prisma } from '@/shared/lib';
+import { normalizePhone, prisma } from '@/shared/lib';
 import { CallbackFormData, callbackSchema } from '../model/callbackSchema';
 // import { sendAdminNotification } from '@/shared/lib/notifications'; 
 
@@ -12,7 +12,8 @@ export async function submitCallback(data: CallbackFormData) {
 		return { error: parsed.error.flatten((issue) => issue.message).fieldErrors };
 	}
 
-	const { name, phone } = parsed.data;
+	const name = parsed.data.name;
+	const phone = normalizePhone(parsed.data.phone);
 
 	try {
 		// Сохраняем заявку в БД
@@ -38,7 +39,5 @@ export async function submitCallback(data: CallbackFormData) {
 		return {
 			serverError: 'Произошла ошибка при отправке заявки. Пожалуйста, попробуйте позже.',
 		};
-		// { error: { root: ['Ошибка сервера. Попробуйте позже.'] } };
-
 	}
 }

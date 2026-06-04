@@ -5,6 +5,7 @@ import { Button, Field, FieldError, FieldLabel, Input, SheetClose } from "@/shar
 import Link from "next/link";
 import { submitCallback } from "../api/submitCallback";
 import { setServerErrors } from "@/shared/lib";
+import { useMask } from '@react-input/mask';
 
 interface CallbackDialogContentProps {
 	setOpen: (val: boolean) => void;
@@ -72,20 +73,39 @@ export function CallbackDialogContent({ setOpen }: CallbackDialogContentProps) {
 					<Controller
 						name="phone"
 						control={form.control}
-						render={({ field, fieldState }) => (
-							<Field data-invalid={fieldState.invalid}>
-								<FieldLabel htmlFor="form-callback-name">Телефон</FieldLabel>
-								<Input
-									{...field}
-									id="form-callback-name"
-									aria-invalid={fieldState.invalid}
-									placeholder="Телефон"
-								/>
-								<div className="min-h-5">
-									{fieldState.invalid && <FieldError errors={[fieldState.error]} />}
-								</div>
-							</Field>
-						)}
+						render={({ field, fieldState }) => {
+							// 1. Создаём ref для маски
+							const maskRef = useMask({
+								mask: '+7 (___) ___-__-__',
+								replacement: { _: /\d/ },
+							});
+
+							const setRefs = (node: HTMLInputElement | null) => {
+								// Передаём node в field.ref (RHF) — поддерживает null
+								field.ref(node);
+								// Передаём node в maskRef.current; используем приведение или проверку
+								if (node) {
+									(maskRef as React.RefObject<HTMLInputElement>).current = node;
+								}
+							};
+
+							return (
+								<Field data-invalid={fieldState.invalid}>
+									<FieldLabel htmlFor="form-callback-phone">Телефон</FieldLabel>
+									<Input
+										{...field}
+										id="form-callback-phone"
+										aria-invalid={fieldState.invalid}
+										placeholder="+7 (999) 999-99-99"
+										// 2. Объединяем ref из useMask и из RHF
+										ref={setRefs}
+									/>
+									<div className="min-h-5">
+										{fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+									</div>
+								</Field>
+							);
+						}}
 					/>
 				</div>
 			</div>
