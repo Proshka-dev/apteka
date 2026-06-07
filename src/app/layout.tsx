@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./styles/globals.css";
 import { Header } from "@/widgets/Header";
 import { montserrat, raleway, roboto } from '@/shared/lib/fonts';
+import { Toaster } from "@/shared/ui";
 
 export const metadata: Metadata = {
 	title: "Create Next App",
@@ -18,6 +19,7 @@ export default function RootLayout({
 			<body
 				className={`${montserrat.variable} ${raleway.variable} ${roboto.variable} antialiased`}
 			>
+				<Toaster />
 				<Header />
 				{children}
 			</body>

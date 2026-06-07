@@ -8,6 +8,7 @@ export * from './textarea'
 export * from './sheet'
 export * from './label'
 export * from './field'
+export * from './sonner'
 
 //Логотип
 export * from './Logo/Logo';

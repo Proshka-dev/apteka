@@ -6,6 +6,7 @@ import Link from "next/link";
 import { submitCallback } from "../api/submitCallback";
 import { setServerErrors } from "@/shared/lib";
 import { useMask } from '@react-input/mask';
+import { toast } from "sonner";
 
 interface CallbackDialogContentProps {
 	setOpen: (val: boolean) => void;
@@ -36,7 +37,9 @@ export function CallbackDialogContent({ setOpen }: CallbackDialogContentProps) {
 		if (result.success) {
 			form.reset();          // очистить поля
 			setOpen(false);   // закрыть диалог
-			// опционально показать тост «Спасибо, мы перезвоним»
+			// показать тост
+			toast.success("Спасибо, мы Вам перезвоним!", { position: "top-center" })
+
 		}
 	};
 
