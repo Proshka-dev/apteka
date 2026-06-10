@@ -3,9 +3,9 @@
 import { useEffect, useState } from 'react';
 import { useMediaQuery } from '@/shared/lib';
 import { Button, Icon, Sheet, SheetContent, SheetTrigger } from '@/shared/ui';
-import { CallbackDialogContent } from './CallbackDialogContent';
+import { RegisterDialogContent } from './RegisterDialogContent';
 
-export function CallbackDialog() {
+export function RegisterDialog() {
 	const [open, setOpen] = useState(false);
 	const isDesktop = useMediaQuery('(min-width: 768px)');
 
@@ -38,7 +38,7 @@ export function CallbackDialog() {
 			}
 			/>
 			<SheetContent side="top" className='p-5 gap-5 md:max-w-4/5 md:mx-auto md:mt-20 md:p-15 md:rounded-4xl' showCloseButton>
-				<CallbackDialogContent setOpen={setOpen} />
+				<RegisterDialogContent setOpen={setOpen} />
 			</SheetContent>
 		</Sheet>
 		// </div>
