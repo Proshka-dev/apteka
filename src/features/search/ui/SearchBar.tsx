@@ -55,7 +55,8 @@ export function SearchBar({ className, variant = 'default' }: SearchBarProps) {
          			ВАЖНО: Оборачиваем триггер в div с z-index выше, чем у Backdrop (z-50),
          			чтобы инпут оставался визуально над блюром и был доступен для клика.
       			*/}
-				<div className="relative z-60">
+				<div className={'relative'}>
+					{/* ${open && 'z-60'} */}
 					<PopoverTrigger
 						nativeButton={false}
 						render={(triggerProps) => (

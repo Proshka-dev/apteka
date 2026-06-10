@@ -19,6 +19,7 @@ export function HomePage() {
 				alt="Arbidol"
 				width={150}
 				height={150}
+				preload
 			/>
 			<Image src={'/arbidol.webp'} alt="test" width={100} height={100} />
 		</div >
