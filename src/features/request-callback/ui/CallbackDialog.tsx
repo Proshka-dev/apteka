@@ -36,7 +36,7 @@ export function CallbackDialog() {
 				)
 			}
 			/>
-			<SheetContent side="top" className='p-5 gap-5 md:max-w-4/5 md:mx-auto md:mt-20 md:p-15 rounded-4xl' showCloseButton>
+			<SheetContent side="top" className='p-5 gap-5 md:max-w-4/5 md:mx-auto md:mt-20 md:p-15 md:rounded-4xl' showCloseButton>
 				{/* md:hidden  */}
 				<CallbackDialogContent setOpen={setOpen} />
 			</SheetContent>

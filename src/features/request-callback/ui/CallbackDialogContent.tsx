@@ -48,23 +48,26 @@ export function CallbackDialogContent({ setOpen }: CallbackDialogContentProps) {
 	return (
 		<form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-5" id="form-callback">
 			<div className="font-bold text-lg font-accent">Мы вам перезвоним</div>
-			<div className="font-sans text-cust-gray">Оставьте ваши данные...</div>
+			<div className="font-sans text-cust-gray text-sm">Оставьте ваши данные и мы свяжемся с вами. Мы не занимаемся рассылкой рекламных сообщений, а так же не передаем контактные данные третьим лицам</div>
 
-			<div className="flex flex-col gap-5">
-				<div>
+			<div className="flex flex-col gap-5 md:flex-row">
+				<div className="flex-1">
 					<Controller
 						name="name"
 						control={form.control}
 						render={({ field, fieldState }) => (
 							<Field data-invalid={fieldState.invalid}>
-								<FieldLabel htmlFor="form-callback-name">Имя</FieldLabel>
+								<FieldLabel htmlFor="form-callback-name" className="md:hidden">
+									Имя
+								</FieldLabel>
+
 								<Input
 									{...field}
 									id="form-callback-name"
 									aria-invalid={fieldState.invalid}
 									placeholder="Ваше имя"
 								/>
-								<div className="min-h-5">
+								<div className="min-h-5 px-5">
 									{fieldState.invalid && <FieldError errors={[fieldState.error]} />}
 								</div>
 
@@ -72,7 +75,7 @@ export function CallbackDialogContent({ setOpen }: CallbackDialogContentProps) {
 						)}
 					/>
 				</div>
-				<div>
+				<div className="flex-1">
 					<Controller
 						name="phone"
 						control={form.control}
@@ -94,7 +97,10 @@ export function CallbackDialogContent({ setOpen }: CallbackDialogContentProps) {
 
 							return (
 								<Field data-invalid={fieldState.invalid}>
-									<FieldLabel htmlFor="form-callback-phone">Телефон</FieldLabel>
+									<FieldLabel htmlFor="form-callback-phone" className="md:hidden">
+										Телефон
+									</FieldLabel>
+
 									<Input
 										{...field}
 										id="form-callback-phone"
@@ -103,7 +109,7 @@ export function CallbackDialogContent({ setOpen }: CallbackDialogContentProps) {
 										// 2. Объединяем ref из useMask и из RHF
 										ref={setRefs}
 									/>
-									<div className="min-h-5">
+									<div className="min-h-5 px-5">
 										{fieldState.invalid && <FieldError errors={[fieldState.error]} />}
 									</div>
 								</Field>
@@ -111,9 +117,22 @@ export function CallbackDialogContent({ setOpen }: CallbackDialogContentProps) {
 						}}
 					/>
 				</div>
+				<div className="hidden lg:block lg:flex-1">
+					<Button
+						type="submit"
+						form="form-callback"
+						variant="primary"
+						size="pill-50-bold-accent"
+						disabled={form.formState.isSubmitting}
+						className={'w-full'}
+					>
+						{form.formState.isSubmitting ? 'Отправка...' : 'Перезвоните мне'}
+					</Button>
+
+				</div>
 			</div>
 
-			<div className="font-sans text-xs text-cust-gray">
+			<div className="font-sans text-xs text-cust-gray md:text-sm">
 				Нажимая на кнопку, вы соглашаетесь на обработку{' '}
 				<SheetClose>
 					<Link href={'/personal'} className="text-cust-mint">персональных данных</Link>
@@ -126,6 +145,7 @@ export function CallbackDialogContent({ setOpen }: CallbackDialogContentProps) {
 				variant="primary"
 				size="pill-50-bold-accent"
 				disabled={form.formState.isSubmitting}
+				className={'lg:hidden'}
 			>
 				{form.formState.isSubmitting ? 'Отправка...' : 'Перезвоните мне'}
 			</Button>
