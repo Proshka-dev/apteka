@@ -7,7 +7,7 @@ import {
 	PopoverBackdrop,
 	PopoverContent,
 	PopoverTrigger,
-} from '@/shared/ui/popover';
+} from '@/shared/ui';
 import { InputGroup, InputGroupAddon, InputGroupInput } from '@/shared/ui';
 import { Button, Icon } from '@/shared/ui';
 import { useSearchSuggestions } from '@/features/search/hooks/useSearchSuggestions';

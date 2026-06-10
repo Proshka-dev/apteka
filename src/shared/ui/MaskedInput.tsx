@@ -2,7 +2,7 @@
 
 import { useMask } from '@react-input/mask';
 import { forwardRef } from 'react';
-import { Input } from './input';
+import { Input } from './shadcn/input';
 
 interface MaskedInputProps {
 	mask: string;

@@ -1,14 +1,15 @@
 //shadcn
-export * from './button';
-export * from './dialog';
-export * from './input';
-export * from './scroll-area';
-export * from './input-group'
-export * from './textarea'
-export * from './sheet'
-export * from './label'
-export * from './field'
-export * from './sonner'
+export * from './shadcn/button';
+export * from './shadcn/dialog';
+export * from './shadcn/input';
+export * from './shadcn/scroll-area';
+export * from './shadcn/input-group'
+export * from './shadcn/textarea'
+export * from './shadcn/sheet'
+export * from './shadcn/label'
+export * from './shadcn/field'
+export * from './shadcn/sonner'
+export * from './shadcn/popover'
 
 //Логотип
 export * from './Logo/Logo';
