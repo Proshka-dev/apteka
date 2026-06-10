@@ -12,15 +12,15 @@ export * from './shadcn/sonner'
 export * from './shadcn/popover'
 
 //Логотип
-export * from './Logo/Logo';
+export * from './Logo';
 
 //Иконки
 export * from './Icon/Icon'
 
 //Кастомные компоненты
-export * from './ButtonContact/ButtonContact'
-export * from './ButtonLink/ButtonLink'
-export * from './Backdrop/Backdrop'
+export * from './ButtonContact'
+export * from './ButtonLink'
+export * from './Backdrop'
 export * from './MaskedInput'
 export * from './StoreImage'
 export * from './InputFormText'
