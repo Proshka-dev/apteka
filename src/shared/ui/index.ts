@@ -10,6 +10,8 @@ export * from './shadcn/label'
 export * from './shadcn/field'
 export * from './shadcn/sonner'
 export * from './shadcn/popover'
+export * from './shadcn/input-otp'
+export * from './shadcn/separator'
 
 //Логотип
 export * from './Logo';

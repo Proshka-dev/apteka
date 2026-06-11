@@ -8,7 +8,7 @@ import {
 	DialogHeader,
 	DialogTitle,
 	DialogTrigger,
-} from "@/shared/ui/dialog"
+} from "@/shared/ui"
 import { DevButtons } from "@/widgets/DevButtons/DevButtons";
 import { DevDialogs } from "@/widgets/DevDialogs/DevDialogs";
 
