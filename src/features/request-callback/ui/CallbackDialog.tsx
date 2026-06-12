@@ -12,35 +12,44 @@ export function CallbackDialog() {
 	// useEffect(() => { if (isDesktop) setOpen(false); }, [isDesktop]);
 
 
+
 	return (
-		// <div className='flex md:hidden'>
 		<Sheet open={open} onOpenChange={setOpen}>
-			<SheetTrigger render={
-				<>
-					{/* десктопная кнопка */}
-					<Button variant={'primary'} size={'pill-50-bold-accent'} className={'hidden md:inline-flex min-w-57'}>
-						Заказать звонок
-					</Button>
-					{/* мобильная кнопка */}
-					<Button
-						className={'inline-flex md:hidden w-full px-2.5'}
-						variant={"primary"}
-						size={"full-40-primary-shadow"}
-					>
-						<div className="flex gap-2.5">
-							<Icon name="chevronDuoDownIcon" className="size-5" />
-							<div>Мы вам перезвоним</div>
-						</div>
-					</Button>
+			{/* мобильная кнопка */}
+			<div className={'block  md:hidden'}>
+				<SheetTrigger
+					render={
+						<Button
+							className={'w-full px-2.5'}
+							variant={"primary"}
+							size={"full-40-primary-shadow"}
+						>
+							<div className="flex gap-2.5">
+								<Icon name="chevronDuoDownIcon" className="size-5" />
+								<div>Мы вам перезвоним</div>
+							</div>
+						</Button>
+					}
+				/>
+			</div>
 
-				</>
+			{/* десктопная кнопка */}
+			<div className={'hidden md:block'}>
+				<SheetTrigger
+					render={
+						<Button variant={'primary'} size={'pill-50-bold-accent'} className={'min-w-57'}>
+							Заказать звонок
+						</Button>
+					}
+				/>
+			</div>
 
-			}
-			/>
+
+
 			<SheetContent side="top" className='p-5 gap-5 md:max-w-4/5 md:mx-auto md:mt-20 md:p-15 md:rounded-4xl' showCloseButton>
 				<CallbackDialogContent setOpen={setOpen} />
 			</SheetContent>
 		</Sheet>
-		// </div>
+
 	);
 }

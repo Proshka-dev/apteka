@@ -11,29 +11,28 @@ export function RegisterDialog() {
 
 	// useEffect(() => { if (isDesktop) setOpen(false); }, [isDesktop]);
 
+	// {/* мобильная кнопка */}
+	// {/* десктопная кнопка */}
+	// 	<Button variant={'primary'} size={'pill-50-bold-accent'} className={'hidden md:inline-flex min-w-57'}>
+	// 	Заказать звонок
+	// </Button>
+
 
 	return (
 		// <div className='flex md:hidden'>
 		<Sheet open={open} onOpenChange={setOpen}>
 			<SheetTrigger render={
-				<>
-					{/* десктопная кнопка */}
-					<Button variant={'primary'} size={'pill-50-bold-accent'} className={'hidden md:inline-flex min-w-57'}>
-						Заказать звонок
-					</Button>
-					{/* мобильная кнопка */}
-					<Button
-						className={'inline-flex md:hidden w-full px-2.5'}
-						variant={"primary"}
-						size={"full-40-primary-shadow"}
-					>
-						<div className="flex gap-2.5">
-							<Icon name="chevronDuoDownIcon" className="size-5" />
-							<div>Мы вам перезвоним</div>
-						</div>
-					</Button>
+				<Button
+					className={'inline-flex md:hidden w-full px-2.5'}
+					variant={"primary"}
+					size={"full-40-primary-shadow"}
+				>
+					<div className="flex gap-2.5">
+						<Icon name="chevronDuoDownIcon" className="size-5" />
+						<div>Мы вам перезвоним</div>
+					</div>
+				</Button>
 
-				</>
 
 			}
 			/>
