@@ -61,9 +61,9 @@ export async function TopHeader() {
 					<ButtonTopNav href='/favorites' iconName='favoriteBorder' className='hidden md:inline-flex'>
 						Избранное
 					</ButtonTopNav>
-					<ButtonTopNav href='/profile' iconName='person'>
+					{/* <ButtonTopNav href='/profile' iconName='person'>
 						Личный кабинет
-					</ButtonTopNav>
+					</ButtonTopNav> */}
 					<UserAuthButton />
 
 				</div>

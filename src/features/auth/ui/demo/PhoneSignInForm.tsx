@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { authClient } from '@/shared/lib/auth/client';
 import { Button, Input } from '@/shared/ui';
+import { useRouter } from 'next/navigation';
 
 type Props = {
 	onSuccess?: () => void;
@@ -14,6 +15,7 @@ export function PhoneSignInForm({ onSuccess }: Props) {
 	const [step, setStep] = useState<'phone' | 'otp'>('phone');
 	const [error, setError] = useState('');
 	const [loading, setLoading] = useState(false);
+	const router = useRouter();
 
 	const requestOTP = async () => {
 		setLoading(true);
@@ -33,8 +35,8 @@ export function PhoneSignInForm({ onSuccess }: Props) {
 		setLoading(true);
 		setError('');
 		try {
-			// Правильный метод: verify
 			await authClient.phoneNumber.verify({ phoneNumber: phone, code });
+			router.refresh();
 			onSuccess?.();
 		} catch (e) {
 			setError('Неверный код');

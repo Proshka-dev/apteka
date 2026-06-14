@@ -1,17 +1,44 @@
 // features/auth/ui/UserAuthButton.tsx
 'use client'
 import { AuthSession } from "@/shared/lib";
+import { Button, Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/shared/ui";
+import { ButtonTopNav } from "@/widgets/Header/ui/ButtonTopNav";
+import { PhoneSignInForm } from "./demo/PhoneSignInForm";
+import { useState } from "react";
 
 interface UserAuthButtonContentProps {
 	session: AuthSession | null;
 }
 
 export function UserAuthButtonContent({ session }: UserAuthButtonContentProps) {
+	const [open, setOpen] = useState(false);
 	return (
 		session ? (
-			<div>{session.user.name}</div >
+			// Если сессия активна
+			<ButtonTopNav
+				href='/profile'
+				iconName='person'
+			>
+				{session.user.name}
+			</ButtonTopNav>
+
 		) : (
-			<div>Вход/регистрация</div>
+			// Неавторизованный пользователь
+			<Dialog open={open} onOpenChange={setOpen}>
+				<DialogTrigger
+					render={(props) => (
+						<Button {...props} variant="primary-outline" size="pill-40-sans">
+							Вход / регистрация
+						</Button>
+					)}
+				/>
+				<DialogContent className="sm:max-w-md">
+					<DialogHeader>
+						<DialogTitle>Вход или регистрация</DialogTitle>
+					</DialogHeader>
+					<PhoneSignInForm onSuccess={() => { setOpen(false) }} />
+				</DialogContent>
+			</Dialog>
 		)
 	)
 }
