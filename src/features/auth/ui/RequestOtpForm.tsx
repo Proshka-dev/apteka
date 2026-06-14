@@ -39,13 +39,15 @@ export function RequestOtpForm({ onOtpSent }: { onOtpSent: (phone: string) => vo
 	};
 
 	return (
-		<form onSubmit={handleSubmit(onSubmit)}>
-			<input {...register("phoneNumber")} placeholder="+7 123 456 78 90" />
-			{errors.phoneNumber && <span>{errors.phoneNumber.message}</span>}
-			{error && <div className="text-red-500">{error}</div>}
-			<button type="submit" disabled={sendOtpMutation.isPending}>
-				{sendOtpMutation.isPending ? "Отправка..." : "Получить код"}
-			</button>
+		<form onSubmit={handleSubmit(onSubmit)} >
+			<div className="flex flex-col gap-5">
+				<input {...register("phoneNumber")} placeholder="+7 123 456 78 90" className="border border-black p-2 w-fit" />
+				{errors.phoneNumber && <span>{errors.phoneNumber.message}</span>}
+				{error && <div className="text-red-500">{error}</div>}
+				<button type="submit" disabled={sendOtpMutation.isPending} className="border border-black w-fit p-2 rounded-xl bg-green-300">
+					{sendOtpMutation.isPending ? "Отправка..." : "Получить код"}
+				</button>
+			</div>
 		</form>
 	);
 }

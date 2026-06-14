@@ -1,5 +1,6 @@
 'use client'
 
+import { NewPhoneSignInForm } from "@/features/auth/ui/NewPhoneSignInForm";
 import { RequestOtpForm } from "@/features/auth/ui/RequestOtpForm";
 import { SignInForm } from "@/features/auth/ui/SignInForm";
 import { VerifyOtpForm } from "@/features/auth/ui/VerifyOtpForm";
@@ -26,7 +27,7 @@ export function HomePage() {
 			{/* <RequestOtpForm onOtpSent={(phone) => { console.log(phone) }} /> */}
 			{/* <SignInForm /> */}
 			<div className="border-2 bg-green-100 w-full p-5 rounded-4xl mb-5">
-				<RequestOtpForm onOtpSent={handleOtpSent} />;
+				<RequestOtpForm onOtpSent={handleOtpSent} />
 			</div>
 			<div className="border-2 bg-blue-100 w-full p-5 rounded-4xl mb-5">
 				{'903-123-45-67'}
@@ -34,6 +35,10 @@ export function HomePage() {
 			</div>
 			<div className="border-2 bg-orange-100 w-full p-5 rounded-4xl mb-5">
 				<SignInForm />
+			</div>
+			<div className="border-2 bg-orange-100 w-full p-5 rounded-4xl mb-5">
+				{'New'}
+				<NewPhoneSignInForm />
 			</div>
 
 

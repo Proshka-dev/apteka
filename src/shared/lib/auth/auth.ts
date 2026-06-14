@@ -9,12 +9,20 @@ export const auth = betterAuth({
 	database: prismaAdapter(prisma, {
 		provider: "postgresql",
 	}),
+
 	secret: process.env.BETTER_AUTH_SECRET!,
 	url: process.env.BETTER_AUTH_URL!,
 	emailAndPassword: {
 		enabled: true, // Включаем вход по паролю
 		autoSignIn: true,
 	},
+
+	// Настройки сессии (срок жизни 30 дней)
+	session: {
+		expiresIn: 60 * 60 * 24 * 30, // 30 дней в секундах
+		updateAge: 60 * 60 * 24,      // Обновлять сессию каждый день при активности
+	},
+
 	plugins: [
 		admin(), // <-- Подключаем плагин для управления ролями
 		phoneNumber({
@@ -39,17 +47,7 @@ export const auth = betterAuth({
 			},
 		}),
 	],
-	// Настройка дополнительных полей пользователя
-	// user: {
-	// 	additionalFields: {
-	// 		role: {
-	// 			type: "string",
-	// 			required: true,
-	// 			defaultValue: "user",
-	// 			input: false, // Важно: пользователь не может задать роль сам
-	// 		},
-	// 	},
-	// },
+
 	// Настройка advanced опций (опционально, но полезно для безопасности)
 	advanced: {
 		// Явно разрешаем вход по номеру телефона из API
