@@ -6,7 +6,7 @@ import { auth } from "./auth";
 
 // Функция для получения текущей сессии с проверкой в БД
 // cache() гарантирует, что за один рендер страницы будет выполнен только один запрос к БД, что повышает производительность
-export const getSession = cache(async () => {
+export const getServerSession = cache(async () => {
 	const session = await auth.api.getSession({
 		headers: await headers(),
 	});
@@ -15,7 +15,7 @@ export const getSession = cache(async () => {
 
 // Функция, которая требует авторизацию и возвращает сессию, иначе редирект
 export const requireAuth = async () => {
-	const session = await getSession();
+	const session = await getServerSession();
 	if (!session) {
 		redirect("/login"); // Используем redirect из next/navigation
 	}

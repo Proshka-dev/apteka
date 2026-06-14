@@ -1,10 +1,10 @@
-
 import { getCities } from '@/entities/region/api/getCities';
 import { getDefaultSelectedCity } from '@/entities/region/lib/getDefaultSelectedCity';
 import { RegionButton } from '@/features/region/';
 import { ButtonContact } from '@/shared/ui';
 import { cookies } from 'next/headers'
 import { ButtonTopNav } from './ButtonTopNav';
+import { UserAuthButton } from '@/features/auth';
 
 export async function TopHeader() {
 	const cookieStore = await cookies();
@@ -64,6 +64,7 @@ export async function TopHeader() {
 					<ButtonTopNav href='/profile' iconName='person'>
 						Личный кабинет
 					</ButtonTopNav>
+					<UserAuthButton />
 
 				</div>
 			</div>

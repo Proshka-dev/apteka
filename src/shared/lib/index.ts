@@ -4,6 +4,7 @@ export * from './utils';
 export * from './form-utils';
 export * from './auth/auth';
 export * from './auth/client';
+//export * from './auth/dal';
 
 export * from './hooks/useClickOutside';
 export * from './hooks/useDebounce';
