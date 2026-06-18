@@ -17,3 +17,4 @@ export * from './normalizePhone';
 //Валидация (схемы)
 export * from './validation/phoneSchema';
 export * from './validation/nameSchema';
+export * from './validation/otpSchema';

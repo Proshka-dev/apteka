@@ -8,9 +8,10 @@ type InputFormTextProps = {
 	label: string;
 	placeholder?: string;
 	hideLabelOnDesktop?: boolean;
+	maxLength?: number;
 };
 
-export function InputFormText({ name, label, placeholder, hideLabelOnDesktop }: InputFormTextProps) {
+export function InputFormText({ name, label, placeholder, hideLabelOnDesktop, maxLength }: InputFormTextProps) {
 	const { control } = useFormContext();
 
 	return (
@@ -27,6 +28,7 @@ export function InputFormText({ name, label, placeholder, hideLabelOnDesktop }: 
 						id={`form-${name}`}
 						aria-invalid={fieldState.invalid}
 						placeholder={placeholder}
+						maxLength={maxLength}
 					/>
 					<div className="min-h-5 px-5">
 						{fieldState.invalid && <FieldError errors={[fieldState.error]} />}

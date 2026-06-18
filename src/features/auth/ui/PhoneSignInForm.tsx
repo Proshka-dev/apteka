@@ -1,65 +1,48 @@
 // features/auth/ui/PhoneSignInForm.tsx
 'use client';
+
 import { useState } from 'react';
-import { authClient } from '@/shared/lib/auth/client';
-import { Button, Input } from '@/shared/ui';
 import { useRouter } from 'next/navigation';
+import { authClient } from '@/shared/lib/auth/client';
+import { PhoneStep } from './PhoneStep';
+import { OtpStep } from './OtpStep';
 
 type Props = {
 	onSuccess?: () => void;
 };
 
 export function PhoneSignInForm({ onSuccess }: Props) {
-	const [phone, setPhone] = useState('');
-	const [code, setCode] = useState('');
 	const [step, setStep] = useState<'phone' | 'otp'>('phone');
-	const [error, setError] = useState('');
-	const [loading, setLoading] = useState(false);
+	const [phone, setPhone] = useState('');
 	const router = useRouter();
 
-	const requestOTP = async () => {
-		setLoading(true);
-		setError('');
-		try {
-			// Правильный метод: sendOtp
-			await authClient.phoneNumber.sendOtp({ phoneNumber: phone });
-			setStep('otp');
-		} catch (e) {
-			setError('Не удалось отправить код');
-		} finally {
-			setLoading(false);
-		}
+	const handleSendOtp = async (phoneNumber: string) => {
+		// Отправляем запрос на генерацию OTP
+		await authClient.phoneNumber.sendOtp({ phoneNumber });
+		setPhone(phoneNumber);
+		setStep('otp');
 	};
 
-	const verifyOTP = async () => {
-		setLoading(true);
-		setError('');
-		try {
-			await authClient.phoneNumber.verify({ phoneNumber: phone, code });
-			router.refresh();
-			onSuccess?.();
-		} catch (e) {
-			setError('Неверный код');
-		} finally {
-			setLoading(false);
-		}
+	const handleVerify = async (code: string) => {
+		// Верифицируем OTP и создаём сессию
+		await authClient.phoneNumber.verify({ phoneNumber: phone, code });
+		// Обновляем серверные компоненты
+		router.refresh();
+		// Сообщаем родителю об успехе (закрыть диалог)
+		onSuccess?.();
 	};
 
 	return (
 		<div className="flex flex-col gap-4">
 			{step === 'phone' ? (
-				<>
-					<Input value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="+7 999 123-45-67" />
-					<Button onClick={requestOTP} disabled={loading}>{loading ? 'Отправка...' : 'Получить код'}</Button>
-				</>
+				<PhoneStep onSendOtp={handleSendOtp} />
 			) : (
-				<>
-					<Input value={code} onChange={(e) => setCode(e.target.value)} placeholder="Введите код" />
-					<Button onClick={verifyOTP} disabled={loading}>{loading ? 'Проверка...' : 'Войти'}</Button>
-					<button type="button" className="text-sm text-blue-500 underline" onClick={() => setStep('phone')}>Назад к номеру</button>
-				</>
+				<OtpStep
+					phone={phone}
+					onVerify={handleVerify}
+					onBack={() => setStep('phone')}
+				/>
 			)}
-			{error && <p className="text-red-500 text-sm">{error}</p>}
 		</div>
 	);
 }

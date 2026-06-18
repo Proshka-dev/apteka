@@ -3,8 +3,8 @@
 import { AuthSession } from "@/shared/lib";
 import { Button, Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/shared/ui";
 import { ButtonTopNav } from "@/widgets/Header/ui/ButtonTopNav";
-import { PhoneSignInForm } from "./PhoneSignInForm";
 import { useState } from "react";
+import { PhoneSignInForm } from "./PhoneSignInForm";
 
 interface UserAuthButtonContentProps {
 	session: AuthSession | null;
