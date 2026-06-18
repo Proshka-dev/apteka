@@ -6,11 +6,11 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Button, InputFormPhone } from '@/shared/ui';
 import { SignInPhoneFormData, signInPhoneSchema } from '../model/signInPhoneSchema';
 
-type Props = {
+interface PhoneStepProps {
 	onSendOtp: (phone: string) => Promise<void>;
 };
 
-export function PhoneStep({ onSendOtp }: Props) {
+export function PhoneStep({ onSendOtp }: PhoneStepProps) {
 	const form = useForm<SignInPhoneFormData>({
 		resolver: zodResolver(signInPhoneSchema),
 		defaultValues: { phone: '' },
@@ -39,6 +39,7 @@ export function PhoneStep({ onSendOtp }: Props) {
 					label="Телефон"
 					placeholder="+7 (999) 999-99-99"
 					hideLabelOnDesktop
+					disabled={form.formState.isSubmitting}
 				/>
 
 				{form.formState.errors.root && (

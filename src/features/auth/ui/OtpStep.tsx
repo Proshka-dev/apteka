@@ -6,13 +6,13 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Button, InputFormText } from '@/shared/ui';
 import { SignInOtpFormData, signInOtpSchema } from '../model/signInOtpSchema';
 
-type Props = {
+interface OtpStepProps {
 	phone: string;
 	onVerify: (code: string) => Promise<void>;
 	onBack: () => void;
 };
 
-export function OtpStep({ phone, onVerify, onBack }: Props) {
+export function OtpStep({ phone, onVerify, onBack }: OtpStepProps) {
 	const form = useForm<SignInOtpFormData>({
 		resolver: zodResolver(signInOtpSchema),
 		defaultValues: { code: '' },
@@ -42,11 +42,12 @@ export function OtpStep({ phone, onVerify, onBack }: Props) {
 					label="Код"
 					placeholder="Введите код"
 					maxLength={6}
+					disabled={form.formState.isSubmitting}
 				/>
 
-				{form.formState.errors.root && (
+				{form.formState.errors.code && (
 					<p className="text-red-500 text-sm">
-						{form.formState.errors.root.message}
+						{form.formState.errors.code.message}
 					</p>
 				)}
 

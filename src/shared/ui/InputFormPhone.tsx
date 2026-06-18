@@ -10,10 +10,10 @@ type InputFormPhoneProps = {
 	label: string;
 	placeholder?: string;
 	hideLabelOnDesktop?: boolean;
-
+	disabled?: boolean;
 };
 
-export function InputFormPhone({ name, label, placeholder, hideLabelOnDesktop }: InputFormPhoneProps) {
+export function InputFormPhone({ name, label, placeholder, hideLabelOnDesktop, disabled }: InputFormPhoneProps) {
 	const { control } = useFormContext();
 
 	return (
@@ -34,6 +34,7 @@ export function InputFormPhone({ name, label, placeholder, hideLabelOnDesktop }:
 							id={`form-${name}`}
 							aria-invalid={fieldState.invalid}
 							placeholder={placeholder}
+							disabled={disabled}
 						/>
 						<div className="min-h-5 px-5">
 							{fieldState.invalid && <FieldError errors={[fieldState.error]} />}
