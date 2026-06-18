@@ -1,5 +1,6 @@
 'use client'
 
+import { LogoutButton } from "@/features/auth/ui/LogoutButton";
 import { authClient } from "@/shared/lib";
 import { Button } from "@/shared/ui";
 import { useRouter } from "next/navigation";
@@ -33,9 +34,7 @@ export function HomePage() {
 			</div> */}
 
 			<div>
-				<Button onClick={() => { authClient.signOut(); router.refresh() }}>
-					Выйти из аккаунта
-				</Button>
+				<LogoutButton>Выйти из аккаунта</LogoutButton>
 			</div>
 
 
