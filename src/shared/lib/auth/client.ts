@@ -8,4 +8,4 @@ export const authClient = createAuthClient({
 });
 
 // Экспортируем типы и удобные методы
-export const { signIn, signOut, useSession, getSession, admin, phoneNumber } = authClient;
+//export const { signIn, signOut, useSession, getSession, admin, phoneNumber } = authClient;

@@ -13,3 +13,7 @@ export * from './hooks/useDragScroll';
 export * from './hooks/usePhoneMask';
 
 export * from './normalizePhone';
+
+//Валидация (схемы)
+export * from './validation/phoneSchema';
+export * from './validation/nameSchema';
