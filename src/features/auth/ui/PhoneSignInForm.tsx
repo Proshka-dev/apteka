@@ -7,6 +7,7 @@ import { authClient } from '@/shared/lib/auth/client';
 import { PhoneStep } from './PhoneStep';
 import { OtpStep } from './OtpStep';
 import { toast } from 'sonner';
+import { translateAuthError } from '../lib/translateAuthError';
 
 interface PhoneSignInFormProps {
 	onSuccess?: () => void;
@@ -15,60 +16,57 @@ interface PhoneSignInFormProps {
 export function PhoneSignInForm({ onSuccess }: PhoneSignInFormProps) {
 	const [step, setStep] = useState<'phone' | 'otp'>('phone');
 	const [phone, setPhone] = useState('');
+	const [isLoading, setIsLoading] = useState(false);
 	const router = useRouter();
 
 	const handleSendOtp = async (phoneNumber: string) => {
-
-		let response;
+		setIsLoading(true);
 		try {
-			// Отправляем запрос на генерацию OTP
-			response = await authClient.phoneNumber.sendOtp({ phoneNumber });
-		} catch (_error) {
-			// Этот catch сработает ТОЛЬКО при сетевой ошибке (например, упал интернет)
-			toast.error('Произошла непредвиденная ошибка сети', { position: 'top-center' });
-			throw new Error('Сетевой сбой. Попробуйте позже.');
-		}
+			const response = await authClient.phoneNumber.sendOtp({ phoneNumber });
 
-		// Обрабатываем бизнес-ошибку Better Auth вне блока try
-		if (response.error) {
-			throw new Error(response.error.message || 'Не удалось отправить код');
-		}
+			//Если ошибка во время отправки
+			if (response.error) {
+				return { success: false, error: translateAuthError(response.error.message) || 'Не удалось отправить код' };
+			}
 
-		toast.success('Код отправлен', { position: 'top-center' });
-		setPhone(phoneNumber);
-		setStep('otp');
+			//Успешная отправка кода
+			toast.success('Код отправлен', { position: 'top-center' });
+			setPhone(phoneNumber);
+			setStep('otp');
+			return { success: true };
+		} catch {
+			toast.error('Произошла ошибка сети', { position: 'top-center' });
+			return { success: false, error: 'Сетевой сбой. Попробуйте позже.', isNetworkError: true };
+		} finally {
+			setIsLoading(false);
+		}
 	};
 
 	const handleVerify = async (code: string) => {
-		let response;
-
+		setIsLoading(true);
 		try {
-			// Верифицируем OTP и создаём сессию
-			response = await authClient.phoneNumber.verify({ phoneNumber: phone, code });
-		} catch (_error) {
-			toast.error('Произошла ошибка при верификации', { position: 'top-center' });
-			throw new Error('Сетевой сбой при проверке кода.');
+			const response = await authClient.phoneNumber.verify({ phoneNumber: phone, code });
+			if (response.error) {
+				return { success: false, error: translateAuthError(response.error.message) || 'Неверный код' };
+			}
+			toast.success('Вход выполнен', { position: 'top-center' });
+			router.refresh();
+			onSuccess?.();
+			return { success: true };
+		} catch {
+			toast.error('Сетевой сбой. Попробуйте позже.', { position: 'top-center' });
+			return { success: false, error: 'Сетевой сбой. Попробуйте позже.', isNetworkError: true };
+		} finally {
+			setIsLoading(false);
 		}
-
-		if (response.error) {
-			throw new Error(response.error.message || 'Неверный код авторизации');
-		}
-
-		toast.success('Вход выполнен', { position: 'top-center' });
-		router.refresh();
-		onSuccess?.();
 	};
 
 	return (
 		<div className="flex flex-col gap-4">
 			{step === 'phone' ? (
-				<PhoneStep onSendOtp={handleSendOtp} />
+				<PhoneStep onSendOtp={handleSendOtp} disabled={isLoading} />
 			) : (
-				<OtpStep
-					phone={phone}
-					onVerify={handleVerify}
-					onBack={() => setStep('phone')}
-				/>
+				<OtpStep phone={phone} onVerify={handleVerify} onBack={() => setStep('phone')} disabled={isLoading} />
 			)}
 		</div>
 	);
