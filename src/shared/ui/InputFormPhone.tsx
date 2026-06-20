@@ -1,19 +1,18 @@
 // shared/ui/form-phone-input.tsx
 'use client';
 
-import { Controller, useFormContext, type Control } from 'react-hook-form';
+import { Controller, useFormContext } from 'react-hook-form';
 import { Field, FieldError, FieldLabel, Input } from '@/shared/ui';
 import { usePhoneMask } from '../lib';
+import type { ComponentProps } from 'react';
 
-type InputFormPhoneProps = {
+type InputFormPhoneProps = Omit<ComponentProps<typeof Input>, 'ref' | 'id'> & {
 	name: string;
 	label: string;
-	placeholder?: string;
 	hideLabelOnDesktop?: boolean;
-	disabled?: boolean;
 };
 
-export function InputFormPhone({ name, label, placeholder, hideLabelOnDesktop, disabled }: InputFormPhoneProps) {
+export function InputFormPhone({ name, label, hideLabelOnDesktop, ...restProps }: InputFormPhoneProps) {
 	const { control } = useFormContext();
 
 	return (
@@ -30,11 +29,10 @@ export function InputFormPhone({ name, label, placeholder, hideLabelOnDesktop, d
 						</FieldLabel>
 						<Input
 							{...field}
+							{...restProps}
 							ref={ref}
 							id={`form-${name}`}
 							aria-invalid={fieldState.invalid}
-							placeholder={placeholder}
-							disabled={disabled}
 						/>
 						<div className="min-h-5 px-5">
 							{fieldState.invalid && <FieldError errors={[fieldState.error]} />}

@@ -3,7 +3,7 @@
 
 import { useForm, FormProvider } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Button, InputFormText } from '@/shared/ui';
+import { Button, InputFormOtp, InputFormText } from '@/shared/ui';
 import { SignInOtpFormData, signInOtpSchema } from '../model/signInOtpSchema';
 import { toast } from 'sonner';
 
@@ -32,11 +32,16 @@ export function OtpStep({ phone, onVerify, onBack, disabled }: OtpStepProps) {
 		<FormProvider {...form}>
 			<form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-4">
 				<p className="text-sm text-gray-600">Код отправлен на {phone}</p>
-				<InputFormText
+				{/* <InputFormText
 					name="code"
 					label="Код"
 					placeholder="Введите код"
 					maxLength={6}
+				/> */}
+				<InputFormOtp
+					name={'code'}
+					label={'Код'}
+
 				/>
 				<Button type="submit" disabled={form.formState.isSubmitting || disabled}>
 					{form.formState.isSubmitting ? 'Проверка...' : 'Войти'}

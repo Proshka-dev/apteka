@@ -1,18 +1,17 @@
+// shared/ui/form-text-input.tsx
 'use client';
 
-import { Controller, useFormContext, type Control } from 'react-hook-form';
+import { Controller, useFormContext } from 'react-hook-form';
 import { Field, FieldError, FieldLabel, Input } from '@/shared/ui';
+import type { ComponentProps } from 'react';
 
-type InputFormTextProps = {
+type InputFormTextProps = Omit<ComponentProps<typeof Input>, 'ref' | 'id'> & {
 	name: string;
 	label: string;
-	placeholder?: string;
 	hideLabelOnDesktop?: boolean;
-	maxLength?: number;
-	disabled?: boolean;
 };
 
-export function InputFormText({ name, label, placeholder, hideLabelOnDesktop, maxLength, disabled }: InputFormTextProps) {
+export function InputFormText({ name, label, hideLabelOnDesktop, ...restProps }: InputFormTextProps) {
 	const { control } = useFormContext();
 
 	return (
@@ -21,16 +20,17 @@ export function InputFormText({ name, label, placeholder, hideLabelOnDesktop, ma
 			control={control}
 			render={({ field, fieldState }) => (
 				<Field data-invalid={fieldState.invalid}>
-					<FieldLabel htmlFor={`form-${name}`} className={hideLabelOnDesktop ? 'md:hidden' : undefined}>
+					<FieldLabel
+						htmlFor={`form-${name}`}
+						className={hideLabelOnDesktop ? 'md:hidden' : undefined}
+					>
 						{label}
 					</FieldLabel>
 					<Input
 						{...field}
+						{...restProps}
 						id={`form-${name}`}
 						aria-invalid={fieldState.invalid}
-						placeholder={placeholder}
-						maxLength={maxLength}
-						disabled={disabled}
 					/>
 					<div className="min-h-5 px-5">
 						{fieldState.invalid && <FieldError errors={[fieldState.error]} />}
