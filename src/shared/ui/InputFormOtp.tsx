@@ -9,6 +9,7 @@ import {
 	InputOTP,
 	InputOTPGroup,
 	InputOTPSlot,
+	Repeat,
 } from '@/shared/ui';
 
 type InputFormOtpProps = {
@@ -43,21 +44,28 @@ export function InputFormOtp({
 					>
 						{label}
 					</FieldLabel>
+					<div className='flex justify-center'>
+						<InputOTP
+							{...field}
+							maxLength={maxLength}
+							{...restProps}
+							id={`form-${name}`}
+							aria-invalid={fieldState.invalid}
+						>
+							<InputOTPGroup>
+								<Repeat
+									times={maxLength}
+									render={(index) => (
+										<InputOTPSlot key={index} index={index} className='border-cust-gray' />
+									)}
+								/>
+								{/* {Array.from({ length: maxLength }).map((_, index) => (
+									<InputOTPSlot key={index} index={index} className='border-cust-gray' />
+								))} */}
+							</InputOTPGroup>
+						</InputOTP>
 
-					<InputOTP
-						{...field}
-						maxLength={maxLength}
-						{...restProps}
-						id={`form-${name}`}
-						aria-invalid={fieldState.invalid}
-
-					>
-						<InputOTPGroup>
-							{Array.from({ length: maxLength }).map((_, index) => (
-								<InputOTPSlot key={index} index={index} className='border-cust-gray' />
-							))}
-						</InputOTPGroup>
-					</InputOTP>
+					</div>
 
 					<div className="min-h-5 px-5">
 						{fieldState.invalid && <FieldError errors={[fieldState.error]} />}

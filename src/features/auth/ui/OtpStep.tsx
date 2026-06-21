@@ -40,8 +40,7 @@ export function OtpStep({ phone, onVerify, onBack, disabled }: OtpStepProps) {
 				/> */}
 				<InputFormOtp
 					name={'code'}
-					label={'Код'}
-
+					label={'Введите код'}
 				/>
 				<Button type="submit" disabled={form.formState.isSubmitting || disabled}>
 					{form.formState.isSubmitting ? 'Проверка...' : 'Войти'}
