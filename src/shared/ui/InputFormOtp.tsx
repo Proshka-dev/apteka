@@ -59,9 +59,6 @@ export function InputFormOtp({
 										<InputOTPSlot key={index} index={index} className='border-cust-gray' />
 									)}
 								/>
-								{/* {Array.from({ length: maxLength }).map((_, index) => (
-									<InputOTPSlot key={index} index={index} className='border-cust-gray' />
-								))} */}
 							</InputOTPGroup>
 						</InputOTP>
 

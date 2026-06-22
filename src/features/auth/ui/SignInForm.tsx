@@ -4,16 +4,16 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { authClient } from '@/shared/lib/auth/client';
-import { PhoneStep } from './PhoneStep';
-import { OtpStep } from './OtpStep';
+import { SignInPhoneStep } from './SignInPhoneStep';
+import { SignInOtpStep } from './SignInOtpStep';
 import { toast } from 'sonner';
 import { translateAuthError } from '../lib/translateAuthError';
 
-interface PhoneSignInFormProps {
+interface SignInFormProps {
 	onSuccess?: () => void;
 };
 
-export function PhoneSignInForm({ onSuccess }: PhoneSignInFormProps) {
+export function SignInForm({ onSuccess }: SignInFormProps) {
 	const [step, setStep] = useState<'phone' | 'otp'>('phone');
 	const [phone, setPhone] = useState('');
 	const [isLoading, setIsLoading] = useState(false);
@@ -64,9 +64,9 @@ export function PhoneSignInForm({ onSuccess }: PhoneSignInFormProps) {
 	return (
 		<div className="flex flex-col gap-4">
 			{step === 'phone' ? (
-				<PhoneStep onSendOtp={handleSendOtp} disabled={isLoading} />
+				<SignInPhoneStep onSendOtp={handleSendOtp} disabled={isLoading} />
 			) : (
-				<OtpStep phone={phone} onVerify={handleVerify} onBack={() => setStep('phone')} disabled={isLoading} />
+				<SignInOtpStep phone={phone} onVerify={handleVerify} onBack={() => setStep('phone')} disabled={isLoading} />
 			)}
 		</div>
 	);
