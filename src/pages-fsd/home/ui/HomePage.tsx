@@ -33,9 +33,6 @@ export function HomePage() {
 				/>
 			</div> */}
 
-			<div>
-				<LogoutButton>Выйти из аккаунта</LogoutButton>
-			</div>
 
 
 

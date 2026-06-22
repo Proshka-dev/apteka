@@ -16,7 +16,7 @@ export function UserAuthButtonContent({ session }: UserAuthButtonContentProps) {
 		session ? (
 			// Если сессия активна
 			<ButtonTopNav
-				href='/profile'
+				href='/user'
 				iconName='person'
 			>
 				{session.user.name}

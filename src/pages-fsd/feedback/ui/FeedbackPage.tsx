@@ -1,7 +1,7 @@
-export function ProfilePage() {
+export function FeedbackPage() {
 	return (
 		<div className="font-accent flex min-h-screen items-center justify-center flex-col" >
-			Редактирования личных данных (/user/profile)
+			Обратная связь (/user/feedback)
 		</div >
 	);
 }
