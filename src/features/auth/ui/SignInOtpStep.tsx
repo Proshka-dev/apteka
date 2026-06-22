@@ -31,17 +31,36 @@ export function SignInOtpStep({ phone, onVerify, onBack, disabled }: SignInOtpSt
 	return (
 		<FormProvider {...form}>
 			<form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-4">
-				<p className="text-sm text-gray-600">Код отправлен на {phone}</p>
-				<InputFormOtp
-					name={'code'}
-					label={'Введите код'}
-				/>
-				<Button type="submit" disabled={form.formState.isSubmitting || disabled}>
+				<p className="text-sm text-gray-600 mb-5">Код отправлен на {phone}</p>
+				<div className='pb-3 flex items-center justify-center'>
+					<InputFormOtp
+						name={'code'}
+						// label={'Введите код'}
+						hideLabel
+					/>
+				</div>
+				<Button
+					type="submit"
+					disabled={form.formState.isSubmitting || disabled}
+					variant={'primary-green-shadow'}
+					size={'pill-50-bold-accent'}
+					className={'text-xs w-fit px-15 self-center'}
+
+				>
 					{form.formState.isSubmitting ? 'Проверка...' : 'Войти'}
 				</Button>
-				<button type="button" className="text-sm text-blue-500 underline" onClick={onBack}>
+				<Button
+					onClick={onBack}
+					variant={'ghost-custom'}
+					size={'pill-40-sans'}
+					className={'w-fit self-center'}
+
+				>
+					Назад к вводу номера
+				</Button>
+				{/* <button type="button" className="text-sm text-blue-500 underline" onClick={onBack}>
 					Назад к номеру
-				</button>
+				</button> */}
 			</form>
 		</FormProvider>
 	);

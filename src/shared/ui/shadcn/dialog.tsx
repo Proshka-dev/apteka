@@ -57,13 +57,14 @@ function DialogContent({
 
 					/* кастомные стили */
 					// -- мобильная версия --
-					"max-w-[calc(100%-2rem)] max-h-[calc(100%-2rem)] w-screen h-screen", // размеры, позиционирование
+					"max-w-[calc(100%-2rem)] max-h-[calc(100%-2rem)] w-screen", // размеры, позиционирование // h-screen
 					"rounded-none shadow-cust-dialogs", // внешний вид
-					"p-5",
+					"px-5 py-10",
 
 					// -- sm --
-					"sm:max-w-[calc(100%-2rem)] sm:w-2/3 sm:h-[50vh]", // размеры, позиционирование
+					"sm:max-w-[calc(100%-2rem)] sm:w-2/3", // размеры, позиционирование //  sm:h-[50vh]
 					"sm:rounded-4xl", // внешний вид
+					"sm:p-15",
 
 
 					//					"md:max-w-[calc(100%-2rem)] md:w-2/3 md:h-[50vh] md:rounded-4xl",//кастомные стили

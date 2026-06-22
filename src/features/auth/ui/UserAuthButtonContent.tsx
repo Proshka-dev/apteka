@@ -32,7 +32,7 @@ export function UserAuthButtonContent({ session }: UserAuthButtonContentProps) {
 						</Button>
 					)}
 				/>
-				<DialogContent className="sm:max-w-md border border-red-600">
+				<DialogContent className=" border border-red-600 md:w-130">
 					<DialogHeader>
 						<DialogTitle>Вход или регистрация</DialogTitle>
 					</DialogHeader>

@@ -62,7 +62,7 @@ export function SignInForm({ onSuccess }: SignInFormProps) {
 	};
 
 	return (
-		<div className="flex flex-col gap-4">
+		<div>
 			{step === 'phone' ? (
 				<SignInPhoneStep onSendOtp={handleSendOtp} disabled={isLoading} />
 			) : (
