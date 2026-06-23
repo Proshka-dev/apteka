@@ -1,13 +1,11 @@
-import { LogoutButton } from "@/features/auth/ui/LogoutButton";
+import { getUserById } from "@/entities/user";
+import { UserDataForm } from "@/features/edit-user-data";
+import { requireAuth } from "@/shared/lib/auth/dal";
 
-export function UserPage() {
+export async function UserPage() {
+	const session = await requireAuth();
+	const user = await getUserById(session.user.id);
 	return (
-		<div className="font-accent flex min-h-screen items-center justify-center flex-col" >
-			Личный кабинет пользователя (/user)
-			<div>
-				<LogoutButton>Выйти из аккаунта</LogoutButton>
-			</div>
-
-		</div >
+		<UserDataForm user={user} />
 	);
 }

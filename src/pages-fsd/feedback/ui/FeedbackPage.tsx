@@ -1,7 +1,10 @@
+import { FeedbackForm } from "@/features/feedback";
+
 export function FeedbackPage() {
 	return (
-		<div className="font-accent flex min-h-screen items-center justify-center flex-col" >
-			Обратная связь (/user/feedback)
-		</div >
+		<div>
+			<h1 className="text-2xl font-bold mb-4">Обратная связь</h1>
+			<FeedbackForm />
+		</div>
 	);
 }

@@ -60,6 +60,8 @@ model User {
   phoneNumberVerified Boolean?
   sessions            Session[]
   accounts            Account[]
+  orders    Order[]       // связь с Order
+  feedbacks Feedback[]    // связь с Feedback
 
   @@unique([email])
   @@unique([phoneNumber])
@@ -113,4 +115,32 @@ model Verification {
 
   @@index([identifier])
   @@map("verification")
+}
+
+model Order {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  total     Float
+  status    String   @default("pending")
+  createdAt DateTime @default(now())
+  items     OrderItem[]
+}
+
+model OrderItem {
+  id       String  @id @default(cuid())
+  orderId  String
+  order    Order   @relation(fields: [orderId], references: [id])
+  productId String
+  quantity Int
+  price    Float
+}
+
+model Feedback {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  topic     String
+  message   String
+  createdAt DateTime @default(now())
 }
