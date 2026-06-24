@@ -10,13 +10,18 @@ export async function updateUserData(data: UserDataFormValues) {
 		return { error: parsed.error.flatten().fieldErrors };
 	}
 
+	console.log('data', data);
+	console.log('parsed.data', parsed.data);
+
 	await prisma.user.update({
 		where: { id: session.user.id },
 		data: {
 			name: parsed.data.name,
-			phoneNumber: parsed.data.phone, // или нормализованный номер
-			// email: parsed.data.email || null,
-			// birthDate: parsed.data.birthDate ? new Date(parsed.data.birthDate) : null,
+			phoneNumber: parsed.data.phone,
+			// при undefined prisma пропустит это значение и не будет его обновлять
+			email: parsed.data.email === '' ? undefined : parsed.data.email,
+			birthDate: parsed.data.birthDate ? new Date(parsed.data.birthDate) : null,
+			gender: parsed.data.gender || null,  // если пустая строка — ставим null
 		},
 	});
 

@@ -8,6 +8,11 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum Gender {
+  male
+  female
+}
+
 model City {
   id        Int      @id @default(autoincrement())
   name      String   @unique
@@ -62,6 +67,8 @@ model User {
   accounts            Account[]
   orders    Order[]       // связь с Order
   feedbacks Feedback[]    // связь с Feedback
+  gender    Gender?   // male, female или null (не указан)
+  birthDate DateTime?
 
   @@unique([email])
   @@unique([phoneNumber])
