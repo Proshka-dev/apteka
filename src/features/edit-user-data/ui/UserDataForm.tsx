@@ -1,7 +1,7 @@
 // features/edit-personal-data/ui/UserDataForm.tsx
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useForm, FormProvider } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import {
@@ -21,16 +21,14 @@ import { useEmailVerification } from '../lib/useEmailVerification';
 import { useRouter } from 'next/navigation';
 
 export function UserDataForm({ user }: { user: any }) {
-
 	const router = useRouter();
 
-	const initialPhone = user.phoneNumber || '';
-	const initialEmail = user.email || '';
+	const [initialPhone, setInitialPhone] = useState(user.phoneNumber || '');
+	const [initialEmail, setInitialEmail] = useState(user.email || '');
 
 	const phoneVer = usePhoneVerification();
 	const emailVer = useEmailVerification();
 
-	// Локальные состояния для OTP-кодов
 	const [phoneOtp, setPhoneOtp] = useState('');
 	const [emailOtp, setEmailOtp] = useState('');
 
@@ -45,37 +43,43 @@ export function UserDataForm({ user }: { user: any }) {
 		},
 	});
 
-	// Отслеживаем изменения полей
+	const watchedName = form.watch('name');
 	const watchedPhone = form.watch('phone');
 	const watchedEmail = form.watch('email');
+	const watchedBirthDate = form.watch('birthDate');
+	const watchedGender = form.watch('gender');
+
+	const initialName = user.name || '';
+	const initialBirthDate = user.birthDate?.toISOString()?.split('T')[0] || '';
+	const initialGender = user.gender || '';
+
+	const nameChanged = watchedName !== initialName;
+	const birthDateChanged = watchedBirthDate !== initialBirthDate;
+	const genderChanged = watchedGender !== initialGender;
 	const phoneChanged = watchedPhone !== initialPhone;
 	const emailChanged = watchedEmail !== initialEmail;
 
-	// Основная отправка остальных полей
+	useEffect(() => {
+		if (phoneVer.step === 'success') setInitialPhone(watchedPhone);
+	}, [phoneVer.step, watchedPhone]);
+
+	useEffect(() => {
+		if (emailVer.step === 'success') setInitialEmail(watchedEmail);
+	}, [emailVer.step, watchedEmail]);
+
+	const hasOtherChanges = nameChanged || birthDateChanged || genderChanged;
+	const isPhonePending = phoneChanged && phoneVer.step !== 'success';
+	const isEmailPending = emailChanged && emailVer.step !== 'success';
+	const isSaveDisabled = isPhonePending || isEmailPending || !hasOtherChanges;
+
 	const onSubmit = async (data: UserDataFormValues) => {
-		// phoneChanged и emailChanged уже есть из form.watch выше
-		const phoneToSend =
-			phoneVer.step === 'success'   // если подтверждён – не трогаем (плагин уже обновил)
-				? undefined
-				: phoneChanged
-					? undefined                // изменён, но не подтверждён – не передаём
-					: data.phone;              // не изменялся – можно передать старый (сервер проигнорирует)
-
-		const emailToSend =
-			emailVer.step === 'success'
-				? undefined
-				: emailChanged
-					? undefined
-					: data.email;
-
 		const result = await updateUserData({
 			name: data.name,
-			phone: phoneToSend,
-			email: emailToSend,
+			phone: undefined,
+			email: undefined,
 			birthDate: data.birthDate,
 			gender: data.gender,
 		});
-
 		if (result?.error) {
 			setServerErrors(form, result.error);
 		} else {
@@ -84,19 +88,13 @@ export function UserDataForm({ user }: { user: any }) {
 		}
 	};
 
-	// Запуск верификации телефона
 	const handleStartPhoneVerification = () => {
 		if (!watchedPhone || watchedPhone === initialPhone) return;
 		phoneVer.startVerification(watchedPhone);
 	};
 
-	// Запуск верификации email (с сохранением в БД)
 	const handleStartEmailVerification = async () => {
 		if (!watchedEmail || watchedEmail === initialEmail) return;
-
-		console.log('[Email] Запуск верификации для', watchedEmail);
-
-		// Сохраняем новый email (с emailVerified=false) и другие поля
 		try {
 			const result = await updateUserData({
 				name: form.getValues('name'),
@@ -105,21 +103,42 @@ export function UserDataForm({ user }: { user: any }) {
 				birthDate: form.getValues('birthDate'),
 				gender: form.getValues('gender'),
 			});
-
 			if (result?.error) {
-				console.error('[Email] Ошибка сохранения email:', result.error);
 				setServerErrors(form, result.error);
 				return;
 			}
 		} catch (e) {
-			console.error('[Email] Исключение при сохранении email:', e);
-			toast.error('Не удалось обновить email. Попробуйте позже.');
+			toast.error('Не удалось обновить email');
 			return;
 		}
-
-		console.log('[Email] Email сохранён, отправляем OTP...');
 		emailVer.startVerification(watchedEmail);
 	};
+
+	const cancelPhoneVerification = () => {
+		form.setValue('phone', initialPhone);
+		phoneVer.reset();
+		setPhoneOtp('');
+	};
+
+	const cancelEmailVerification = () => {
+		form.setValue('email', initialEmail);
+		emailVer.reset();
+		setEmailOtp('');
+	};
+
+	useEffect(() => {
+		if (!phoneChanged && phoneVer.step !== 'idle' && phoneVer.step !== 'success') {
+			phoneVer.reset();
+			setPhoneOtp('');
+		}
+	}, [phoneChanged, phoneVer]);
+
+	useEffect(() => {
+		if (!emailChanged && emailVer.step !== 'idle' && emailVer.step !== 'success') {
+			emailVer.reset();
+			setEmailOtp('');
+		}
+	}, [emailChanged, emailVer]);
 
 	return (
 		<FormProvider {...form}>
@@ -132,14 +151,24 @@ export function UserDataForm({ user }: { user: any }) {
 					{phoneChanged && phoneVer.step !== 'success' && (
 						<div className="mt-2 flex flex-col gap-2">
 							{phoneVer.step === 'idle' && (
-								<Button
-									type="button"
-									variant="primary-outline"
-									size="pill-40-bold-accent"
-									onClick={handleStartPhoneVerification}
-								>
-									Подтвердить телефон
-								</Button>
+								<div className="flex gap-2">
+									<Button
+										type="button"
+										variant="primary-outline"
+										size="pill-40-bold-accent"
+										onClick={handleStartPhoneVerification}
+									>
+										Подтвердить телефон
+									</Button>
+									<Button
+										type="button"
+										variant="ghost-custom"
+										size="pill-40-bold-accent"
+										onClick={cancelPhoneVerification}
+									>
+										Отмена
+									</Button>
+								</div>
 							)}
 							{phoneVer.step === 'sent' && (
 								<>
@@ -179,6 +208,14 @@ export function UserDataForm({ user }: { user: any }) {
 												? `Повторно через ${phoneVer.secondsLeft}с`
 												: 'Отправить повторно'}
 										</Button>
+										<Button
+											type="button"
+											variant="ghost-custom"
+											size="pill-40-bold-accent"
+											onClick={cancelPhoneVerification}
+										>
+											Отмена
+										</Button>
 									</div>
 								</>
 							)}
@@ -197,14 +234,24 @@ export function UserDataForm({ user }: { user: any }) {
 					{emailChanged && emailVer.step !== 'success' && (
 						<div className="mt-2 flex flex-col gap-2">
 							{emailVer.step === 'idle' && (
-								<Button
-									type="button"
-									variant="primary-outline"
-									size="pill-40-bold-accent"
-									onClick={handleStartEmailVerification}
-								>
-									Подтвердить email
-								</Button>
+								<div className="flex gap-2">
+									<Button
+										type="button"
+										variant="primary-outline"
+										size="pill-40-bold-accent"
+										onClick={handleStartEmailVerification}
+									>
+										Подтвердить email
+									</Button>
+									<Button
+										type="button"
+										variant="ghost-custom"
+										size="pill-40-bold-accent"
+										onClick={cancelEmailVerification}
+									>
+										Отмена
+									</Button>
+								</div>
 							)}
 							{emailVer.step === 'sent' && (
 								<>
@@ -244,6 +291,14 @@ export function UserDataForm({ user }: { user: any }) {
 												? `Повторно через ${emailVer.secondsLeft}с`
 												: 'Отправить повторно'}
 										</Button>
+										<Button
+											type="button"
+											variant="ghost-custom"
+											size="pill-40-bold-accent"
+											onClick={cancelEmailVerification}
+										>
+											Отмена
+										</Button>
 									</div>
 								</>
 							)}
@@ -267,9 +322,28 @@ export function UserDataForm({ user }: { user: any }) {
 					</select>
 				</div>
 
-				<Button type="submit" disabled={form.formState.isSubmitting}>
+				<Button
+					type="submit"
+					disabled={form.formState.isSubmitting || isSaveDisabled}
+				>
 					{form.formState.isSubmitting ? 'Сохранение...' : 'Сохранить'}
 				</Button>
+
+				{isPhonePending && (
+					<p className="text-sm text-amber-600 text-center">
+						Подтвердите новый номер телефона
+					</p>
+				)}
+				{isEmailPending && (
+					<p className="text-sm text-amber-600 text-center">
+						Подтвердите новый адрес электронной почты
+					</p>
+				)}
+				{!isPhonePending && !isEmailPending && !hasOtherChanges && (
+					<p className="text-sm text-gray-500 text-center">
+						Нет изменений для сохранения
+					</p>
+				)}
 			</form>
 		</FormProvider>
 	);
