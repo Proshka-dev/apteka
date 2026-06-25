@@ -1,6 +1,6 @@
 'use client';
 import { usePathname } from 'next/navigation';
-import { authClient } from '@/shared/lib/auth/client';
+import { authClient } from '@/shared/lib';
 import Link from 'next/link';
 import { Button } from '@/shared/ui';
 import { AuthSession } from '@/shared/lib';

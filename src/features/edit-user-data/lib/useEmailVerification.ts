@@ -1,6 +1,6 @@
 // features/edit-personal-data/lib/useEmailVerification.ts
 import { useState, useEffect, useCallback } from 'react';
-import { authClient } from '@/shared/lib/auth/client';
+import { authClient } from '@/shared/lib';
 import { toast } from 'sonner';
 
 type Step = 'idle' | 'sending' | 'sent' | 'verifying' | 'success' | 'error';

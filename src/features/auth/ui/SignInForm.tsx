@@ -3,7 +3,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { authClient } from '@/shared/lib/auth/client';
+import { authClient } from '@/shared/lib';
 import { SignInPhoneStep } from './SignInPhoneStep';
 import { SignInOtpStep } from './SignInOtpStep';
 import { toast } from 'sonner';
