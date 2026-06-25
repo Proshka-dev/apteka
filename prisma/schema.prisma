@@ -50,25 +50,25 @@ model CallbackRequest {
 }
 
 model User {
-  id                  String    @id
+  id                  String     @id
   name                String
   email               String
-  emailVerified       Boolean   @default(false)
+  emailVerified       Boolean    @default(false)
   image               String?
-  createdAt           DateTime  @default(now())
-  updatedAt           DateTime  @updatedAt
+  createdAt           DateTime   @default(now())
+  updatedAt           DateTime   @updatedAt
   role                String?
-  banned              Boolean?  @default(false)
+  banned              Boolean?   @default(false)
   banReason           String?
   banExpires          DateTime?
   phoneNumber         String?
   phoneNumberVerified Boolean?
   sessions            Session[]
   accounts            Account[]
-  orders    Order[]       // связь с Order
-  feedbacks Feedback[]    // связь с Feedback
-  gender    Gender?   // male, female или null (не указан)
-  birthDate DateTime?
+  orders              Order[] // связь с Order
+  feedbacks           Feedback[] // связь с Feedback
+  gender              Gender? // male, female или null (не указан)
+  birthDate           DateTime?
 
   @@unique([email])
   @@unique([phoneNumber])
@@ -125,22 +125,22 @@ model Verification {
 }
 
 model Order {
-  id        String   @id @default(cuid())
+  id        String      @id @default(cuid())
   userId    String
-  user      User     @relation(fields: [userId], references: [id])
+  user      User        @relation(fields: [userId], references: [id])
   total     Float
-  status    String   @default("pending")
-  createdAt DateTime @default(now())
+  status    String      @default("pending")
+  createdAt DateTime    @default(now())
   items     OrderItem[]
 }
 
 model OrderItem {
-  id       String  @id @default(cuid())
-  orderId  String
-  order    Order   @relation(fields: [orderId], references: [id])
+  id        String @id @default(cuid())
+  orderId   String
+  order     Order  @relation(fields: [orderId], references: [id])
   productId String
-  quantity Int
-  price    Float
+  quantity  Int
+  price     Float
 }
 
 model Feedback {
