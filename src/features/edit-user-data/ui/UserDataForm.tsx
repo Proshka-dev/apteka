@@ -49,10 +49,13 @@ export function UserDataForm({ user }: { user: any }) {
 
 	// Основная отправка остальных полей
 	const onSubmit = async (data: UserDataFormValues) => {
+
+		console.log('data:', data);
+
 		const result = await updateUserData({
 			name: data.name,
 			phone: phoneVer.step === 'success' ? undefined : data.phone,
-			email: emailVer.step === 'success' ? undefined : data.email, // email тоже не трогаем, если уже подтверждён
+			email: emailVer.step === 'success' ? undefined : data.email,
 			birthDate: data.birthDate,
 			gender: data.gender,
 		});
@@ -72,17 +75,31 @@ export function UserDataForm({ user }: { user: any }) {
 	// Запуск верификации email (с сохранением в БД)
 	const handleStartEmailVerification = async () => {
 		if (!watchedEmail || watchedEmail === initialEmail) return;
-		const result = await updateUserData({
-			name: form.getValues('name'),
-			phone: form.getValues('phone'),
-			email: watchedEmail,
-			birthDate: form.getValues('birthDate'),
-			gender: form.getValues('gender'),
-		});
-		if (result?.error) {
-			setServerErrors(form, result.error);
+
+		console.log('[Email] Запуск верификации для', watchedEmail);
+
+		// Сохраняем новый email (с emailVerified=false) и другие поля
+		try {
+			const result = await updateUserData({
+				name: form.getValues('name'),
+				phone: form.getValues('phone'),
+				email: watchedEmail,
+				birthDate: form.getValues('birthDate'),
+				gender: form.getValues('gender'),
+			});
+
+			if (result?.error) {
+				console.error('[Email] Ошибка сохранения email:', result.error);
+				setServerErrors(form, result.error);
+				return;
+			}
+		} catch (e) {
+			console.error('[Email] Исключение при сохранении email:', e);
+			toast.error('Не удалось обновить email. Попробуйте позже.');
 			return;
 		}
+
+		console.log('[Email] Email сохранён, отправляем OTP...');
 		emailVer.startVerification(watchedEmail);
 	};
 

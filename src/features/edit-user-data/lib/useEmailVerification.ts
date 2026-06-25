@@ -26,6 +26,7 @@ export function useEmailVerification() {
 	}, [secondsLeft]);
 
 	const startVerification = useCallback(async (email: string) => {
+		console.log('[useEmailVerification] startVerification called with', email);
 		setLastEmail(email);
 		setStep('sending');
 		setError('');
@@ -34,14 +35,17 @@ export function useEmailVerification() {
 				email,
 				type: 'email-verification',
 			});
+			console.log('[useEmailVerification] Ответ от sendVerificationOtp:', response);
 			if (response.error) {
+				console.error('[useEmailVerification] Ошибка в ответе:', response.error);
 				setError(response.error.message || 'Не удалось отправить код');
 				setStep('error');
 				return;
 			}
 			setStep('sent');
 			setSecondsLeft(60);
-		} catch {
+		} catch (e) {
+			console.error('[useEmailVerification] Исключение при отправке OTP:', e);
 			setError('Сетевая ошибка при отправке кода');
 			setStep('error');
 		}

@@ -1,4 +1,3 @@
-// features/edit-personal-data/api/updateUserData.ts
 'use server';
 
 import { prisma } from '@/shared/lib/prisma';
@@ -6,6 +5,9 @@ import { requireAuth } from '@/shared/lib/auth/dal';
 import { userDataSchema } from '../model/userDataSchema';
 
 export async function updateUserData(data: unknown) {
+	console.log('updateUserData - data:', data);
+
+
 	const session = await requireAuth();
 	const parsed = userDataSchema.safeParse(data);
 	if (!parsed.success) {
@@ -24,22 +26,27 @@ export async function updateUserData(data: unknown) {
 
 	const updateData: any = { name };
 
-	// Телефон обновляем только если передан и действительно отличается
-	if (phone && phone !== currentUser.phoneNumber) {
+	// Телефон: обновляем только если передан и отличается
+	if (phone !== undefined && phone !== currentUser.phoneNumber) {
 		updateData.phoneNumber = phone;
-		updateData.phoneNumberVerified = false; // но обычно плагин сам обновляет
+		updateData.phoneNumberVerified = false;
 	}
 
-	// Email: если передан и отличается – обновляем с verified = false
-	if (email && email !== currentUser.email) {
+	// Email: обновляем только если передан, не пустой и отличается
+	if (email !== undefined && email !== '' && email !== currentUser.email) {
 		updateData.email = email;
 		updateData.emailVerified = false;
 	} else if (email === '' && currentUser.email) {
-		// не трогаем email
+		// Пустая строка – не обновляем email, оставляем старый (временный или настоящий)
 	}
 
+	// Дата рождения
 	updateData.birthDate = birthDate ? new Date(birthDate) : null;
+
+	// Пол
 	updateData.gender = gender || null;
+
+	console.log('updateData', updateData);
 
 	await prisma.user.update({
 		where: { id: userId },

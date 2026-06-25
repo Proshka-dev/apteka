@@ -1,9 +1,8 @@
 import { betterAuth } from "better-auth";
 import { prismaAdapter } from "better-auth/adapters/prisma";
 import { admin } from "better-auth/plugins/admin"; // <-- Импортируем плагин admin
-import { phoneNumber } from "better-auth/plugins/phone-number";
+import { phoneNumber, emailOTP } from "better-auth/plugins";
 import { prisma } from "./prisma";
-import { emailOTP } from "better-auth/plugins";
 // import { sendSMS } from "@better-auth/infra/sms"; // <-- Импортируем утилиту для отправки SMS
 
 export const auth = betterAuth({

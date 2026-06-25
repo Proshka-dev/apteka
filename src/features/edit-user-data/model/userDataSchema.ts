@@ -10,14 +10,15 @@ export const userDataSchema = z.object({
 		.union([
 			z.email({ message: 'Некорректный email' }),
 			z.literal(''),
-			z.undefined()
-		]),
+		])
+		.optional(),
 	birthDate: z
 		.string()
 		.optional(),
 	gender: z
 		.enum(['male', 'female'])
-		.optional(),
+		.optional()
+		.or(z.literal('')),
 });
 
 export type UserDataFormValues = z.infer<typeof userDataSchema>;
