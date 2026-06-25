@@ -18,8 +18,12 @@ import { UserDataFormValues, userDataSchema } from '../model/userDataSchema';
 import { updateUserData } from '../api/updateUserData';
 import { usePhoneVerification } from '../lib/usePhoneVerification';
 import { useEmailVerification } from '../lib/useEmailVerification';
+import { useRouter } from 'next/navigation';
 
 export function UserDataForm({ user }: { user: any }) {
+
+	const router = useRouter();
+
 	const initialPhone = user.phoneNumber || '';
 	const initialEmail = user.email || '';
 
@@ -49,20 +53,34 @@ export function UserDataForm({ user }: { user: any }) {
 
 	// Основная отправка остальных полей
 	const onSubmit = async (data: UserDataFormValues) => {
+		// phoneChanged и emailChanged уже есть из form.watch выше
+		const phoneToSend =
+			phoneVer.step === 'success'   // если подтверждён – не трогаем (плагин уже обновил)
+				? undefined
+				: phoneChanged
+					? undefined                // изменён, но не подтверждён – не передаём
+					: data.phone;              // не изменялся – можно передать старый (сервер проигнорирует)
 
-		console.log('data:', data);
+		const emailToSend =
+			emailVer.step === 'success'
+				? undefined
+				: emailChanged
+					? undefined
+					: data.email;
 
 		const result = await updateUserData({
 			name: data.name,
-			phone: phoneVer.step === 'success' ? undefined : data.phone,
-			email: emailVer.step === 'success' ? undefined : data.email,
+			phone: phoneToSend,
+			email: emailToSend,
 			birthDate: data.birthDate,
 			gender: data.gender,
 		});
+
 		if (result?.error) {
 			setServerErrors(form, result.error);
 		} else {
 			toast.success('Данные сохранены');
+			router.refresh();
 		}
 	};
 
