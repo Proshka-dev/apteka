@@ -19,8 +19,13 @@ import { updateUserData } from '../api/updateUserData';
 import { usePhoneVerification } from '../lib/usePhoneVerification';
 import { useEmailVerification } from '../lib/useEmailVerification';
 import { useRouter } from 'next/navigation';
+import { GetUserByIdResponse } from '@/entities/user';
 
-export function UserDataForm({ user }: { user: any }) {
+interface UserDataFormProps {
+	user: GetUserByIdResponse;
+}
+
+export function UserDataForm({ user }: UserDataFormProps) {
 	const router = useRouter();
 
 	const [initialPhone, setInitialPhone] = useState(user.phoneNumber || '');
@@ -60,11 +65,11 @@ export function UserDataForm({ user }: { user: any }) {
 	const emailChanged = watchedEmail !== initialEmail;
 
 	useEffect(() => {
-		if (phoneVer.step === 'success') setInitialPhone(watchedPhone);
+		if (phoneVer.step === 'success' && watchedPhone) setInitialPhone(watchedPhone);
 	}, [phoneVer.step, watchedPhone]);
 
 	useEffect(() => {
-		if (emailVer.step === 'success') setInitialEmail(watchedEmail);
+		if (emailVer.step === 'success' && watchedEmail) setInitialEmail(watchedEmail);
 	}, [emailVer.step, watchedEmail]);
 
 	const hasOtherChanges = nameChanged || birthDateChanged || genderChanged;

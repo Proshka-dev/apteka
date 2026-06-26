@@ -14,3 +14,5 @@ export async function getUserById(userId: string) {
 		},
 	});
 }
+
+export type GetUserByIdResponse = NonNullable<Awaited<ReturnType<typeof getUserById>>>;
