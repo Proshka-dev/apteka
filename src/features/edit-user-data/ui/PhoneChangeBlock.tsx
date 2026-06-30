@@ -4,7 +4,6 @@
 import { useState, useEffect } from 'react';
 import { useForm, FormProvider } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { z } from 'zod';
 import {
 	Button,
 	InputFormPhone,
@@ -45,6 +44,7 @@ export function PhoneChangeBlock({ initialPhone }: PhoneChangeBlockProps) {
 	};
 
 	useEffect(() => {
+		//при успешной верификации устанавливаем сurrentPhone = watchedPhone
 		if (phoneVer.step === 'success') {
 			setCurrentPhone(watchedPhone);
 			toast.success('Телефон подтверждён и обновлён');
@@ -52,6 +52,7 @@ export function PhoneChangeBlock({ initialPhone }: PhoneChangeBlockProps) {
 	}, [phoneVer.step, watchedPhone]);
 
 	useEffect(() => {
+		//автоматическая отмена при возврате поля к прежнему значению
 		if (!changed && phoneVer.step !== 'idle' && phoneVer.step !== 'success') {
 			handleCancel();
 		}
