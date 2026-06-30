@@ -13,6 +13,8 @@ export * from './shadcn/popover'
 export * from './shadcn/input-otp'
 export * from './shadcn/separator'
 export * from './shadcn/select'
+export * from './shadcn/table'
+export * from './shadcn/badge'
 
 //Логотип
 export * from './Logo';
