@@ -1,16 +1,16 @@
 // features/edit-personal-data/ui/UserDataForm.tsx
 'use client';
 
-import { useForm, FormProvider } from 'react-hook-form';
+import { useForm, FormProvider, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { z } from 'zod';
-import { Button, InputFormText } from '@/shared/ui';
+import { Button, InputFormText, Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/shared/ui';
 import { setServerErrors } from '@/shared/lib/form-utils';
 import { updateUserData } from '../api/updateUserData';
 import { toast } from 'sonner';
 import { useRouter } from 'next/navigation';
 import { GetUserByIdResponse } from '@/entities/user';
 import { UserDataValues, userDataSchema } from '../model/userDataSchema';
+import { formatDateForInput } from '@/shared/lib';
 
 interface UserDataFormProps {
 	user: GetUserByIdResponse;
@@ -19,14 +19,25 @@ interface UserDataFormProps {
 export function UserDataForm({ user }: UserDataFormProps) {
 	const router = useRouter();
 
+	const initialValues: UserDataValues = {
+		name: user.name || '',
+		birthDate: formatDateForInput(user.birthDate),
+		gender: (user.gender as UserDataValues['gender']) || '',
+	};
+
 	const form = useForm<UserDataValues>({
 		resolver: zodResolver(userDataSchema),
-		defaultValues: {
-			name: user.name || '',
-			birthDate: user.birthDate?.toISOString()?.split('T')[0] || '',
-			gender: user.gender || '',
-		},
+		defaultValues: initialValues,
 	});
+
+	const watchedName = form.watch('name');
+	const watchedBirthDate = form.watch('birthDate');
+	const watchedGender = form.watch('gender');
+
+	const nameChanged = watchedName !== initialValues.name;
+	const birthDateChanged = watchedBirthDate !== initialValues.birthDate;
+	const genderChanged = watchedGender !== initialValues.gender;
+	const hasChanges = nameChanged || birthDateChanged || genderChanged;
 
 	const onSubmit = async (data: UserDataValues) => {
 		const result = await updateUserData({
@@ -44,6 +55,10 @@ export function UserDataForm({ user }: UserDataFormProps) {
 		}
 	};
 
+	const handleCancel = () => {
+		form.reset(initialValues);
+	};
+
 	return (
 		<FormProvider {...form}>
 			<form onSubmit={form.handleSubmit(onSubmit)} className="max-w-md flex flex-col gap-4">
@@ -52,16 +67,43 @@ export function UserDataForm({ user }: UserDataFormProps) {
 
 				<div>
 					<label className="block mb-1 font-medium">Пол</label>
-					<select {...form.register('gender')} className="w-full border rounded p-2">
-						<option value="">Не указан</option>
-						<option value="male">Мужской</option>
-						<option value="female">Женский</option>
-					</select>
+					<Controller
+						name="gender"
+						control={form.control}
+						render={({ field }) => (
+							<Select value={field.value || ''} onValueChange={field.onChange}>
+								<SelectTrigger className="w-full">
+									<SelectValue placeholder="Не указан" />
+								</SelectTrigger>
+								<SelectContent>
+									<SelectItem value="">Не указан</SelectItem>
+									<SelectItem value="male">Мужской</SelectItem>
+									<SelectItem value="female">Женский</SelectItem>
+								</SelectContent>
+							</Select>
+						)}
+					/>
 				</div>
 
-				<Button type="submit" disabled={form.formState.isSubmitting}>
-					{form.formState.isSubmitting ? 'Сохранение...' : 'Сохранить'}
-				</Button>
+				<div className="flex gap-2">
+					<Button
+						type="submit"
+						disabled={form.formState.isSubmitting || !hasChanges}
+					>
+						{form.formState.isSubmitting ? 'Сохранение...' : 'Сохранить'}
+					</Button>
+
+					{hasChanges && (
+						<Button
+							type="button"
+							variant="ghost-custom"
+							size="pill-40-bold-accent"
+							onClick={handleCancel}
+						>
+							Отмена
+						</Button>
+					)}
+				</div>
 			</form>
 		</FormProvider>
 	);

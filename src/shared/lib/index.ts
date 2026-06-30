@@ -14,6 +14,7 @@ export * from './hooks/useDragScroll';
 export * from './hooks/usePhoneMask';
 
 export * from './normalizePhone';
+export * from './formatDateForInput'
 
 //Валидация (схемы)
 export * from './validation/phoneSchema';
