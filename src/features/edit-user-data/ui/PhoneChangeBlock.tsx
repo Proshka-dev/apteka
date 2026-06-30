@@ -14,13 +14,7 @@ import {
 } from '@/shared/ui';
 import { usePhoneVerification } from '../lib/usePhoneVerification';
 import { toast } from 'sonner';
-
-const phoneSchema = z.object({
-	phone: z.string().regex(/^\+7 \(\d{3}\) \d{3}-\d{2}-\d{2}$/, 'Неверный формат'),
-});
-
-type PhoneValues = z.infer<typeof phoneSchema>;
-
+import { phoneChangeSchema, PhoneChangeValues } from '../model/phoneChangeSchema';
 interface PhoneChangeBlockProps {
 	initialPhone: string;
 }
@@ -30,8 +24,8 @@ export function PhoneChangeBlock({ initialPhone }: PhoneChangeBlockProps) {
 	const [phoneOtp, setPhoneOtp] = useState('');
 	const phoneVer = usePhoneVerification();
 
-	const form = useForm<PhoneValues>({
-		resolver: zodResolver(phoneSchema),
+	const form = useForm<PhoneChangeValues>({
+		resolver: zodResolver(phoneChangeSchema),
 		defaultValues: { phone: initialPhone },
 	});
 

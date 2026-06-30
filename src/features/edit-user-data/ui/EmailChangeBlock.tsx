@@ -15,14 +15,7 @@ import {
 import { useEmailVerification } from '../lib/useEmailVerification';
 import { updateEmailBeforeVerification } from '../api/updateEmailBeforeVerification';
 import { toast } from 'sonner';
-
-const emailSchema = z.object({
-	email: z
-		.union([z.email({ message: 'Некорректный email' }), z.literal('')])
-		.optional(),
-});
-
-type EmailValues = z.infer<typeof emailSchema>;
+import { emailChangeSchema, EmailChangeValues } from '../model/emailChangeSchema';
 
 interface EmailChangeBlockProps {
 	initialEmail: string;
@@ -33,8 +26,8 @@ export function EmailChangeBlock({ initialEmail }: EmailChangeBlockProps) {
 	const [emailOtp, setEmailOtp] = useState('');
 	const emailVer = useEmailVerification();
 
-	const form = useForm<EmailValues>({
-		resolver: zodResolver(emailSchema),
+	const form = useForm<EmailChangeValues>({
+		resolver: zodResolver(emailChangeSchema),
 		defaultValues: { email: initialEmail },
 	});
 

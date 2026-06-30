@@ -19,3 +19,4 @@ export * from './normalizePhone';
 export * from './validation/phoneSchema';
 export * from './validation/nameSchema';
 export * from './validation/otpSchema';
+export * from './validation/emailSchema';

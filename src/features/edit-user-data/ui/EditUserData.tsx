@@ -17,7 +17,7 @@ export function EditPersonalData({ user }: EditUserDataProps) {
 			<section>
 				<EmailChangeBlock initialEmail={user.email || ''} />
 			</section>
-			<section>
+			<section className='border-t-2 pt-5'>
 				<UserDataForm user={user} />
 			</section>
 		</div>

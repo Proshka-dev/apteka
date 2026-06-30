@@ -10,14 +10,7 @@ import { updateUserData } from '../api/updateUserData';
 import { toast } from 'sonner';
 import { useRouter } from 'next/navigation';
 import { GetUserByIdResponse } from '@/entities/user';
-
-const basicInfoSchema = z.object({
-	name: z.string().min(2, 'Имя слишком короткое'),
-	birthDate: z.string().optional(),
-	gender: z.enum(['male', 'female']).optional().or(z.literal('')),
-});
-
-type BasicInfoValues = z.infer<typeof basicInfoSchema>;
+import { UserDataValues, userDataSchema } from '../model/userDataSchema';
 
 interface UserDataFormProps {
 	user: GetUserByIdResponse;
@@ -26,8 +19,8 @@ interface UserDataFormProps {
 export function UserDataForm({ user }: UserDataFormProps) {
 	const router = useRouter();
 
-	const form = useForm<BasicInfoValues>({
-		resolver: zodResolver(basicInfoSchema),
+	const form = useForm<UserDataValues>({
+		resolver: zodResolver(userDataSchema),
 		defaultValues: {
 			name: user.name || '',
 			birthDate: user.birthDate?.toISOString()?.split('T')[0] || '',
@@ -35,7 +28,7 @@ export function UserDataForm({ user }: UserDataFormProps) {
 		},
 	});
 
-	const onSubmit = async (data: BasicInfoValues) => {
+	const onSubmit = async (data: UserDataValues) => {
 		const result = await updateUserData({
 			name: data.name,
 			phone: undefined,
