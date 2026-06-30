@@ -15,6 +15,7 @@ import {
 import { usePhoneVerification } from '../lib/usePhoneVerification';
 import { toast } from 'sonner';
 import { phoneChangeSchema, PhoneChangeValues } from '../model/phoneChangeSchema';
+import { translateAuthError } from '@/shared/lib';
 interface PhoneChangeBlockProps {
 	initialPhone: string;
 }
@@ -84,7 +85,7 @@ export function PhoneChangeBlock({ initialPhone }: PhoneChangeBlockProps) {
 						)}
 						{phoneVer.step === 'sent' && (
 							<>
-								<div className="flex justify-center">
+								<div className="flex justify-center mb-5">
 									<InputOTP
 										value={phoneOtp}
 										onChange={setPhoneOtp}
@@ -94,7 +95,7 @@ export function PhoneChangeBlock({ initialPhone }: PhoneChangeBlockProps) {
 									>
 										<InputOTPGroup>
 											{Array.from({ length: 6 }).map((_, i) => (
-												<InputOTPSlot key={i} index={i} />
+												<InputOTPSlot key={i} index={i} className="p-5 text-md" />
 											))}
 										</InputOTPGroup>
 									</InputOTP>
@@ -117,7 +118,7 @@ export function PhoneChangeBlock({ initialPhone }: PhoneChangeBlockProps) {
 										onClick={() => phoneVer.startVerification(phoneVer.lastPhone)}
 									>
 										{phoneVer.secondsLeft > 0
-											? `Повторно через ${phoneVer.secondsLeft}с`
+											? `Повторить через ${phoneVer.secondsLeft} сек`
 											: 'Отправить повторно'}
 									</Button>
 									<Button
@@ -132,7 +133,7 @@ export function PhoneChangeBlock({ initialPhone }: PhoneChangeBlockProps) {
 							</>
 						)}
 						{phoneVer.step === 'verifying' && <p>Проверка...</p>}
-						{phoneVer.error && <p className="text-red-500 text-sm">{phoneVer.error}</p>}
+						{phoneVer.error && <p className="text-red-500 text-sm">{translateAuthError(phoneVer.error)}</p>}
 					</div>
 				)}
 				{phoneVer.step === 'success' && (

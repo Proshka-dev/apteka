@@ -63,7 +63,7 @@ export function InputFormOtp({
 									<Repeat
 										times={maxLength}
 										render={(index) => (
-											<InputOTPSlot key={index} index={index} className='border-cust-gray p-6 text-lg' />
+											<InputOTPSlot key={index} index={index} className='p-6 text-lg' />
 										)}
 									/>
 								</InputOTPGroup>

@@ -16,6 +16,7 @@ import { useEmailVerification } from '../lib/useEmailVerification';
 import { updateEmailBeforeVerification } from '../api/updateEmailBeforeVerification';
 import { toast } from 'sonner';
 import { emailChangeSchema, EmailChangeValues } from '../model/emailChangeSchema';
+import { translateAuthError } from '@/shared/lib';
 
 interface EmailChangeBlockProps {
 	initialEmail: string;
@@ -97,7 +98,7 @@ export function EmailChangeBlock({ initialEmail }: EmailChangeBlockProps) {
 						)}
 						{emailVer.step === 'sent' && (
 							<>
-								<div className="flex justify-center">
+								<div className="flex justify-center mb-5">
 									<InputOTP
 										value={emailOtp}
 										onChange={setEmailOtp}
@@ -107,7 +108,7 @@ export function EmailChangeBlock({ initialEmail }: EmailChangeBlockProps) {
 									>
 										<InputOTPGroup>
 											{Array.from({ length: 6 }).map((_, i) => (
-												<InputOTPSlot key={i} index={i} />
+												<InputOTPSlot key={i} index={i} className="p-5 text-md" />
 											))}
 										</InputOTPGroup>
 									</InputOTP>
@@ -130,7 +131,7 @@ export function EmailChangeBlock({ initialEmail }: EmailChangeBlockProps) {
 										onClick={() => emailVer.startVerification(emailVer.lastEmail)}
 									>
 										{emailVer.secondsLeft > 0
-											? `Повторно через ${emailVer.secondsLeft}с`
+											? `Повторить через ${emailVer.secondsLeft} сек`
 											: 'Отправить повторно'}
 									</Button>
 									<Button
@@ -145,7 +146,7 @@ export function EmailChangeBlock({ initialEmail }: EmailChangeBlockProps) {
 							</>
 						)}
 						{emailVer.step === 'verifying' && <p>Проверка...</p>}
-						{emailVer.error && <p className="text-red-500 text-sm">{emailVer.error}</p>}
+						{emailVer.error && <p className="text-red-500 text-sm">{translateAuthError(emailVer.error)}</p>}
 					</div>
 				)}
 				{emailVer.step === 'success' && (

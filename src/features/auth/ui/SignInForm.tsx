@@ -3,11 +3,10 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { authClient } from '@/shared/lib';
+import { authClient, translateAuthError } from '@/shared/lib';
 import { SignInPhoneStep } from './SignInPhoneStep';
 import { SignInOtpStep } from './SignInOtpStep';
 import { toast } from 'sonner';
-import { translateAuthError } from '../lib/translateAuthError';
 
 interface SignInFormProps {
 	onSuccess?: () => void;

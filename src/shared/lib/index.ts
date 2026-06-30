@@ -5,6 +5,7 @@ export * from './form-utils';
 export * from './auth';
 export * from './auth-client';
 export * from './isTempEmail'
+export * from './translateAuthError'
 //export * from './auth/dal';
 
 export * from './hooks/useClickOutside';
