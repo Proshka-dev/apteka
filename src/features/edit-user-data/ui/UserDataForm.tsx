@@ -17,6 +17,12 @@ interface UserDataFormProps {
 }
 
 export function UserDataForm({ user }: UserDataFormProps) {
+	const genderOptions = [
+		{ value: "", label: "Не указан" },
+		{ value: "male", label: "Мужской" },
+		{ value: "female", label: "Женский" },
+	]
+
 	const router = useRouter();
 
 	const initialValues: UserDataValues = {
@@ -71,14 +77,20 @@ export function UserDataForm({ user }: UserDataFormProps) {
 						name="gender"
 						control={form.control}
 						render={({ field }) => (
-							<Select value={field.value || ''} onValueChange={field.onChange}>
+							<Select
+								value={field.value || ''}
+								onValueChange={field.onChange}
+								items={genderOptions} // 👈 Обязательно для Base UI!
+							>
 								<SelectTrigger className="w-full">
 									<SelectValue placeholder="Не указан" />
 								</SelectTrigger>
 								<SelectContent>
-									<SelectItem value="">Не указан</SelectItem>
-									<SelectItem value="male">Мужской</SelectItem>
-									<SelectItem value="female">Женский</SelectItem>
+									{genderOptions.map((option) => (
+										<SelectItem key={option.value} value={option.value}>
+											{option.label}
+										</SelectItem>
+									))}
 								</SelectContent>
 							</Select>
 						)}
