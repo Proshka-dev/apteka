@@ -1,8 +1,8 @@
 import { betterAuth } from "better-auth";
 import { prismaAdapter } from "better-auth/adapters/prisma";
 import { admin } from "better-auth/plugins/admin"; // <-- Импортируем плагин admin
-import { phoneNumber } from "better-auth/plugins/phone-number";
-import { prisma } from "../prisma";
+import { phoneNumber, emailOTP } from "better-auth/plugins";
+import { prisma } from "./prisma";
 // import { sendSMS } from "@better-auth/infra/sms"; // <-- Импортируем утилиту для отправки SMS
 
 export const auth = betterAuth({
@@ -31,6 +31,7 @@ export const auth = betterAuth({
 
 	plugins: [
 		admin(), // <-- Подключаем плагин для управления ролями
+
 		phoneNumber({
 			// Функция для отправки SMS
 			sendOTP: async ({ phoneNumber: to, code }) => {
@@ -51,6 +52,14 @@ export const auth = betterAuth({
 				// Временная заглушка для email, т.к. он обязателен в схеме
 				getTempEmail: (phoneNumber) => `${phoneNumber}@temp.user`,
 			},
+		}),
+
+		emailOTP({
+			async sendVerificationOTP({ email, otp, type }) {
+				// Здесь реальная отправка email (через nodemailer, resend и т.п.)
+				console.log(`[emailOTP] Отправлен код ${otp} на ${email}, тип: ${type}`);
+			},
+			// Опционально можно настроить длину кода, время жизни и т.д.
 		}),
 	],
 

@@ -1,55 +1,121 @@
+// features/edit-personal-data/ui/UserDataForm.tsx
 'use client';
-import { useForm, FormProvider } from 'react-hook-form';
+
+import { useForm, FormProvider, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Button, InputFormText, InputFormPhone } from '@/shared/ui';
+import { Button, InputFormText, Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/shared/ui';
 import { setServerErrors } from '@/shared/lib/form-utils';
-import { toast } from 'sonner';
-import { UserDataFormValues, userDataSchema } from '../model/userDataSchema';
 import { updateUserData } from '../api/updateUserData';
-import { isTempEmail } from '@/shared/lib';
+import { toast } from 'sonner';
+import { useRouter } from 'next/navigation';
+import { GetUserByIdResponse } from '@/entities/user';
+import { UserDataValues, userDataSchema } from '../model/userDataSchema';
+import { formatDateForInput } from '@/shared/lib';
 
-export function UserDataForm({ user }: { user: any }) {
-	const tempEmail = isTempEmail(user.email);
+interface UserDataFormProps {
+	user: GetUserByIdResponse;
+}
 
-	const form = useForm<UserDataFormValues>({
+export function UserDataForm({ user }: UserDataFormProps) {
+	const genderOptions = [
+		{ value: "", label: "Не указан" },
+		{ value: "male", label: "Мужской" },
+		{ value: "female", label: "Женский" },
+	]
+
+	const router = useRouter();
+
+	const initialValues: UserDataValues = {
+		name: user.name || '',
+		birthDate: formatDateForInput(user.birthDate),
+		gender: (user.gender as UserDataValues['gender']) || '',
+	};
+
+	const form = useForm<UserDataValues>({
 		resolver: zodResolver(userDataSchema),
-		defaultValues: {
-			name: user.name || '',
-			phone: user.phoneNumber || '',
-			email: tempEmail ? '' : user.email || '',   // не показываем временный
-			birthDate: user.birthDate?.toISOString().split('T')[0] || '',
-			gender: user.gender || '',
-		},
+		defaultValues: initialValues,
 	});
 
-	const onSubmit = async (data: UserDataFormValues) => {
-		const result = await updateUserData(data);
+	const watchedName = form.watch('name');
+	const watchedBirthDate = form.watch('birthDate');
+	const watchedGender = form.watch('gender');
 
-		if (result.error) {
+	const nameChanged = watchedName !== initialValues.name;
+	const birthDateChanged = watchedBirthDate !== initialValues.birthDate;
+	const genderChanged = watchedGender !== initialValues.gender;
+	const hasChanges = nameChanged || birthDateChanged || genderChanged;
+
+	const onSubmit = async (data: UserDataValues) => {
+		const result = await updateUserData({
+			name: data.name,
+			phone: undefined,
+			email: undefined,
+			birthDate: data.birthDate,
+			gender: data.gender,
+		});
+		if (result?.error) {
 			setServerErrors(form, result.error);
-			return;
+		} else {
+			toast.success('Данные сохранены');
+			router.refresh();
 		}
-		toast.success('Данные сохранены');
+	};
+
+	const handleCancel = () => {
+		form.reset(initialValues);
 	};
 
 	return (
 		<FormProvider {...form}>
 			<form onSubmit={form.handleSubmit(onSubmit)} className="max-w-md flex flex-col gap-4">
 				<InputFormText name="name" label="ФИО" placeholder="Иван Иванов" />
-				<InputFormPhone name="phone" label="Телефон" placeholder="+7 (999) 999-99-99" />
-				<InputFormText name="email" label="Email" placeholder="example@mail.ru" />
-				<InputFormText name="birthDate" label="Дата рождения" placeholder="ГГГГ-ММ-ДД" />
+				<InputFormText name="birthDate" label="Дата рождения" type="date" />
 
-				<label className="block mb-1 font-medium">Пол</label>
-				<select {...form.register('gender')} className="w-full border rounded p-2">
-					<option value="">Не указан</option>
-					<option value="male">Мужской</option>
-					<option value="female">Женский</option>
-				</select>
+				<div>
+					<label className="block mb-1 font-medium">Пол</label>
+					<Controller
+						name="gender"
+						control={form.control}
+						render={({ field }) => (
+							<Select
+								value={field.value || ''}
+								onValueChange={field.onChange}
+								items={genderOptions} // 👈 Обязательно для Base UI!
+							>
+								<SelectTrigger className="w-full">
+									<SelectValue placeholder="Не указан" />
+								</SelectTrigger>
+								<SelectContent>
+									{genderOptions.map((option) => (
+										<SelectItem key={option.value} value={option.value}>
+											{option.label}
+										</SelectItem>
+									))}
+								</SelectContent>
+							</Select>
+						)}
+					/>
+				</div>
 
-				<Button type="submit" disabled={form.formState.isSubmitting}>
-					{form.formState.isSubmitting ? 'Сохранение...' : 'Сохранить'}
-				</Button>
+				<div className="flex gap-2">
+					<Button
+						type="submit"
+						disabled={form.formState.isSubmitting || !hasChanges}
+					>
+						{form.formState.isSubmitting ? 'Сохранение...' : 'Сохранить'}
+					</Button>
+
+					{hasChanges && (
+						<Button
+							type="button"
+							variant="ghost-custom"
+							size="pill-40-bold-accent"
+							onClick={handleCancel}
+						>
+							Отмена
+						</Button>
+					)}
+				</div>
 			</form>
 		</FormProvider>
 	);

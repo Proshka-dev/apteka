@@ -12,6 +12,7 @@ export * from './shadcn/sonner'
 export * from './shadcn/popover'
 export * from './shadcn/input-otp'
 export * from './shadcn/separator'
+export * from './shadcn/select'
 
 //Логотип
 export * from './Logo';

@@ -4,6 +4,15 @@ import { prisma } from '@/shared/lib/prisma';
 export async function getUserById(userId: string) {
 	return prisma.user.findUnique({
 		where: { id: userId },
-		select: { id: true, name: true, email: true, phoneNumber: true, },
+		select: {
+			id: true,
+			name: true,
+			email: true,
+			phoneNumber: true,
+			birthDate: true,
+			gender: true
+		},
 	});
 }
+
+export type GetUserByIdResponse = NonNullable<Awaited<ReturnType<typeof getUserById>>>;

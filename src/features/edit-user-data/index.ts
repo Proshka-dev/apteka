@@ -1,1 +1,1 @@
-export * from './ui/UserDataForm'
+export * from './ui/EditUserData'

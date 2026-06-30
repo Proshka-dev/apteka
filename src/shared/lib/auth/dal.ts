@@ -2,7 +2,7 @@
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { cache } from "react";
-import { auth } from "./auth";
+import { auth } from "../auth";
 
 // Функция для получения текущей сессии с проверкой в БД
 // cache() гарантирует, что за один рендер страницы будет выполнен только один запрос к БД, что повышает производительность
