@@ -23,6 +23,28 @@ model City {
   @@map("cities")
 }
 
+model Product {
+  id              Int       @id @default(autoincrement())
+  name            String
+  slug            String    @unique
+  code            String    @unique   // артикул
+  brand           String?
+  packageQuantity Int?               // количество в упаковке
+  price           Float               // текущая цена в рублях
+  oldPrice        Float?              // старая цена (перечёркнутая)
+  inStock         Boolean   @default(true)
+  isProductOfDay  Boolean   @default(false)
+  rating          Float     @default(0)
+  reviewCount     Int       @default(0)
+  imagePath       String?             // путь к изображению в storage/images/products/
+  categoryId      Int
+  category        Category  @relation(fields: [categoryId], references: [id])
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  @@map("products")
+}
+
 model Category {
   id        Int        @id @default(autoincrement())
   name      String     @unique // отображаемое название (например, "лекарства")
@@ -34,6 +56,7 @@ model Category {
   children  Category[] @relation("CategoryToParent")
   createdAt DateTime   @default(now())
   updatedAt DateTime   @updatedAt
+  products Product[]
 
   @@map("categories")
 }
