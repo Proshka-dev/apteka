@@ -48,6 +48,7 @@ export function PhoneChangeBlock({ initialPhone }: PhoneChangeBlockProps) {
 		if (phoneVer.step === 'success') {
 			setCurrentPhone(watchedPhone);
 			toast.success('Телефон подтверждён и обновлён');
+			phoneVer.reset(); // сбрасываем статус
 		}
 	}, [phoneVer.step, watchedPhone]);
 

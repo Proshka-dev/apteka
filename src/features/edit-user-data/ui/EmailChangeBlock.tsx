@@ -16,19 +16,24 @@ import { updateEmailBeforeVerification } from '../api/updateEmailBeforeVerificat
 import { toast } from 'sonner';
 import { emailChangeSchema, EmailChangeValues } from '../model/emailChangeSchema';
 import { translateAuthError } from '@/shared/lib';
+import { isTempEmail } from '@/shared/lib/isTempEmail';
 
 interface EmailChangeBlockProps {
 	initialEmail: string;
 }
 
 export function EmailChangeBlock({ initialEmail }: EmailChangeBlockProps) {
-	const [currentEmail, setCurrentEmail] = useState(initialEmail);
+	// Является ли исходный email временным?
+	const tempEmail = isTempEmail(initialEmail);
+	const initialFieldValue = tempEmail ? '' : initialEmail;
+
+	const [currentEmail, setCurrentEmail] = useState(initialFieldValue);
 	const [emailOtp, setEmailOtp] = useState('');
 	const emailVer = useEmailVerification();
 
 	const form = useForm<EmailChangeValues>({
 		resolver: zodResolver(emailChangeSchema),
-		defaultValues: { email: initialEmail },
+		defaultValues: { email: initialFieldValue },
 	});
 
 	const watchedEmail = form.watch('email') ?? '';
@@ -60,6 +65,7 @@ export function EmailChangeBlock({ initialEmail }: EmailChangeBlockProps) {
 		if (emailVer.step === 'success') {
 			setCurrentEmail(watchedEmail);
 			toast.success('Email подтверждён');
+			emailVer.reset(); // сбрасываем статус, чтобы не срабатывало повторно
 		}
 	}, [emailVer.step, watchedEmail]);
 
@@ -72,7 +78,16 @@ export function EmailChangeBlock({ initialEmail }: EmailChangeBlockProps) {
 	return (
 		<FormProvider {...form}>
 			<div className="max-w-md flex flex-col gap-2">
-				<InputFormText name="email" label="Email" placeholder="example@mail.ru" />
+				<InputFormText
+					name="email"
+					label="Email"
+					placeholder={tempEmail ? 'Введите настоящий email' : 'example@mail.ru'}
+				/>
+				{tempEmail && !changed && (
+					<p className="text-xs text-muted-foreground">
+						Сейчас используется временный email. Пожалуйста, укажите настоящий.
+					</p>
+				)}
 				{changed && emailVer.step !== 'success' && (
 					<div className="mt-2 flex flex-col gap-2">
 						{emailVer.step === 'idle' && (

@@ -33,7 +33,13 @@ export function usePhoneVerification() {
 		try {
 			const response = await authClient.phoneNumber.sendOtp({ phoneNumber: phone });
 			if (response.error) {
-				setError(response.error.message || 'Не удалось отправить код');
+				const message = typeof response.error === 'object' && response.error.message
+					? response.error.message
+					: 'Не удалось отправить код';
+				if (response.error.message) {
+					console.error('[usePhoneVerification] Ошибка в ответе:', response.error);
+				}
+				setError(message);
 				setStep('error');
 				return;
 			}

@@ -7,6 +7,7 @@ const authErrorMap: Record<string, string> = {
 	'Too many attempts': 'Слишком много попыток',
 	'Phone number not found': 'Номер не найден',
 	'Invalid phone number': 'Некорректный номер телефона',
+	'Invalid email': 'Некорректный email',
 };
 
 const defaultError = 'Произошла ошибка. Попробуйте позже';
