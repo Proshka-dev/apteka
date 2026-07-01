@@ -25,7 +25,7 @@ export function ProfileSidebarContent({ userName, isAdmin }: ProfileSidebarConte
 	};
 
 	return (
-		<aside className="w-64 border-r p-4 flex flex-col">
+		<aside className="flex flex-col p-4 border-b sm:w-64 sm:border-r">
 			<div className="font-semibold mb-4">{userName}</div>
 			<nav className="flex flex-col gap-2 flex-1">
 				{links.map((link) => (
