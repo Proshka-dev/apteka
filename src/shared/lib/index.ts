@@ -6,6 +6,7 @@ export * from './auth';
 export * from './auth-client';
 export * from './isTempEmail'
 export * from './translateAuthError'
+export * from './maskPhone'
 //export * from './auth/dal';
 
 export * from './hooks/useClickOutside';

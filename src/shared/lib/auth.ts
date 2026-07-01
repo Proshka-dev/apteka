@@ -51,6 +51,7 @@ export const auth = betterAuth({
 			signUpOnVerification: {
 				// Временная заглушка для email, т.к. он обязателен в схеме
 				getTempEmail: (phoneNumber) => `${phoneNumber}@temp.user`,
+				getTempName: () => "", //пустое имя при регистрации
 			},
 		}),
 

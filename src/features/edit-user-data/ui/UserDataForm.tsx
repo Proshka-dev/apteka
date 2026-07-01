@@ -68,7 +68,7 @@ export function UserDataForm({ user }: UserDataFormProps) {
 	return (
 		<FormProvider {...form}>
 			<form onSubmit={form.handleSubmit(onSubmit)} className="max-w-md flex flex-col gap-4">
-				<InputFormText name="name" label="ФИО" placeholder="Иван Иванов" />
+				<InputFormText name="name" label="ФИО" placeholder="Не указано" />
 				<InputFormText name="birthDate" label="Дата рождения" type="date" />
 
 				<div>
