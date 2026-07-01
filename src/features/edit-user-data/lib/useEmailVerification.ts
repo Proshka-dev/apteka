@@ -32,23 +32,19 @@ export function useEmailVerification() {
 		try {
 			const response = await authClient.emailOtp.sendVerificationOtp({ email, type: 'email-verification' });
 			if (response.error) {
-				// Извлекаем сообщение: может быть строкой или объектом с полем message
 				const message = typeof response.error === 'object' && response.error.message
 					? response.error.message
 					: 'Не удалось отправить код';
-				// Логируем только если есть непустое сообщение
-				if (response.error.message) {
-					console.error('[useEmailVerification] Ошибка в ответе:', response.error);
-				}
+				// При ошибке отправки возвращаемся в idle, чтобы можно было повторить
 				setError(message);
-				setStep('error');
+				setStep('idle');
 				return;
 			}
 			setStep('sent');
 			setSecondsLeft(60);
 		} catch {
 			setError('Сетевая ошибка при отправке кода');
-			setStep('error');
+			setStep('idle'); // также возвращаемся в idle
 		}
 	}, []);
 

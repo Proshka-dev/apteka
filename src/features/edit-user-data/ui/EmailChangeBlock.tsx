@@ -15,60 +15,67 @@ import { useEmailVerification } from '../lib/useEmailVerification';
 import { updateEmailBeforeVerification } from '../api/updateEmailBeforeVerification';
 import { toast } from 'sonner';
 import { emailChangeSchema, EmailChangeValues } from '../model/emailChangeSchema';
-import { translateAuthError } from '@/shared/lib';
-import { isTempEmail } from '@/shared/lib/isTempEmail';
+import { translateAuthError, isTempEmail } from '@/shared/lib';
 
 interface EmailChangeBlockProps {
 	initialEmail: string;
+	initialEmailVerified: boolean;
 }
 
-export function EmailChangeBlock({ initialEmail }: EmailChangeBlockProps) {
-	// Является ли исходный email временным?
+export function EmailChangeBlock({ initialEmail, initialEmailVerified }: EmailChangeBlockProps) {
 	const tempEmail = isTempEmail(initialEmail);
 	const initialFieldValue = tempEmail ? '' : initialEmail;
 
 	const [currentEmail, setCurrentEmail] = useState(initialFieldValue);
+	const [emailVerified, setEmailVerified] = useState(initialEmailVerified);
 	const [emailOtp, setEmailOtp] = useState('');
 	const emailVer = useEmailVerification();
 
 	const form = useForm<EmailChangeValues>({
 		resolver: zodResolver(emailChangeSchema),
 		defaultValues: { email: initialFieldValue },
+		mode: 'onChange',
 	});
 
 	const watchedEmail = form.watch('email') ?? '';
 	const changed = watchedEmail !== currentEmail;
+	const isValid = form.formState.isValid && watchedEmail !== '';
 
-	const handleStart = async () => {
-		if (!watchedEmail || watchedEmail === currentEmail) return;
+	// Сохранить новый email без верификации
+	const handleSave = async () => {
+		if (!isValid) return;
 		try {
 			await updateEmailBeforeVerification(watchedEmail);
+			setCurrentEmail(watchedEmail);
+			setEmailVerified(false);
+			toast.success('Email сохранён');
 		} catch {
-			toast.error('Не удалось обновить email');
-			return;
+			toast.error('Не удалось сохранить email');
 		}
-		emailVer.startVerification(watchedEmail);
 	};
 
-	const handleCancel = async () => {
+	// Отмена редактирования (возвращает поле к currentEmail и сбрасывает OTP, если активен)
+	const handleCancel = () => {
 		form.setValue('email', currentEmail);
-		try {
-			await updateEmailBeforeVerification(currentEmail);
-		} catch {
-			toast.error('Не удалось откатить email');
-		}
 		emailVer.reset();
 		setEmailOtp('');
 	};
 
+	// Запуск верификации сохранённого email
+	const handleStartVerification = () => {
+		emailVer.startVerification(currentEmail);
+	};
+
+	// Обработка успешной верификации
 	useEffect(() => {
 		if (emailVer.step === 'success') {
-			setCurrentEmail(watchedEmail);
+			setEmailVerified(true);
 			toast.success('Email подтверждён');
-			emailVer.reset(); // сбрасываем статус, чтобы не срабатывало повторно
+			emailVer.reset();
 		}
-	}, [emailVer.step, watchedEmail]);
+	}, [emailVer.step]);
 
+	// Автоматическая отмена, если значение вернулось к currentEmail во время процесса OTP
 	useEffect(() => {
 		if (!changed && emailVer.step !== 'idle' && emailVer.step !== 'success') {
 			handleCancel();
@@ -83,89 +90,110 @@ export function EmailChangeBlock({ initialEmail }: EmailChangeBlockProps) {
 					label="Email"
 					placeholder={tempEmail ? 'Введите настоящий email' : 'example@mail.ru'}
 				/>
+
 				{tempEmail && !changed && (
 					<p className="text-xs text-muted-foreground">
 						Сейчас используется временный email. Пожалуйста, укажите настоящий.
 					</p>
 				)}
-				{changed && emailVer.step !== 'success' && (
-					<div className="mt-2 flex flex-col gap-2">
-						{emailVer.step === 'idle' && (
-							<div className="flex gap-2">
-								<Button
-									type="button"
-									variant="primary-outline"
-									size="pill-40-bold-accent"
-									onClick={handleStart}
-								>
-									Подтвердить email
-								</Button>
-								<Button
-									type="button"
-									variant="ghost-custom"
-									size="pill-40-bold-accent"
-									onClick={handleCancel}
-								>
-									Отмена
-								</Button>
-							</div>
-						)}
-						{emailVer.step === 'sent' && (
-							<>
-								<div className="flex justify-center mb-5">
-									<InputOTP
-										value={emailOtp}
-										onChange={setEmailOtp}
-										maxLength={6}
-										id="email-otp"
-										aria-invalid={false}
-									>
-										<InputOTPGroup>
-											{Array.from({ length: 6 }).map((_, i) => (
-												<InputOTPSlot key={i} index={i} className="p-5 text-md" />
-											))}
-										</InputOTPGroup>
-									</InputOTP>
-								</div>
-								<div className="flex gap-2">
-									<Button
-										type="button"
-										variant="primary"
-										size="pill-40-bold-accent"
-										disabled={emailOtp.length < 6}
-										onClick={() => emailVer.verify(emailOtp)}
-									>
-										Проверить код
-									</Button>
-									<Button
-										type="button"
-										variant="ghost-custom"
-										size="pill-40-bold-accent"
-										disabled={emailVer.secondsLeft > 0}
-										onClick={() => emailVer.startVerification(emailVer.lastEmail)}
-									>
-										{emailVer.secondsLeft > 0
-											? `Повторить через ${emailVer.secondsLeft} сек`
-											: 'Отправить повторно'}
-									</Button>
-									<Button
-										type="button"
-										variant="ghost-custom"
-										size="pill-40-bold-accent"
-										onClick={handleCancel}
-									>
-										Отмена
-									</Button>
-								</div>
-							</>
-						)}
-						{emailVer.step === 'verifying' && <p>Проверка...</p>}
-						{emailVer.error && <p className="text-red-500 text-sm">{translateAuthError(emailVer.error)}</p>}
+
+				{/* Поле изменено, но ещё не сохранено */}
+				{changed && (
+					<div className="mt-2 flex gap-2">
+						<Button
+							type="button"
+							variant="primary-outline"
+							size="pill-40-bold-accent"
+							onClick={handleSave}
+							disabled={!isValid}
+						>
+							Сохранить email
+						</Button>
+						<Button
+							type="button"
+							variant="ghost-custom"
+							size="pill-40-bold-accent"
+							onClick={handleCancel}
+						>
+							Отмена
+						</Button>
 					</div>
 				)}
-				{emailVer.step === 'success' && (
-					<p className="text-green-600 text-sm">Email подтверждён</p>
+
+				{/* Email сохранён, но не подтверждён */}
+				{!changed && currentEmail && !emailVerified && (
+					<div className="mt-2 flex flex-col gap-2">
+						<p className="text-sm text-amber-600">Email не подтверждён</p>
+						<Button
+							type="button"
+							variant="primary-outline"
+							size="pill-40-bold-accent"
+							onClick={handleStartVerification}
+							disabled={emailVer.step === 'sending' || emailVer.step === 'sent'}
+						>
+							Подтвердить email
+						</Button>
+					</div>
 				)}
+
+				{/* Интерфейс OTP (показывается только когда процесс верификации активен) */}
+				{(emailVer.step === 'sent' || emailVer.step === 'verifying') && (
+					<div className="mt-2 flex flex-col gap-2">
+						<p className="text-sm text-gray-600">Код отправлен на {currentEmail}</p>
+						<div className="flex justify-center mb-5">
+							<InputOTP
+								value={emailOtp}
+								onChange={setEmailOtp}
+								maxLength={6}
+								id="email-otp"
+								aria-invalid={false}
+							>
+								<InputOTPGroup>
+									{Array.from({ length: 6 }).map((_, i) => (
+										<InputOTPSlot key={i} index={i} className="p-5 text-md" />
+									))}
+								</InputOTPGroup>
+							</InputOTP>
+						</div>
+						<div className="flex gap-2">
+							<Button
+								type="button"
+								variant="primary"
+								size="pill-40-bold-accent"
+								disabled={emailOtp.length < 6}
+								onClick={() => emailVer.verify(emailOtp)}
+							>
+								Проверить код
+							</Button>
+							<Button
+								type="button"
+								variant="ghost-custom"
+								size="pill-40-bold-accent"
+								disabled={emailVer.secondsLeft > 0}
+								onClick={() => emailVer.startVerification(currentEmail)}
+							>
+								{emailVer.secondsLeft > 0
+									? `Повторить через ${emailVer.secondsLeft} сек`
+									: 'Отправить повторно'}
+							</Button>
+							<Button
+								type="button"
+								variant="ghost-custom"
+								size="pill-40-bold-accent"
+								onClick={handleCancel}
+							>
+								Отмена
+							</Button>
+						</div>
+						{emailVer.error && (
+							<p className="text-red-500 text-sm">{translateAuthError(emailVer.error)}</p>
+						)}
+					</div>
+				)}
+
+				{/* {emailVerified && (
+					<p className="text-green-600 text-sm">Email подтверждён</p>
+				)} */}
 			</div>
 		</FormProvider>
 	);

@@ -10,7 +10,8 @@ export async function getUserById(userId: string) {
 			email: true,
 			phoneNumber: true,
 			birthDate: true,
-			gender: true
+			gender: true,
+			emailVerified: true,
 		},
 	});
 }

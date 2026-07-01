@@ -15,7 +15,10 @@ export function EditPersonalData({ user }: EditUserDataProps) {
 				<PhoneChangeBlock initialPhone={user.phoneNumber || ''} />
 			</section>
 			<section>
-				<EmailChangeBlock initialEmail={user.email || ''} />
+				<EmailChangeBlock
+					initialEmail={user.email || ''}
+					initialEmailVerified={user.emailVerified}
+				/>
 			</section>
 			<section className='border-t-2 pt-5'>
 				<UserDataForm user={user} />
