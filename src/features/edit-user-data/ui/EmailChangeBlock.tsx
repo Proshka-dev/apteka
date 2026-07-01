@@ -128,6 +128,7 @@ export function EmailChangeBlock({ initialEmail, initialEmailVerified }: EmailCh
 							type="button"
 							variant="primary-outline"
 							size="pill-40-bold-accent"
+							className={'w-fit'}
 							onClick={handleStartVerification}
 							disabled={emailVer.step === 'sending' || emailVer.step === 'sent'}
 						>

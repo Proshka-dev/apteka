@@ -100,6 +100,9 @@ export function UserDataForm({ user }: UserDataFormProps) {
 				<div className="flex gap-2">
 					<Button
 						type="submit"
+						variant={'primary'}
+						size={'pill-50-bold-accent'}
+						className={'w-full'}
 						disabled={form.formState.isSubmitting || !hasChanges}
 					>
 						{form.formState.isSubmitting ? 'Сохранение...' : 'Сохранить'}
