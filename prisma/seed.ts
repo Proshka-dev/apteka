@@ -11,7 +11,7 @@ async function main() {
 
 	// await seedCities(prisma);
 	// await seedCategories(prisma);
-	await seedProducts(prisma);
+	// await seedProducts(prisma);
 
 	console.log('🎉 Seed завершён.');
 }

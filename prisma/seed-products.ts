@@ -42,8 +42,20 @@ export async function seedProducts(prisma: PrismaClient) {
 
 	const packageSizes = [10, 20, 30, 50, 60, 100];
 
+	const countries = ['Беларусь', 'Германия', 'Греция', 'Ирландия', 'Испания', 'Италия', 'Китай'];
+
+	const allEffects = [
+		'для бронхов', 'для желудка', 'для волос', 'для горла',
+		'для губ', 'для дыхательных путей', 'для желудка'
+	];
+
 	console.log('🛒 Генерация 100 товаров...');
 	for (let i = 0; i < 100; i++) {
+		const country = countries[Math.floor(Math.random() * countries.length)];
+		const effectCount = Math.floor(Math.random() * 3) + 1; // 1-3 эффекта
+		const effects = Array.from({ length: effectCount }, () =>
+			allEffects[Math.floor(Math.random() * allEffects.length)]
+		);
 		const name = names[i % names.length];
 		const brand = brands[Math.floor(Math.random() * brands.length)];
 		const code = `${300000 + i}`;
@@ -70,6 +82,8 @@ export async function seedProducts(prisma: PrismaClient) {
 				inStock,
 				isProductOfDay,
 				rating,
+				country,
+				effects,
 				imagePath: null,
 				categoryId,
 			},
